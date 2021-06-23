@@ -9,8 +9,8 @@
     <link href="~/css/main.css" rel="stylesheet">
     <link href="~/css/style.css" rel="stylesheet">
     <link href="~/css/site.css" rel="stylesheet">
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    
 </head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
@@ -48,33 +48,33 @@
             <div class="app-header__content">
                 <div class="app-header-right">
                     @*<div class="search-wrapper">
-            <div class="input-holder">
-                <input type="text" class="search-input" placeholder="Type to search">
-                <button class="search-icon"><span></span></button>
-            </div>
-            <button class="close"></button>
-        </div>*@
+                            <div class="input-holder">
+                                <input type="text" class="search-input" placeholder="Type to search">
+                                <button class="search-icon"><span></span></button>
+                            </div>
+                            <button class="close"></button>
+                        </div>*@
                     <div class="dropdown">
-                            <ul class="header-menu nav">
-                                <li class="nav-item">
-                                    <a class="nav-link">
-                                        @*<img class="avt" src="@Web_BanXeMoTo.Models.StaticAcc.Avatar" />*@
-                                        <img class="avt" src="/img/main/avatar-default-icon.png" />
+                        <ul class="header-menu nav">
+                            <li class="nav-item">
+                                <a class="nav-link">
+                                    @*<img class="avt" src="@Web_BanXeMoTo.Models.StaticAcc.Avatar" />*@
+                                    <img class="avt" src="/img/main/avatar-default-icon.png" />
 
-                                    </a>
-                                </li>
-                                <li class="btn-group nav-item">
-                                    <a id="name" class="nav-link">
-                                        Name
-                                    </a>
-                                    <a class="nav-link">:</a>
-                                </li>
-                                <li class="btn-group  nav-item">
-                                    <a id="role" class="nav-link">
-                                        Email
-                                    </a>
-                                </li>
-                            </ul>
+                                </a>
+                            </li>
+                            <li class="btn-group nav-item">
+                                <a id="name" class="nav-link">
+                                    Name
+                                </a>
+                                <a class="nav-link">:</a>
+                            </li>
+                            <li class="btn-group  nav-item">
+                                <a id="role" class="nav-link">
+                                    Email
+                                </a>
+                            </li>
+                        </ul>
                         <div class="dropdown-content">
                             <a href="@Url.ActionLink("Index", "Profile")" class="@ViewBag.ActiveProfile">Profile</a>
                             @Html.ActionLink("Logout", "Logout", "Login")
@@ -98,11 +98,11 @@
                             </li>
                             @if (User.Identity.IsAuthenticated)
                             {
-                            <li>
-                                <form asp-controller="AccountManagement" asp-action="Logout" method="post">
-                                    <input type="submit" value="Logout" />
-                                </form>
-                            </li>
+                                <li>
+                                    <form asp-controller="AccountManagement" asp-action="Logout" method="post">
+                                        <input type="submit" value="Logout" />
+                                    </form>
+                                </li>
                             }
                         </ul>
                     </div>
@@ -115,9 +115,15 @@
 
         </div>
     </div>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/jquery.min.js"></script>
 
     <script type="text/javascript" src="~/js/main.js"></script>
     <script type="text/javascript" src="~/js/site.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    @RenderSection("scripts", false)
 
 </body>
 

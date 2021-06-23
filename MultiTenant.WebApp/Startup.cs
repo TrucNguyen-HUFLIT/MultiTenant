@@ -1,9 +1,12 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MultiTenant.WebApp.Filter;
 using MultiTenant.Application.Services.User;
+using MultiTenant.Application.Validators.User;
 using ReflectionIT.Mvc.Paging;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -28,10 +31,7 @@ namespace MultiTenant.WebApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddControllersWithViews();
-            services.AddDbContext<Data.Contexts.MultiTenantContext>(options => options.UseSqlServer(@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database=MultiTenant;Trusted_Connection=True;"));
-
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            services.AddDbContext<Data.Contexts.MultiTenantContext>(options => options.UseSqlServer(@"Server=HUYDESKTOP;Database=MultiTenant;Trusted_Connection=True;"));
 
             services.AddPaging(options =>
             {
@@ -39,8 +39,25 @@ namespace MultiTenant.WebApp
                 options.PageParameterName = "page";
             });
 
+            services.AddMvc(
+                option =>
+                {
+                    option.Filters.Add(typeof(ExceptionFilter));
+                }
+                ).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Latest)
+                .AddFluentValidation(option =>
+                {
+                    option.RegisterValidatorsFromAssemblyContaining<AccountEditValidator>();
+                   
+                });
+
+            services.AddControllersWithViews();
+
+            services.AddScoped<ModelStateAjaxFilter>();
+
             services.AddScoped<IUserService, UserService>();
 
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = "Cookies";
@@ -67,8 +84,9 @@ namespace MultiTenant.WebApp
                     // options.Scope.Add("profile"); // default scope
                    options.SaveTokens = true;
                });
+
         }
-          
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
@@ -76,12 +94,11 @@ namespace MultiTenant.WebApp
 
             app.UseHttpsRedirection();
 
-            app.UseAuthentication();
-
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

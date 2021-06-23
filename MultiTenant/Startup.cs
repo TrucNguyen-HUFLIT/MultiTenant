@@ -72,13 +72,13 @@ namespace MultiTenant
             app.UseDeveloperExceptionPage();
 
             app.UseHttpsRedirection();
-
-            app.UseAuthentication();
-
             app.UseStaticFiles();
+
             app.UseCookiePolicy();
 
             app.UseRouting();
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

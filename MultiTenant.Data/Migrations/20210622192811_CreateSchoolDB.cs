@@ -2,7 +2,7 @@
 
 namespace MultiTenant.Data.Migrations
 {
-    public partial class CreateMultiTenantDB : Migration
+    public partial class CreateSchoolDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,10 +12,9 @@ namespace MultiTenant.Data.Migrations
                 {
                     TenantId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Host = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DatabaseConnection = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubDomain = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DataConnectionString = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TenantName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Favicon = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -30,10 +29,11 @@ namespace MultiTenant.Data.Migrations
                     AccId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirsName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Role = table.Column<int>(type: "int", nullable: false),
                     TenantId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

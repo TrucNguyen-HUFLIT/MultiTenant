@@ -12,7 +12,9 @@ namespace MultiTenant.Application.Services.User
     public interface IUserService
     {
         Task<PagingList<Account>> GetListUsersAsync(string filter, int page, string sortEx = "AccId");
-        AccountEdit GetAccountEditById(int id);
+        Task<AccountEdit> GetAccountEditByIdAsync(int id);
+        Task<bool> ChangeImageAsync(ChangeImage changeImage);
         Task<bool> EditAsync(AccountEdit accountEdit);
+        List<Tenant> GetListTenant();
     }
 }
