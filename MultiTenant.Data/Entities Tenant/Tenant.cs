@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MultiTenant.Data.Entities_Tenant
 {
@@ -13,6 +9,7 @@ namespace MultiTenant.Data.Entities_Tenant
         public string DataConnectionString { get; set; }
         public string TenantName { get; set; } 
         public string Favicon { get; set; }
+
 
         public ICollection<Account> Accounts { get; set; }
 

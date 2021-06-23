@@ -1,26 +1,34 @@
 ﻿using MultiTenant.Data.Entities_Tenant;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MultiTenant.Application.Models
 {
     public class AccountRequest
     {
-        
-        public int AccId { get; set; }
+        [Display(Name = "ID Acc")]
+        public int AccId { get; set; } //Id
+
+        [Display(Name = "Email")]
         public string Email { get; set; }
+ 
+        [Display(Name = "Password")]
         public string Password { get; set; }
+
         [Display(Name = "First Name ")]
         public string FirstName { get; set; }
+
         [Display(Name = "Last Name ")]
         public string LastName { get; set; }
-        public string Avatar { get; set; }
+
+        [Display(Name = "Avatar")]
+        public string Avatar { get; set; } //Picture
+
+        [Display(Name = "Role")]
         public Role Role { get; set; }
-        public int TenantId { get; set; }
+
+        [Display(Name = "ID Tenant")]
+        public int TenantId { get; set; } //ClientID
+
 
     }
 }

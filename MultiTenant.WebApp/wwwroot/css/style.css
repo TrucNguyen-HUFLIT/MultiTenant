@@ -18,10 +18,10 @@
     margin-top: 0px
 }
 
-.active {
+/*.active {
     background: #72b6ff;
     text-decoration: none
-}
+}*/
 
 .pagination-container > .pagination > li > span {
     background-color: white;
@@ -54,4 +54,28 @@
     background-position: 10px 10px;
     background-repeat: no-repeat;
     padding: 2px 4px 2px 8px;
+}
+
+/*input[type=submit] {
+    background-color: #304477;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 10px;
+    width: 220px;
+    text-decoration: none;
+    margin: 4px 2px;
+    margin-top: 50px;
+    cursor: pointer;
+}*/
+
+.submit-logout {
+    margin-top: 50px;
+    background-color: #304477;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    width: 220px;
 }

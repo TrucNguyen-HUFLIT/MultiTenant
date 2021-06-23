@@ -1,23 +1,27 @@
-﻿using Microsoft.AspNetCore.Http;
-using MultiTenant.Data.Entities_Tenant;
-using System;
-using System.Collections.Generic;
+﻿using MultiTenant.Data.Entities_Tenant;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MultiTenant.Application.Models
 {
     public  class AccountEdit
     {
-        public int AccId { get; set; }
-        public string Name { get; set; }
+        [Display(Name = "ID Acc")]
+        public int AccId { get; set; } //Id
+
+        [Display(Name = "Email")]
         public string Email { get; set; }
-        public string Avatar { get; set; }
+
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+
+        [Display(Name = "Avatar")]
+        public string Avatar { get; set; } //Picture
+
+        [Display(Name = "Role")]
         public Role Role { get; set; }
-        public int TenantId { get; set; }
+
+        [Display(Name = "ID Tenant")]
+        public int TenantId { get; set; } //ClientID
 
     }
 }
