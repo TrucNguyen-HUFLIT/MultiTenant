@@ -6,30 +6,35 @@
 }
 @model ReflectionIT.Mvc.Paging.PagingList<MultiTenant.Data.Entities_Tenant.Account>
 @using ReflectionIT.Mvc.Paging
-<div class="page-breadcrumb">
-    <div class="row align-items-center">
-        <div class="col-md-6 col-8 align-self-center">
-            <h3 class="page-title mb-0 p-0">Management</h3>
-            <div class="d-flex align-items-center">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Management</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">List Account</li>
 
-                    </ol>
-                </nav>
+
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <h2 style="font-weight:500">List Account</h2>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="container-fluid">
+    <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+        <li class="nav-item">
+            <a asp-action="Index" class="nav-link active ">
+                <span>List account</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-action="Create" class="nav-link ">
+                <span>Create</span>
+            </a>
+        </li>
+    </ul>
     <div class="row">
-        <div class="col-sm-12">
-            <div class="card">
+        <div class="col-md-12">
+            <div class="main-card mb-3 card">
                 <div class="card-body">
-                    <a asp-action="Create" class="btn btn-outline-info">Create</a>
-                    <br />                    <br />
                     <form method="get" class="form-inline" style="display:block; float:right">
                         <input name="filter" class="form-control" placeholder="Search..."
                                value="@Model.RouteValue["Filter"]" />
@@ -37,34 +42,37 @@
                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
                         </button>
                     </form>
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr class="table-success align-middle text-center">
-                                    <th class="border-top-0">
-                                        ID
-                                    </th>
-                                    <th class="border-top-0">
-                                        @Html.DisplayNameFor(model => model.Name)
-                                    </th>
-                                    <th class="border-top-0">
-                                        @Html.DisplayNameFor(model => model.Email)
-                                    </th>
-                                    <th class="border-top-0">
-                                        @Html.DisplayNameFor(model => model.Role)
-                                    </th>
-                                    <th class="border-top-0">
-                                        @Html.DisplayNameFor(model => model.Avatar)
-                                    </th>
-                                    <th class="border-top-0">
-                                        @Html.DisplayNameFor(model => model.TenantId)
-                                    </th>
-                                    <th class="border-top-0"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
+                    <br />
+                    <br />
+                    <br />
+
+                    <table class="table table-hover table-sm" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr class="table-success align-middle text-center">
+                                <th class="border-top-0">
+                                    ID
+                                </th>
+                                <th class="border-top-0">
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th class="border-top-0">
+                                    @Html.DisplayNameFor(model => model.Email)
+                                </th>
+                                <th class="border-top-0">
+                                    @Html.DisplayNameFor(model => model.Role)
+                                </th>
+                                <th class="border-top-0">
+                                    @Html.DisplayNameFor(model => model.Avatar)
+                                </th>
+                                <th class="border-top-0">
+                                    @Html.DisplayNameFor(model => model.TenantId)
+                                </th>
+                                <th class="border-top-0"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
                                 <tr class="align-middle text-center">
                                     <td>
                                         @Html.DisplayFor(modelItem => item.AccId)
@@ -93,34 +101,25 @@
                                         @Html.DisplayFor(modelItem => item.TenantId)
                                     </td>
                                     <td>
-
                                         <a asp-action="Edit" asp-route-id="@item.AccId" asp-controller="AccountManagement" class="btn btn-outline-warning">Edit</a>
-
-
                                     </td>
                                 </tr>
-                                }
-                                @*<tr>
-                            <td colspan="2">
-                                @{ int pages = ((int)ViewData["Pages"]); int p = ((int)ViewData["Page"]);}
-                                <form asp-action="Index" method="get">
-                                    <input type="submit" value="Go to" /> page <input type="number" max="@pages" min="1" name="page" value="@p" style="width: 45px" /> of @pages
-                                </form>
-                            </td>
-                            <td colspan="8" class="text-center">Tổng số: @Model.ListAccount.Count()</td>
-                        </tr>*@
-                            </tbody>
-                        </table>
-                    </div>
+                            }
+                            @*<tr>
+                    <td colspan="2">
+                        @{ int pages = ((int)ViewData["Pages"]); int p = ((int)ViewData["Page"]);}
+                        <form asp-action="Index" method="get">
+                            <input type="submit" value="Go to" /> page <input type="number" max="@pages" min="1" name="page" value="@p" style="width: 45px" /> of @pages
+                        </form>
+                    </td>
+                    <td colspan="8" class="text-center">Tổng số: @Model.ListAccount.Count()</td>
+                </tr>*@
+                        </tbody>
+                    </table>
                 </div>
-                <nav aria-label="..." style="float:right">
-
-                    @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
-                </nav>
             </div>
         </div>
     </div>
+
 </div>
-<footer class="footer">
-    2021 ©Copyright By Saigon Technology Solution
-</footer>
+

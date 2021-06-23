@@ -1,10 +1,7 @@
 ﻿using MultiTenant.Application.Models;
 using MultiTenant.Data.Entities_Tenant;
 using ReflectionIT.Mvc.Paging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MultiTenant.Application.Services.User
