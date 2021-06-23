@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -35,8 +37,9 @@ namespace MultiTenant
             services.AddControllersWithViews();
             //services.AddDbContext<Data.Contexts.MultiTenantContext>(options => options.UseSqlServer(@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database=MultiTenant;Trusted_Connection=True;"));
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            services.AddSingleton<SubdomainRouteTransformer>();
 
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddAuthentication(options =>
             {
@@ -81,12 +84,36 @@ namespace MultiTenant
             app.UseAuthentication();
             app.UseAuthorization();
 
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller=Home}/{action=Index}/{id?}");
+            //});
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapDynamicControllerRoute<SubdomainRouteTransformer>("{controller=Home}/{action=Index}/{id?}");
             });
+        }
+    }
+
+    public class SubdomainRouteTransformer : DynamicRouteValueTransformer
+    {
+        public override async ValueTask<RouteValueDictionary> TransformAsync(HttpContext httpContext, RouteValueDictionary values)
+        {
+            var subDomain = httpContext.Request.Host.Host.Split(".").First(); //tenant1.localhost --> tenant1
+
+            if (!string.IsNullOrEmpty(subDomain))
+            {
+                if (subDomain == "localhost")
+                {
+                    return values;
+                }
+                values["controller"] = subDomain;
+            }
+
+            return values;
         }
     }
 }
