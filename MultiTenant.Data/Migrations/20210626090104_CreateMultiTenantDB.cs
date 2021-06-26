@@ -2,7 +2,7 @@
 
 namespace MultiTenant.Data.Migrations
 {
-    public partial class CreateSchoolDB : Migration
+    public partial class CreateMultiTenantDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

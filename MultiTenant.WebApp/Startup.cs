@@ -31,7 +31,7 @@ namespace MultiTenant.WebApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<Data.Contexts.MultiTenantContext>(options => options.UseSqlServer(@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database=MultiTenant;Trusted_Connection=True;"));
+            services.AddDbContext<Data.Contexts.MultiTenantContext>(options => options.UseSqlServer(@"Server=HUYDESKTOP;Database=MultiTenant;Trusted_Connection=True;"));
 
             services.AddPaging(options =>
             {

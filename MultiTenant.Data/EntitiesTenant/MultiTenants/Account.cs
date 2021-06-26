@@ -1,5 +1,10 @@
-﻿
-namespace MultiTenant.Data.Entities_Tenant
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MultiTenant.Data.EntitiesTenant.MultiTenants
 {
     public class Account
     {

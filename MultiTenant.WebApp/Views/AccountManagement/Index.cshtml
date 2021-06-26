@@ -4,7 +4,7 @@
     ViewData["Title"] = "Account Mgmt";
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
-@model ReflectionIT.Mvc.Paging.PagingList<MultiTenant.Data.Entities_Tenant.Account>
+@model ReflectionIT.Mvc.Paging.PagingList<MultiTenant.Data.EntitiesTenant.MultiTenants.Account>
 @using ReflectionIT.Mvc.Paging
 
 
@@ -84,7 +84,7 @@
                                         @Html.DisplayFor(modelItem => item.Email)
                                     </td>
                                     <td>
-                                        @if (item.Role == MultiTenant.Data.Entities_Tenant.Role.Admin)
+                                        @if (item.Role == MultiTenant.Data.EntitiesTenant.MultiTenants.Role.Admin)
                                         {
                                             <span>Admin</span>
                                         }

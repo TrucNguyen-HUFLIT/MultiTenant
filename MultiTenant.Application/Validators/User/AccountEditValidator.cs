@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MultiTenant.Application.Models;
+using MultiTenant.Application.Models.Account;
 
 namespace MultiTenant.Application.Validators.User
 {

@@ -1,13 +1,17 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using MultiTenant.Application.Exceptions;
 using MultiTenant.Application.Models;
+using MultiTenant.Application.Models.Account;
 using MultiTenant.Data.Contexts;
-using MultiTenant.Data.Entities_Tenant;
+using MultiTenant.Data.EntitiesTenant.MultiTenants;
 using ReflectionIT.Mvc.Paging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MultiTenant.Application.Services.User
@@ -47,14 +51,28 @@ namespace MultiTenant.Application.Services.User
             return true;
 
         }
+
+        public Task CreateAsync(AccountCreate accountCreate)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> EditAsync(AccountEdit accountEdit)
         {
             var model = await _context.Accounts
                   .Where(x => x.AccId == accountEdit.AccId)
                   .FirstOrDefaultAsync();
-
+            var email = await _context.Accounts.Select(x => x.Email).ToListAsync();
+            foreach(var e in email)
+            {
+                if (e == accountEdit.Email)
+                {
+                    throw new SameEmailException(model.Email);
+                }
+            }
             model.Name = accountEdit.Name;
             model.TenantId = accountEdit.TenantId;
+            model.Email = accountEdit.Email;
             _context.Update(model);
             await _context.SaveChangesAsync();
             return true;
@@ -88,6 +106,7 @@ namespace MultiTenant.Application.Services.User
             var model = _context.Tenants.ToList();
             return model;
         }
+
 
         public async Task<PagingList<Account>> GetListUsersAsync(string filter, int page, string sortEx = "AccId")
         {

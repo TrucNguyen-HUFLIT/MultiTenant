@@ -9,8 +9,8 @@ using MultiTenant.Data.Contexts;
 namespace MultiTenant.Data.Migrations
 {
     [DbContext(typeof(MultiTenantContext))]
-    [Migration("20210622192811_CreateSchoolDB")]
-    partial class CreateSchoolDB
+    [Migration("20210626090104_CreateMultiTenantDB")]
+    partial class CreateMultiTenantDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,7 +20,7 @@ namespace MultiTenant.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("MultiTenant.Data.Entities_Tenant.Account", b =>
+            modelBuilder.Entity("MultiTenant.Data.EntitiesTenant.MultiTenants.Account", b =>
                 {
                     b.Property<int>("AccId")
                         .ValueGeneratedOnAdd()
@@ -57,7 +57,7 @@ namespace MultiTenant.Data.Migrations
                     b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("MultiTenant.Data.Entities_Tenant.Tenant", b =>
+            modelBuilder.Entity("MultiTenant.Data.EntitiesTenant.MultiTenants.Tenant", b =>
                 {
                     b.Property<int>("TenantId")
                         .ValueGeneratedOnAdd()
@@ -81,9 +81,9 @@ namespace MultiTenant.Data.Migrations
                     b.ToTable("Tenants");
                 });
 
-            modelBuilder.Entity("MultiTenant.Data.Entities_Tenant.Account", b =>
+            modelBuilder.Entity("MultiTenant.Data.EntitiesTenant.MultiTenants.Account", b =>
                 {
-                    b.HasOne("MultiTenant.Data.Entities_Tenant.Tenant", "Tenant")
+                    b.HasOne("MultiTenant.Data.EntitiesTenant.MultiTenants.Tenant", "Tenant")
                         .WithMany("Accounts")
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -92,7 +92,7 @@ namespace MultiTenant.Data.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("MultiTenant.Data.Entities_Tenant.Tenant", b =>
+            modelBuilder.Entity("MultiTenant.Data.EntitiesTenant.MultiTenants.Tenant", b =>
                 {
                     b.Navigation("Accounts");
                 });

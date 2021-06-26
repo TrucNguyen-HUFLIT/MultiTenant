@@ -4,6 +4,7 @@ using MultiTenant.WebApp.Filter;
 using MultiTenant.Application.Models;
 using MultiTenant.Application.Services.User;
 using System.Threading.Tasks;
+using MultiTenant.Application.Models.Account;
 
 namespace MultiTenant.WebApp.Controllers
 {
