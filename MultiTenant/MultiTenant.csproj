@@ -17,4 +17,9 @@
     <PackageReference Include="ReflectionIT.Mvc.Paging" Version="5.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MultiTenant.Application\MultiTenant.Application.csproj" />
+    <ProjectReference Include="..\MultiTenant.Data\MultiTenant.Data.csproj" />
+  </ItemGroup>
+
 </Project>
