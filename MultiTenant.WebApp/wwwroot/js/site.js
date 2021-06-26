@@ -1,4 +1,4 @@
-﻿$("#edit-delete-acc-form").submit(function (e) {
+﻿$("#edit-acc-form").submit(function (e) {
     e.preventDefault();
 
     let form = $(this).serializeArray();
@@ -13,6 +13,11 @@
         },
         error: function (data) {
             console.log(data);
+            var error = data.responseText;
+            if (error == " Email is already ") {
+                document.getElementById("emailAlready").innerHTML = data.responseText;
+                return;
+            }
             try {
                 var objectValidation = data.responseJSON;
 
@@ -20,9 +25,15 @@
                     document.getElementById("Err_Name").innerHTML = objectValidation["accountEdit.Name"];
                 else
                     document.getElementById("Err_Name").innerHTML = "";
+
+                if (objectValidation["accountEdit.Email"] != undefined)
+                    document.getElementById("Err_Email").innerHTML = objectValidation["accountEdit.Email"];
+                else
+                    document.getElementById("Err_Email").innerHTML = "";
             }
             catch {
                 document.getElementById("Err_Name").innerHTML = "";
+                document.getElementById("Err_Email").innerHTML = "";
             }
         },
 

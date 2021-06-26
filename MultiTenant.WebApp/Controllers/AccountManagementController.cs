@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using MultiTenant.WebApp.Filter;
 using MultiTenant.Application.Models;
 using MultiTenant.Application.Services.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using MultiTenant.Application.Models.Account;
 
 namespace MultiTenant.WebApp.Controllers
 {
@@ -28,7 +26,7 @@ namespace MultiTenant.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            ViewBag.Active = "active";
+            ViewBag.ActiveAccount = "active";
             var model = new AccountViewModel
             {
                 ListTenant = _accountservice.GetListTenant(),

@@ -3,5 +3,107 @@
     ViewData["Title"] = "Tenant Mgmt";
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
+@model ReflectionIT.Mvc.Paging.PagingList<MultiTenant.Data.EntitiesTenant.MultiTenants.Tenant>
+@using ReflectionIT.Mvc.Paging
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <h2 style="font-weight:500">List Account</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+        <li class="nav-item">
+            <a asp-action="Index" class="nav-link active ">
+                <span>List Tenant</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-action="Create" class="nav-link ">
+                <span>Create</span>
+            </a>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <form method="get" class="form-inline" style="display:block; float:right">
+                        <input name="filter" class="form-control" placeholder="Search..."
+                               value="@Model.RouteValue["Filter"]" />
+                        <button type="submit" class="btn btn-smn btn-primary">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+                        </button>
+                    </form>
+                    <br />
+                    <br />
+                    <br />
 
+                    <table class="table table-hover table-sm" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr class="table-success align-middle text-center">
+                                <th class="border-top-0">
+                                    @Html.DisplayNameFor(model => model.TenantId)
+                                </th>
+                                <th class="border-top-0">
+                                    @Html.DisplayNameFor(model => model.TenantName)
+                                </th>
+                                <th class="border-top-0">
+                                    @Html.DisplayNameFor(model => model.SubDomain)
+                                </th>
+                                <th class="border-top-0">
+                                    @Html.DisplayNameFor(model => model.DataConnectionString)
+                                </th>
+                                <th class="border-top-0">
+                                    @Html.DisplayNameFor(model => model.Favicon)
+                                </th>
+                                <th class="border-top-0"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr class="align-middle text-center">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TenantId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TenantName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SubDomain)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DataConnectionString)
+                                    </td>
+                                    <td>
+                                        <img src="@item.Favicon" width="120" class="rounded-circle" />
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TenantId)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.TenantId" asp-controller="AccountManagement" class="btn btn-outline-warning">Edit</a>
+                                    </td>
+                                </tr>
+                            }
+                            @*<tr>
+                                    <td colspan="2">
+                                        @{ int pages = ((int)ViewData["Pages"]); int p = ((int)ViewData["Page"]);}
+                                        <form asp-action="Index" method="get">
+                                            <input type="submit" value="Go to" /> page <input type="number" max="@pages" min="1" name="page" value="@p" style="width: 45px" /> of @pages
+                                        </form>
+                                    </td>
+                                    <td colspan="8" class="text-center">Tổng số: @Model.ListAccount.Count()</td>
+                                </tr>*@
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
+</div>

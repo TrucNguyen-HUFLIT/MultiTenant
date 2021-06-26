@@ -1,10 +1,5 @@
 ﻿using FluentValidation;
-using MultiTenant.Application.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MultiTenant.Application.Models.Account;
 
 namespace MultiTenant.Application.Validators.User
 {

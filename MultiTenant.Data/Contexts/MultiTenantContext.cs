@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MultiTenant.Data.Entities_Tenant;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MultiTenant.Data.EntitiesTenant.MultiTenants;
 
 namespace MultiTenant.Data.Contexts
 {
