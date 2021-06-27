@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MultiTenant.Controllers
 {
@@ -6,7 +7,7 @@ namespace MultiTenant.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction();
         }
     }
 }
