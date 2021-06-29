@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MultiTenant.Data.Contexts;
+using MultiTenant.MiddlewareHelpers;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,17 +32,12 @@ namespace MultiTenant
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
+            
             services.AddControllersWithViews();
+            services.AddScoped<DbContext, TenantContext>();
             services.AddDbContext<MultiTenantContext>();
-
-            services.AddDbContext<TenantContext>((provider,options )=>
-            {
-                var context = provider.GetRequiredService<MultiTenantContext>();
-                var tenantId =  context.Accounts.Where(x=>x.UserName == "huy").Select(x=>x.TenantId).FirstOrDefault();
-                var databaseName = context.Tenants.Where(x => x.TenantId == tenantId).Select(x=>x.DataConnectionString).FirstOrDefault();
-
-                options.UseSqlServer($@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database={databaseName};Trusted_Connection=True;");
-            });
+            services.AddDbContext<TenantContext>();
 
             services.AddSingleton<SubdomainRouteTransformer>();
 
@@ -73,28 +69,7 @@ namespace MultiTenant
                    // options.Scope.Add("oidc"); // default scope
                    // options.Scope.Add("profile"); // default scope
                    options.SaveTokens = true;
-               })
-               //.AddOpenIdConnect("oidc", "tenant1", options =>
-               //{
-               //    options.SignInScheme = "Cookies";
-               //    options.Authority = "https://localhost:5000";
-               //    options.RequireHttpsMetadata = true;
-
-               //    options.ClientId = "tenant1";
-               //    options.ClientSecret = "SuperSecretPassword";
-               //    options.ResponseType = "code";
-
-               //    options.UsePkce = true;
-               //    options.ResponseMode = "query";
-               //    options.GetClaimsFromUserInfoEndpoint = true;
-
-               //    options.CallbackPath = "/signin-oidc"; // default redirect URI
-
-               //    options.Scope.Add("oidc"); // default scope
-               //    options.Scope.Add("profile"); // default scope
-               //    options.SaveTokens = true;
-               //})
-               ;
+               });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,9 +80,12 @@ namespace MultiTenant
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseCookiePolicy();
+            //app.UseCookiePolicy();
+            app.UseCookiePolicy( new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
 
             app.UseRouting();
+
+            app.UseHttpContextAccessor();
 
             app.UseAuthentication();
             app.UseAuthorization();

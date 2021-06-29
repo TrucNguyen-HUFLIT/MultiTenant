@@ -65,28 +65,6 @@ namespace MultiTenant.Login
                     RequirePkce = true,
                     AllowPlainTextPkce = false
                 },
-                new Client
-                {
-                    ClientId = "tenant1",
-                    ClientName = "Tenant 1",
-                    ClientSecrets = new List<Secret> {new Secret("SuperSecretPassword".Sha256())}, // change me!
-                    
-                    AllowedGrantTypes = GrantTypes.Code,
-                    RedirectUris = new List<string> {"https://tenant1.localhost:5002/signin-oidc"},
-                    FrontChannelLogoutUri = "https://tenant1.localhost:5002/signout-oidc",
-                    PostLogoutRedirectUris = new List<string>  { "https://tenant1.localhost:5002/signout-callback-oidc" },
-
-                    AllowedScopes = new List<string>
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        //IdentityServerConstants.StandardScopes.Email,
-                        "role",
-                    },
-
-                    RequirePkce = true,
-                    AllowPlainTextPkce = false
-                },
             };
         }
     }
@@ -176,18 +154,6 @@ namespace MultiTenant.Login
                         new Claim(JwtClaimTypes.Email, "minhtam@gmail.com"),
                         new Claim(JwtClaimTypes.Role, "customer"),
                         new Claim(JwtClaimTypes.ClientId, "tenant")
-                    }
-                },
-                new TestUser
-                {
-                    SubjectId = "4",
-                    Username = "tri",
-                    Password = "Password123!",
-                    Claims = new List<Claim>
-                    {
-                        new Claim(JwtClaimTypes.Email, "tri@gmail.com"),
-                        new Claim(JwtClaimTypes.Role, "customer"),
-                        new Claim(JwtClaimTypes.ClientId, "tenant1")
                     }
                 },
             };

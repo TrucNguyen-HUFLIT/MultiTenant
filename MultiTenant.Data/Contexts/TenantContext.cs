@@ -1,28 +1,38 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using MultiTenant.Data.EntitiesTenant.Tenants;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MultiTenant.Data.Contexts
 {
     public class TenantContext :DbContext
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public DbSet<Account> Accounts { get; set; }
         public TenantContext()
         {
 
         }
-        public TenantContext(DbContextOptions<TenantContext> options) : base(options)
-        {
 
+        public TenantContext(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor; //chỗ này n chưa được truyền vào nè a.
         }
+       
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            string host_dbName = "";
+            try
+            {
+                host_dbName = _httpContextAccessor.HttpContext.Request.Host.Value;
+            }
+            
+            catch(Exception ex)
+            {
+            }
+
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseSqlServer(@"Server=HUYDESKTOP;Database=Tenant;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer($@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database={host_dbName};Trusted_Connection=True;");
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
