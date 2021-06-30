@@ -2,11 +2,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MultiTenant.Data.Contexts;
-using MultiTenant.MiddlewareHelpers;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,14 +30,16 @@ namespace MultiTenant
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
-            
             services.AddControllersWithViews();
-            services.AddScoped<DbContext, TenantContext>();
-            services.AddDbContext<MultiTenantContext>();
-            services.AddDbContext<TenantContext>();
 
+            //services.AddScoped<DbContext, TenantContext>();
             services.AddSingleton<SubdomainRouteTransformer>();
+
+            services.AddDbContext<MultiTenantContext>();
+
+            services.AddDbContext<TenantContext>();
+            //get host name
+            services.AddHttpContextAccessor();
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
@@ -85,7 +85,7 @@ namespace MultiTenant
 
             app.UseRouting();
 
-            app.UseHttpContextAccessor();
+            //app.UseHttpContextAccessor();
 
             app.UseAuthentication();
             app.UseAuthorization();

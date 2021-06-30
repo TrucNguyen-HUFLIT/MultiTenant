@@ -22,6 +22,7 @@ namespace MultiTenant.Controllers
 
         public IActionResult Index()
         {
+            var model = _tenantContext.Accounts.FindAsync(1);
             var user = User;
             return View();
         }

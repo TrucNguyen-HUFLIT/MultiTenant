@@ -14,25 +14,21 @@ namespace MultiTenant.Data.Contexts
 
         }
 
-        public TenantContext(IHttpContextAccessor httpContextAccessor)
+        public TenantContext(IHttpContextAccessor httpContextAccessor) 
         {
-            _httpContextAccessor = httpContextAccessor; //chỗ này n chưa được truyền vào nè a.
+            _httpContextAccessor = httpContextAccessor;
         }
        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string host_dbName = "";
-            try
-            {
-                host_dbName = _httpContextAccessor.HttpContext.Request.Host.Value;
-            }
-            
-            catch(Exception ex)
-            {
-            }
+            //get host name
+            string host = _httpContextAccessor.HttpContext.Request.Host.Value;
+            string[] dbName = host.Split(".");
+            if (dbName.Length == 1)
+                dbName[0] = "Tenant";
 
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseSqlServer($@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database={host_dbName};Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer($@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database={dbName[0]};Trusted_Connection=True;");
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
