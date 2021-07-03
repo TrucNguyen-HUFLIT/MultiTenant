@@ -9,6 +9,9 @@ using MultiTenant.Application.Services.User;
 using MultiTenant.Application.Validators.User;
 using ReflectionIT.Mvc.Paging;
 using System.IdentityModel.Tokens.Jwt;
+using MultiTenant.Application.Services.Tenants;
+using MultiTenant.Data.Contexts;
+using System.Linq;
 
 namespace MultiTenant.WebApp
 {
@@ -31,7 +34,16 @@ namespace MultiTenant.WebApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<Data.Contexts.MultiTenantContext>(options => options.UseSqlServer(@"Server=HUYDESKTOP;Database=MultiTenant;Trusted_Connection=True;"));
+            services.AddDbContext<MultiTenantContext>(options => options.UseSqlServer(@"Server=HUYDESKTOP;Database=MultiTenant;Trusted_Connection=True;"));
+
+        //    services.AddDbContext<TenantContext>((provider, option) =>
+        //    {
+        //        var context = provider.GetRequiredService<MultiTenantContext>();
+        //        var tenantId= context.Accounts.Where(x=>x.UserName == "huy").Select(x=>x.TenantId).FirstOrDefault();
+        //        var tenantName = context.Tenants.Where(x => x.TenantId == tenantId).Select(x => x.TenantName).FirstOrDefault();
+
+        //        option.UseSqlServer($@"Server=HUYDESKTOP;Database={tenantName};Trusted_Connection=True;");
+        //   });
 
             services.AddPaging(options =>
             {
@@ -56,6 +68,7 @@ namespace MultiTenant.WebApp
             services.AddScoped<ModelStateAjaxFilter>();
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITenantService, TenantService>();
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication(options =>

@@ -6,8 +6,7 @@ namespace MultiTenant.Data.EntitiesTenant.MultiTenants
     {
         public int TenantId { get; set; }
         public string SubDomain { get; set; } 
-        public string DataConnectionString { get; set; }
-        public string TenantName { get; set; } 
+        public string DbName { get; set; }
         public string Favicon { get; set; }
 
 

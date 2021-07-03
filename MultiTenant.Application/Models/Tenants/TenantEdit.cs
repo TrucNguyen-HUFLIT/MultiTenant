@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace MultiTenant.Application.Models.Tenants
 {
-    class TenantEdit
+    public  class TenantEdit
     {
         [Display(Name ="ID Tenant")]
         public int TenantId { get; set; }
         public string SubDomain { get; set; } //localhost
-        public string DataConnectionString { get; set; }
-        public string TenantName { get; set; }
+        public string DbName { get; set; }
         public string Favicon { get; set; }
 
 

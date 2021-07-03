@@ -5,6 +5,7 @@
 }
 @model ReflectionIT.Mvc.Paging.PagingList<MultiTenant.Data.EntitiesTenant.MultiTenants.Tenant>
 @using ReflectionIT.Mvc.Paging
+
 <div class="app-main__inner">
     <div class="app-page-title">
         <div class="page-title-wrapper">
@@ -48,14 +49,12 @@
                                 <th class="border-top-0">
                                     @Html.DisplayNameFor(model => model.TenantId)
                                 </th>
-                                <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.TenantName)
-                                </th>
+                             
                                 <th class="border-top-0">
                                     @Html.DisplayNameFor(model => model.SubDomain)
                                 </th>
                                 <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.DataConnectionString)
+                                    @Html.DisplayNameFor(model => model.DbName)
                                 </th>
                                 <th class="border-top-0">
                                     @Html.DisplayNameFor(model => model.Favicon)
@@ -70,35 +69,30 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.TenantId)
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TenantName)
-                                    </td>
+                              
                                     <td>
                                         @Html.DisplayFor(modelItem => item.SubDomain)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.DataConnectionString)
+                                        @Html.DisplayFor(modelItem => item.DbName)
                                     </td>
                                     <td>
                                         <img src="@item.Favicon" width="120" class="rounded-circle" />
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.TenantId)
-                                    </td>
-                                    <td>
-                                        <a asp-action="Edit" asp-route-id="@item.TenantId" asp-controller="AccountManagement" class="btn btn-outline-warning">Edit</a>
+                                        <a asp-action="Edit" asp-route-id="@item.TenantId" asp-controller="TenantManagement" class="btn btn-outline-warning">Edit</a>
                                     </td>
                                 </tr>
                             }
                             @*<tr>
-                                    <td colspan="2">
-                                        @{ int pages = ((int)ViewData["Pages"]); int p = ((int)ViewData["Page"]);}
-                                        <form asp-action="Index" method="get">
-                                            <input type="submit" value="Go to" /> page <input type="number" max="@pages" min="1" name="page" value="@p" style="width: 45px" /> of @pages
-                                        </form>
-                                    </td>
-                                    <td colspan="8" class="text-center">Tổng số: @Model.ListAccount.Count()</td>
-                                </tr>*@
+                    <td colspan="2">
+                        @{ int pages = ((int)ViewData["Pages"]); int p = ((int)ViewData["Page"]);}
+                        <form asp-action="Index" method="get">
+                            <input type="submit" value="Go to" /> page <input type="number" max="@pages" min="1" name="page" value="@p" style="width: 45px" /> of @pages
+                        </form>
+                    </td>
+                    <td colspan="8" class="text-center">Tổng số: @Model.ListAccount.Count()</td>
+                </tr>*@
                         </tbody>
                     </table>
                 </div>

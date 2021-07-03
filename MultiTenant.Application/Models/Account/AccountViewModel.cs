@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MultiTenant.Application.Models.Account
 {
-    public  class AccountViewModel
+    public class AccountViewModel
     {
         public AccountEdit AccountEdit { get; set; }
         public AccountRequest AccountRequest { get; set; }

@@ -23,6 +23,7 @@ namespace MultiTenant.WebApp.Controllers
             ViewBag.ActiveAccount = "active";
             return View(await _accountservice.GetListUsersAsync(filter, page, sortEx));
         }
+
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
