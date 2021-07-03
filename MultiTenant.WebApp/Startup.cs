@@ -10,8 +10,6 @@ using MultiTenant.Application.Validators.User;
 using ReflectionIT.Mvc.Paging;
 using System.IdentityModel.Tokens.Jwt;
 using MultiTenant.Application.Services.Tenants;
-using MultiTenant.Data.Contexts;
-using System.Linq;
 
 namespace MultiTenant.WebApp
 {

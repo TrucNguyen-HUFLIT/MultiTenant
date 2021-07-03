@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using MultiTenant.Data.EntitiesTenant.Tenants;
-using System;
 
 namespace MultiTenant.Data.Contexts
 {
@@ -13,12 +12,10 @@ namespace MultiTenant.Data.Contexts
         {
 
         }
-
         public TenantContext(IHttpContextAccessor httpContextAccessor) 
         {
             _httpContextAccessor = httpContextAccessor;
         }
-       
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //get host name
@@ -29,8 +26,6 @@ namespace MultiTenant.Data.Contexts
 
             if (!optionsBuilder.IsConfigured)
                 optionsBuilder.UseSqlServer($@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database={dbName[0]};Trusted_Connection=True;");
-
-
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,7 +36,6 @@ namespace MultiTenant.Data.Contexts
                entity.Property(p => p.Name).IsRequired();
 
            });
-          
         }
     }
 }
