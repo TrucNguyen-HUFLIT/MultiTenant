@@ -81,14 +81,14 @@
                             </div>
                             <input asp-for="AccountEdit.Avatar" hidden>
                             <div class="form-group">
-                                <label asp-for="AccountEdit.Name" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger"> *</span>
+                                <label asp-for="AccountEdit.Name" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
                                 <div class="col-md-12">
                                     <input asp-for="AccountEdit.Name" class="form-control ps-0 form-control-line label-color" onchange="ShowBtnSave_PW()" />
                                     <span asp-validation-for="AccountEdit.Name" id="Err_Name" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label asp-for="AccountEdit.Email" class="control-label col-md-12 mb-0"></label>
+                                <label asp-for="AccountEdit.Email" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
                                 <div class="col-md-12">
                                     <input asp-for="AccountEdit.Email" class="form-control ps-0 form-control-line label-color " />
                                     <span asp-validation-for="AccountEdit.Name" id="Err_Email" class="text-danger"></span>
@@ -118,7 +118,7 @@
                                             @foreach (var item in Model.ListTenant)
                                             {
 
-                                                <option value="@item.TenantId">@item.TenantName</option>
+                                                <option value="@item.TenantId">@item.DbName</option>
                                             }
                                         </select>
                                     </div>

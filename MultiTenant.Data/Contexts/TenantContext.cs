@@ -30,16 +30,17 @@ namespace MultiTenant.Data.Contexts
             if (!optionsBuilder.IsConfigured)
                 optionsBuilder.UseSqlServer($@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database={dbName[0]};Trusted_Connection=True;");
 
+
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Account>(entity =>
-            {
-                entity.HasKey(e => e.IdAcc);
-                entity.Property(p => p.Email).IsRequired();
-                entity.Property(p => p.Name).IsRequired();
+           modelBuilder.Entity<Account>(entity =>
+           {
+               entity.HasKey(e => e.IdAcc);
+               entity.Property(p => p.Email).IsRequired();
+               entity.Property(p => p.Name).IsRequired();
 
-            });
+           });
           
         }
     }

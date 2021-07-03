@@ -9,6 +9,9 @@ using MultiTenant.Application.Services.User;
 using MultiTenant.Application.Validators.User;
 using ReflectionIT.Mvc.Paging;
 using System.IdentityModel.Tokens.Jwt;
+using MultiTenant.Application.Services.Tenants;
+using MultiTenant.Data.Contexts;
+using System.Linq;
 
 namespace MultiTenant.WebApp
 {
@@ -30,8 +33,8 @@ namespace MultiTenant.WebApp
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
             services.AddDbContext<Data.Contexts.MultiTenantContext>(options => options.UseSqlServer(@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database=MultiTenant;Trusted_Connection=True;"));
+
 
             services.AddPaging(options =>
             {
@@ -56,6 +59,7 @@ namespace MultiTenant.WebApp
             services.AddScoped<ModelStateAjaxFilter>();
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITenantService, TenantService>();
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication(options =>

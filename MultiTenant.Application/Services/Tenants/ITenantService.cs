@@ -1,4 +1,5 @@
 ﻿
+using MultiTenant.Application.Models.Tenants;
 using MultiTenant.Data.EntitiesTenant.MultiTenants;
 using ReflectionIT.Mvc.Paging;
 using System;
@@ -11,6 +12,8 @@ namespace MultiTenant.Application.Services.Tenants
 {
     public interface ITenantService
     {
-        Task<PagingList<Tenant>> GetListUsersAsync(string filter, int page, string sortEx = "TenantName");
+        Task<PagingList<Tenant>> GetListTenantsAsync(string filter, int page, string sortEx = "TenantId");
+        Task<TenantEdit> GetTenantEditByIdAsync(int id);
+
     }
 }
