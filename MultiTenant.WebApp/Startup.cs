@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MultiTenant.WebApp.Filter;
-using MultiTenant.Application.Services.User;
-using MultiTenant.Application.Validators.User;
+using MultiTenant.Application.Validators.MultiTenants.User;
 using ReflectionIT.Mvc.Paging;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -33,7 +32,7 @@ namespace MultiTenant.WebApp
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddDbContext<Data.Contexts.MultiTenantContext>(options => options.UseSqlServer(@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database=MultiTenant;Trusted_Connection=True;"));
+            services.AddDbContext<Data.Contexts.MultiTenantContext>();
 
 
             services.AddPaging(options =>

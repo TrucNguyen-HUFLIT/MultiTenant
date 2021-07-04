@@ -1,13 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MultiTenant.Application.Services.Tenants;
 using MultiTenant.Data.Contexts;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MultiTenant
 {
@@ -33,6 +30,7 @@ namespace MultiTenant
             services.AddControllersWithViews();
 
             //services.AddSingleton<SubdomainRouteTransformer>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddDbContext<MultiTenantContext>();
             services.AddDbContext<TenantContext>();
@@ -90,7 +88,7 @@ namespace MultiTenant
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=AccountManagement}/{action=Index}/{id?}");
             });
 
             //app.UseEndpoints(endpoints =>

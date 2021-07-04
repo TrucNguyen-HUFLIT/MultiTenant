@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MultiTenant.Application.Exceptions;
 using MultiTenant.Application.Models.MultiTenants.Account;
-using MultiTenant.Application.Services.MultiTenants.User;
 using MultiTenant.Data.Contexts;
 using MultiTenant.Data.EntitiesTenant.MultiTenants;
 using ReflectionIT.Mvc.Paging;
@@ -13,7 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MultiTenant.Application.Services.User
+namespace MultiTenant.Application.Services.MultiTenants.User
 {
     public class UserService : IUserService
     {
@@ -116,7 +115,7 @@ namespace MultiTenant.Application.Services.User
                 qry = qry.Where(p => p.Email.StartsWith(filter));
             }
 
-            var model = await PagingList.CreateAsync(qry, 10, page, sortEx, "FirstName");
+            var model = await PagingList.CreateAsync(qry, 10, page, sortEx, "AccId");
 
             model.RouteValue = new RouteValueDictionary {
             { "filter", filter}

@@ -68,9 +68,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
             }
 
             var model = await PagingList.CreateAsync(qry, 10, page, sortEx, "TenantId");
-            model.RouteValue = new RouteValueDictionary {
-            { "filter", filter}
-            };
+            model.RouteValue = new RouteValueDictionary{ { "filter", filter}   };
 
             return model;
         }
