@@ -1,17 +1,14 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
-using MultiTenant.Application.Models.Tenants;
+using MultiTenant.Application.Models.MultiTenant.Tenants;
 using MultiTenant.Data.Contexts;
 using MultiTenant.Data.EntitiesTenant.MultiTenants;
 using ReflectionIT.Mvc.Paging;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace MultiTenant.Application.Services.Tenants
+namespace MultiTenant.Application.Services.MultiTenants.Tenants
 {
     public class TenantService : ITenantService
     {
@@ -58,6 +55,11 @@ namespace MultiTenant.Application.Services.Tenants
                 return tenantEdit;
             }
             return null;
+        }
+
+        Task<TenantEdit> ITenantService.GetTenantEditByIdAsync(int id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

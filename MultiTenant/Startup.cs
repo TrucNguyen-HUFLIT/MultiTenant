@@ -32,17 +32,15 @@ namespace MultiTenant
            
             services.AddControllersWithViews();
 
-            //services.AddScoped<DbContext, TenantContext>();
             //services.AddSingleton<SubdomainRouteTransformer>();
 
             services.AddDbContext<MultiTenantContext>();
-
             services.AddDbContext<TenantContext>();
+
             //get host name
             services.AddHttpContextAccessor();
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = "Cookies";
@@ -102,21 +100,21 @@ namespace MultiTenant
         }
     }
 
-    public class SubdomainRouteTransformer : DynamicRouteValueTransformer
-    {
-        public override async ValueTask<RouteValueDictionary> TransformAsync(HttpContext httpContext, RouteValueDictionary values)
-        {
-            var subDomain = httpContext.Request.Host.Host.Split(".").First(); //tenant1.localhost --> tenant1
+    //public class SubdomainRouteTransformer : DynamicRouteValueTransformer
+    //{
+    //    public override async ValueTask<RouteValueDictionary> TransformAsync(HttpContext httpContext, RouteValueDictionary values)
+    //    {
+    //        var subDomain = httpContext.Request.Host.Host.Split(".").First(); //tenant1.localhost --> tenant1
 
-            if (!string.IsNullOrEmpty(subDomain))
-            {
-                if (subDomain == "localhost")
-                {
-                    return values;
-                }
-                values["controller"] = subDomain;
-            }
-            return values;
-        }
-    }
+    //        if (!string.IsNullOrEmpty(subDomain))
+    //        {
+    //            if (subDomain == "localhost")
+    //            {
+    //                return values;
+    //            }
+    //            values["controller"] = subDomain;
+    //        }
+    //        return values;
+    //    }
+    //}
 }
