@@ -2,7 +2,7 @@
 @{ ViewData["Title"] = "Edit Tenant";
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
-@model MultiTenant.Application.Models.Tenants.TenantViewModel
+@model MultiTenant.Application.Models.MultiTenants.Tenants.TenantViewModel
     <!-- ============================================================== -->
 <!-- Bread crumb and right sidebar toggle -->
 <!-- ============================================================== -->
@@ -32,23 +32,35 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="card-body">
-                    <form asp-action="Edit" enctype="multipart/form-data">
+                    <form asp-action="Edit" id="edit-tenant-form" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <label asp-for="TenantEdit.TenantId" class="control-label"></label>
                             <input asp-for="TenantEdit.TenantId" class="form-control" readonly />
                             <span asp-validation-for="TenantEdit.TenantId" class="text-danger"></span>
                         </div>
-                    
+
                         <div class="form-group">
-                            <label asp-for="TenantEdit.DbName" class="control-label"></label>
+                            <label asp-for="TenantEdit.DbName" class="control-label"></label><span class="text-danger"> *</span>
                             <input asp-for="TenantEdit.DbName" class="form-control" />
-                            <span asp-validation-for="TenantEdit.DbName" class="text-danger"></span>
+                            <span asp-validation-for="TenantEdit.DbName" class="text-danger" id="Err_Name"></span>
+                            <span class="text-danger" style="font-size:20px;" id="dataAlready"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="TenantEdit.SubDomain" class="control-label"></label>
-                            <input asp-for="TenantEdit.SubDomain" class="form-control" />
+                            <input asp-for="TenantEdit.SubDomain" class="form-control"  readonly/>
                             <span asp-validation-for="TenantEdit.SubDomain" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TenantEdit.UploadFavicon" class="control-label"></label>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="TenantEdit.UploadFavicon" accept="image/*" />
+                            @if (Model.TenantEdit != null)
+                            {
+                                <img src="@Model.TenantEdit.Favicon" asp-append-version="true" width="120" height="90" />
+                            }
+                            <span asp-validation-for="TenantEdit.UploadFavicon" class="text-danger" hidden></span>
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Save" class="btn btn-primary" />

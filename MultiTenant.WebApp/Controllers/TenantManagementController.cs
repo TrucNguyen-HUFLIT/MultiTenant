@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MultiTenant.Application.Models.Tenants;
-using MultiTenant.Application.Services.Tenants;
+using MultiTenant.Application.Models.MultiTenants.Tenants;
+using MultiTenant.Application.Services.MultiTenants.Tenants;
+using MultiTenant.WebApp.Filter;
 using System.Threading.Tasks;
 
 namespace MultiTenant.WebApp.Controllers
@@ -31,6 +32,14 @@ namespace MultiTenant.WebApp.Controllers
                 TenantEdit = await _tenantservice.GetTenantEditByIdAsync(id),
             };
             return View(model);
+        }
+        [ServiceFilter(typeof(ModelStateAjaxFilter))]
+        [TypeFilter(typeof(ExceptionFilter))]
+        [HttpPost]
+        public async Task<IActionResult> Edit(TenantEdit tenantEdit)
+        {
+            await _tenantservice.EditAsync(tenantEdit);
+            return Ok(tenantEdit.TenantId);
         }
     }
 }

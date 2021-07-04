@@ -1,5 +1,7 @@
 ﻿
-namespace MultiTenant.Application.Models.MultiTenant.Tenants
+using MultiTenant.Application.Models.MultiTenants.Tenants;
+
+namespace MultiTenant.Application.Models.MultiTenants.Tenants
 {
     public class TenantViewModel
     {

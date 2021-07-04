@@ -40,6 +40,48 @@
     });
 });
 
+$("#edit-tenant-form").submit(function (e) {
+    e.preventDefault();
+
+    let formData = new FormData($(this)[0]);
+    $.ajax({
+        url: '/tenantmanagement/edit',
+        type: "post",
+        async: false,
+        cache: false,
+        contentType: false,
+        enctype: 'multipart/form-data',
+        processData: false,
+        data: formData,
+        success: function (data) {
+            console.log(data);
+            window.location.replace("/tenantmanagement/edit/" + data);
+        },
+        error: function (data) {
+            console.log(data);
+            var error = data.responseText;
+            if (error == " Database is already ") {
+                document.getElementById("dataAlready").innerHTML = data.responseText;
+                return;
+            }
+            try {
+                var objectValidation = data.responseJSON;
+
+                if (objectValidation["tenantEdit.DbName"] != undefined)
+                    document.getElementById("Err_Name").innerHTML = objectValidation["tenantEdit.DbName"];
+                else
+                    document.getElementById("Err_Name").innerHTML = "";
+
+            }
+            catch {
+                document.getElementById("Err_Name").innerHTML = "";
+            }
+        },
+
+    });
+});
+
+
 $(document).ready(function () {
 });
 

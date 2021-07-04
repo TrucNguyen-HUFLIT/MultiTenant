@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MultiTenant.Application.Models.Tenants;
+using MultiTenant.Application.Models.MultiTenants.Tenants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
