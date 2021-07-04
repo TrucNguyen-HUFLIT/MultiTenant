@@ -6,9 +6,12 @@ using MultiTenant.Application.Models.MultiTenants.Tenants;
 using MultiTenant.Data.Contexts;
 using MultiTenant.Data.EntitiesTenant.MultiTenants;
 using ReflectionIT.Mvc.Paging;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace MultiTenant.Application.Services.MultiTenants.Tenants
 {
@@ -59,20 +62,43 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
             return true;
         }
 
-        public async Task<PagingList<Tenant>> GetListTenantsAsync(string filter, int page, string sortEx = "TenantId")
+        public async Task<X.PagedList.IPagedList<TenantRequest>> GetListTenantRequestAsync(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            var qry = _context.Tenants.AsNoTracking().OrderBy(p => p.DbName).AsQueryable();
-            if (!string.IsNullOrWhiteSpace(filter))
+            var model = new List<TenantRequest>();
+            var listTenant = await _context.Tenants.ToListAsync();
+
+            if (listTenant != null)
             {
-                qry = qry.Where(p => p.DbName.StartsWith(filter));
+
+                foreach (var tenant in listTenant)
+                {
+                    var accountRequest = new TenantRequest
+                    {
+                        DbName = tenant.DbName,
+                        SubDomain = tenant.SubDomain,
+                        Favicon = tenant.Favicon,
+                        TenantId = tenant.TenantId
+                        
+                    };
+                    model.Add(accountRequest);
+                }
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    model = model.Where(s => s.DbName.Contains(searchString)
+                                            || s.DbName.Contains(searchString)).ToList();
+                }
+                model = sortOrder switch
+                {
+                    "name_desc" => model.OrderByDescending(x => x.DbName).ToList(),
+                    "name" => model.OrderBy(x => x.DbName).ToList(),
+                    "id_desc" => model.OrderByDescending(x => x.TenantId).ToList(),
+                    _ => model.OrderBy(x => x.TenantId).ToList(),
+                };
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+                return model.ToPagedList(pageNumber, pageSize);
             }
-
-            var model = await PagingList.CreateAsync(qry, 10, page, sortEx, "TenantId");
-            model.RouteValue = new RouteValueDictionary {
-            { "filter", filter}
-            };
-
-            return model;
+            return null;
         }
 
         public async Task<TenantEdit> GetTenantEditByIdAsync(int id)

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace MultiTenant.Application.Services.User
 {
@@ -107,22 +108,44 @@ namespace MultiTenant.Application.Services.User
         }
 
 
-        public async Task<PagingList<Account>> GetListUsersAsync(string filter, int page, string sortEx = "AccId")
+        public async Task<X.PagedList.IPagedList<AccountRequest>> GetListAccountRequestAsync(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            var model = new List<AccountRequest>();
+            var listAccount = await _context.Accounts.ToListAsync();
 
-            var qry = _context.Accounts.AsNoTracking().OrderBy(p => p.Email).AsQueryable();
-            if (!string.IsNullOrWhiteSpace(filter))
+            if (listAccount != null)
             {
-                qry = qry.Where(p => p.Email.StartsWith(filter));
+
+                foreach (var account in listAccount)
+                {
+                    var accountRequest = new AccountRequest
+                    {
+                        AccId = account.AccId,
+                        Email = account.Email,
+                        Name = account.Name,
+                        Avatar = account.Avatar,
+                        Role = account.Role,
+                        TenantId=account.TenantId
+                    };
+                    model.Add(accountRequest);
+                }
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    model = model.Where(s => s.Name.Contains(searchString)
+                                            || s.Email.Contains(searchString)).ToList();
+                }
+                model = sortOrder switch
+                {
+                    "name_desc" => model.OrderByDescending(x => x.Name).ToList(),
+                    "name" => model.OrderBy(x => x.Name).ToList(),
+                    "id_desc" => model.OrderByDescending(x => x.AccId).ToList(),
+                    _ => model.OrderBy(x => x.AccId).ToList(),
+                };
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+                return model.ToPagedList(pageNumber, pageSize);
             }
-
-            var model = await PagingList.CreateAsync(qry, 10, page, sortEx, "FirstName");
-
-            model.RouteValue = new RouteValueDictionary {
-            { "filter", filter}
-            };
-
-            return model;
+            return null;
         }
     }
 }

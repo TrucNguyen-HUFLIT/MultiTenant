@@ -6,6 +6,7 @@ using MultiTenant.Application.Services.User;
 using System.Threading.Tasks;
 using MultiTenant.Application.Services.MultiTenants.User;
 using MultiTenant.Application.Models.MultiTenants.Account;
+using System;
 
 namespace MultiTenant.WebApp.Controllers
 {
@@ -18,11 +19,23 @@ namespace MultiTenant.WebApp.Controllers
         {
             _accountservice = accountService;
         }
-        public async Task<IActionResult> Index(string filter, int page, string sortEx = "AccId")
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            var user = User;
             ViewBag.ActiveAccount = "active";
-            return View(await _accountservice.GetListUsersAsync(filter, page, sortEx));
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) || sortOrder.Equals("name") ? "name_desc" : "name";
+           
+            ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+
+            if (searchString != null) page = 1;
+            else searchString = currentFilter;
+            ViewBag.CurrentFilter = searchString;
+
+            var model = new AccountViewModel
+            {
+                ListAccountRequest = await _accountservice.GetListAccountRequestAsync(sortOrder, currentFilter, searchString, page)
+            };
+            return View(model);
         }
 
         [HttpGet]

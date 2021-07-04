@@ -3,9 +3,9 @@
     ViewData["Title"] = "Tenant Mgmt";
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
-@model ReflectionIT.Mvc.Paging.PagingList<MultiTenant.Data.EntitiesTenant.MultiTenants.Tenant>
-@using ReflectionIT.Mvc.Paging
-
+@model MultiTenant.Application.Models.MultiTenants.Tenants.TenantViewModel
+@using X.PagedList.Mvc.Core;
+@using Microsoft.AspNetCore.Mvc;
 <div class="app-main__inner">
     <div class="app-page-title">
         <div class="page-title-wrapper">
@@ -32,13 +32,11 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="card-body">
-                    <form method="get" class="form-inline" style="display:block; float:right">
-                        <input name="filter" class="form-control" placeholder="Search..."
-                               value="@Model.RouteValue["Filter"]" />
-                        <button type="submit" class="btn btn-smn btn-primary">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
-                        </button>
-                    </form>
+                    @using (Html.BeginForm("Index", "TenantManagement", FormMethod.Get, new { @style = "float: right; width: 40%" }))
+                    {
+                        <input type="text" id="searchString" name="searchString" placeholder="Find by name tenant">
+                        <input type="submit" value="Search" class="btn btn-outline-info" style="margin-bottom:5px" />
+                    }
                     <br />
                     <br />
                     <br />
@@ -47,29 +45,29 @@
                         <thead>
                             <tr class="table-success align-middle text-center">
                                 <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.TenantId)
+                                    @Html.ActionLink("Tenant ID", "Index", new { sortOrder = ViewBag.IDSortParm })
                                 </th>
-                             
+
                                 <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.SubDomain)
-                                </th>
-                                <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.DbName)
+                                    @Html.DisplayNameFor(model => model.TenantRequest.SubDomain)
                                 </th>
                                 <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.Favicon)
+                                    @Html.ActionLink("Database Name", "Index", new { sortOrder = ViewBag.DbNameSortParm })
+                                </th>
+                                <th class="border-top-0">
+                                    @Html.DisplayNameFor(model => model.TenantRequest.Favicon)
                                 </th>
                                 <th class="border-top-0"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
+                            @foreach (var item in Model.ListTenantRequest)
                             {
                                 <tr class="align-middle text-center">
                                     <td>
                                         @Html.DisplayFor(modelItem => item.TenantId)
                                     </td>
-                              
+
                                     <td>
                                         @Html.DisplayFor(modelItem => item.SubDomain)
                                     </td>
@@ -84,17 +82,13 @@
                                     </td>
                                 </tr>
                             }
-                            @*<tr>
-                    <td colspan="2">
-                        @{ int pages = ((int)ViewData["Pages"]); int p = ((int)ViewData["Page"]);}
-                        <form asp-action="Index" method="get">
-                            <input type="submit" value="Go to" /> page <input type="number" max="@pages" min="1" name="page" value="@p" style="width: 45px" /> of @pages
-                        </form>
-                    </td>
-                    <td colspan="8" class="text-center">Tổng số: @Model.ListAccount.Count()</td>
-                </tr>*@
+
                         </tbody>
                     </table>
+                    Page @(Model.ListTenantRequest.PageCount < Model.ListTenantRequest.PageNumber ? 0 : Model.ListTenantRequest.PageNumber) of @Model.ListTenantRequest.PageCount
+
+                    @Html.PagedListPager(Model.ListTenantRequest, page => Url.Action("Index",
+                        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
                 </div>
             </div>
         </div>
