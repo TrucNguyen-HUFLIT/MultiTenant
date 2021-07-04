@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace MultiTenant.Application.Models.Tenants
+namespace MultiTenant.Application.Models.MultiTenant.Tenants
+
 {
     public  class TenantEdit
     {

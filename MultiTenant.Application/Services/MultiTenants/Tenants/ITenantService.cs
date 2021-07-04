@@ -1,14 +1,10 @@
 ﻿
-using MultiTenant.Application.Models.Tenants;
+using MultiTenant.Application.Models.MultiTenant.Tenants;
 using MultiTenant.Data.EntitiesTenant.MultiTenants;
 using ReflectionIT.Mvc.Paging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace MultiTenant.Application.Services.Tenants
+namespace MultiTenant.Application.Services.MultiTenants.Tenants
 {
     public interface ITenantService
     {

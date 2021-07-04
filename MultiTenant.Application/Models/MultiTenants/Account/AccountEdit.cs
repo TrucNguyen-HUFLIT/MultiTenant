@@ -1,14 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using MultiTenant.Data.EntitiesTenant.MultiTenants;
-using System;
-using System.Collections.Generic;
+﻿using MultiTenant.Data.EntitiesTenant.MultiTenants;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MultiTenant.Application.Models.Account
+namespace MultiTenant.Application.Models.MultiTenants.Account
 {
     public  class AccountEdit
     {

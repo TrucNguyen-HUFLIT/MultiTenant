@@ -1,0 +1,136 @@
+﻿@using Microsoft.AspNetCore.Http;
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title> @ViewData["Title"]</title>
+    @*<link rel="icon" type="image/jpg" href="~/img/Background/favicon.jpg" />*@
+
+    <link href="~/css/main.css" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet">
+    <link href="~/css/site.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+</head>
+<body>
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+        <div class="app-header header-shadow">
+            <div class="app-header__logo">
+                <div class="logo-src"></div>
+                <div class="header__pane ml-auto">
+                    <div>
+                        <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="app-header__mobile-menu">
+                <div>
+                    <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="app-header__menu">
+                <span>
+                    <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                        <span class="btn-icon-wrapper">
+                            <i class="fa fa-ellipsis-v fa-w-6"></i>
+                        </span>
+                    </button>
+                </span>
+            </div>
+            <div class="app-header__content">
+                <div class="app-header-right">
+                    @*<div class="search-wrapper">
+                            <div class="input-holder">
+                                <input type="text" class="search-input" placeholder="Type to search">
+                                <button class="search-icon"><span></span></button>
+                            </div>
+                            <button class="close"></button>
+                        </div>*@
+                    <div class="dropdown">
+                        <ul class="header-menu nav">
+                            <li class="nav-item">
+                                <a class="nav-link">
+                                    <img class="avt" src="@MultiTenant.Application.Models.Account.StaticAcc.Avatar" />
+                                    @*<img class="avt" src="/img/main/avatar-default-icon.png" />*@
+
+                                </a>
+                            </li>
+                            <li class="btn-group nav-item">
+                                <a id="name" class="nav-link">
+                                    Name
+                                </a>
+                                <a class="nav-link">:</a>
+                            </li>
+                            <li class="btn-group  nav-item">
+                                <a id="role" class="nav-link">
+                                    Email
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="dropdown-content">
+                            <a href="@Url.ActionLink("Index", "Profile")" class="@ViewBag.ActiveProfile">Profile</a>
+                            @Html.ActionLink("Logout", "Logout", "Login")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="app-main">
+            <div class="app-sidebar sidebar-shadow margin-menu">
+                <div class="scrollbar-sidebar">
+                    <div class="app-sidebar__inner">
+                        <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+                            <br />
+                            <li class="app-sidebar__heading" style="font-size:20px;">Management</li>
+                            <li class="nav-item">
+                                <a href="@Url.ActionLink("Index", "TenantManagement")" class="nav-link @ViewBag.ActiveTenant" style="font-size:17px;width: 222px;padding:18px">
+                                    <span>Tenant Management</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.ActionLink("Index", "AccountManagement")" class="nav-link @ViewBag.ActiveAccount" style="font-size:17px;width: 222px;padding:18px">
+                                    <span>Account Management</span>
+                                </a>
+                            </li>
+                            <br />
+                            <br />
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <form asp-controller="AccountManagement" asp-action="Logout" method="post">
+                                        <input type="submit" value="Logout" class="btn submit-logout"/>
+                                    </form>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="app-main__outer">
+                @RenderBody()
+            </div>
+
+        </div>
+    </div>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/jquery.min.js"></script>
+
+    <script type="text/javascript" src="~/js/main.js"></script>
+    <script type="text/javascript" src="~/js/site.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    @RenderSection("scripts", false)
+
+</body>
+
+

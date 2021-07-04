@@ -44,7 +44,7 @@ namespace MultiTenant.Login
                     AllowPlainTextPkce = false
                 },
                  new Client
-                {
+                 {
                     ClientId = "tenant",
                     ClientName = "Main Tenant",
                     ClientSecrets = new List<Secret> {new Secret("SuperSecretPassword".Sha256())}, // change me!

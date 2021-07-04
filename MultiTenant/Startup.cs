@@ -1,8 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MultiTenant.Data.Contexts;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MultiTenant
 {
@@ -16,7 +21,7 @@ namespace MultiTenant
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services) 
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -24,20 +29,26 @@ namespace MultiTenant
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+           
             services.AddControllersWithViews();
-            //services.AddDbContext<Data.Contexts.MultiTenantContext>(options => options.UseSqlServer(@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database=MultiTenant;Trusted_Connection=True;"));
+
+            //services.AddSingleton<SubdomainRouteTransformer>();
+
+            services.AddDbContext<MultiTenantContext>();
+            services.AddDbContext<TenantContext>();
+
+            //get host name
+            services.AddHttpContextAccessor();
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-
-
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = "Cookies";
+                options.DefaultSignInScheme = "Cookies";
                 options.DefaultChallengeScheme = "oidc";
             })
                .AddCookie("Cookies")
-               .AddOpenIdConnect("oidc", options =>
+               .AddOpenIdConnect("oidc", "tenant", options =>
                {
                    options.SignInScheme = "Cookies";
                    options.Authority = "https://localhost:5000";
@@ -68,6 +79,7 @@ namespace MultiTenant
             app.UseStaticFiles();
 
             app.UseCookiePolicy();
+            //app.UseCookiePolicy( new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
 
             app.UseRouting();
 
@@ -80,6 +92,29 @@ namespace MultiTenant
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapDynamicControllerRoute<SubdomainRouteTransformer>("{controller=Home}/{action=Index}/{id?}");
+            //});
         }
     }
+
+    //public class SubdomainRouteTransformer : DynamicRouteValueTransformer
+    //{
+    //    public override async ValueTask<RouteValueDictionary> TransformAsync(HttpContext httpContext, RouteValueDictionary values)
+    //    {
+    //        var subDomain = httpContext.Request.Host.Host.Split(".").First(); //tenant1.localhost --> tenant1
+
+    //        if (!string.IsNullOrEmpty(subDomain))
+    //        {
+    //            if (subDomain == "localhost")
+    //            {
+    //                return values;
+    //            }
+    //            values["controller"] = subDomain;
+    //        }
+    //        return values;
+    //    }
+    //}
 }
