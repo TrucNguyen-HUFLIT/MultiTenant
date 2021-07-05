@@ -4,9 +4,12 @@ using MultiTenant.Application.Models.Tenants.Account;
 using MultiTenant.Data.Contexts;
 using MultiTenant.Data.EntitiesTenant.Tenants;
 using ReflectionIT.Mvc.Paging;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace MultiTenant.Application.Services.Tenants
 {
@@ -19,23 +22,6 @@ namespace MultiTenant.Application.Services.Tenants
         {
             _tenantContext = tenantContext;
             _multiTenantContext = multiTenantContext;
-        }
-
-        public async Task<PagingList<Account>> GetListUsersAsync(string filter, int page, string sortEx = "IdAcc")
-        {
-            var qry = _tenantContext.Accounts.AsNoTracking().OrderBy(p => p.Email).AsQueryable();
-            if (!string.IsNullOrWhiteSpace(filter))
-            {
-                qry = qry.Where(p => p.Email.StartsWith(filter));
-            }
-
-            var model = await PagingList.CreateAsync(qry, 10, page, sortEx, "IdAcc");
-
-            model.RouteValue = new RouteValueDictionary {
-            { "filter", filter}
-            };
-
-            return model;
         }
 
         public async Task<bool> EditAsync(AccountRequest accountRequest)
@@ -67,6 +53,43 @@ namespace MultiTenant.Application.Services.Tenants
                     Email = model.Email,
                 };
                 return accountEdit;
+            }
+            return null;
+        }
+
+        public async Task<X.PagedList.IPagedList<AccountRequest>> GetListAccountRequestAsync(string sortOrder, string currentFilter, string searchString, int? page)
+        {
+            var model = new List<AccountRequest>();
+            var listAccount = await _tenantContext.Accounts.ToListAsync();
+
+            if (listAccount != null)
+            {
+                foreach (var account in listAccount)
+                {
+                    var accountRequest = new AccountRequest
+                    {
+                        IdAcc = account.IdAcc,
+                        Email = account.Email,
+                        Name = account.Name,
+                        Age = account.Age,
+                    };
+                    model.Add(accountRequest);
+                }
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    model = model.Where(s => s.Name.Contains(searchString)
+                                            || s.Email.Contains(searchString)).ToList();
+                }
+                model = sortOrder switch
+                {
+                    "name_desc" => model.OrderByDescending(x => x.Name).ToList(),
+                    "name" => model.OrderBy(x => x.Name).ToList(),
+                    "id_desc" => model.OrderByDescending(x => x.IdAcc).ToList(),
+                    _ => model.OrderBy(x => x.IdAcc).ToList(),
+                };
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+                return model.ToPagedList(pageNumber, pageSize);
             }
             return null;
         }
