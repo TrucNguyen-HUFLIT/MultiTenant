@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MultiTenant.Application.Exceptions;
 using MultiTenant.Application.Models.MultiTenants.Tenants;
 using MultiTenant.Data.Contexts;
-using MultiTenant.Data.EntitiesTenant.MultiTenants;
 using ReflectionIT.Mvc.Paging;
 using System;
 using System.Collections.Generic;

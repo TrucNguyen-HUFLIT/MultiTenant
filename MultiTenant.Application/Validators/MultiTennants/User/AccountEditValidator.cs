@@ -1,8 +1,7 @@
 ﻿using FluentValidation;
-
 using MultiTenant.Application.Models.MultiTenants.Account;
 
-namespace MultiTenant.Application.Validators.User
+namespace MultiTenant.Application.Validators.MultiTenants.User
 {
     public  class AccountEditValidator: AbstractValidator<AccountEdit>
     {

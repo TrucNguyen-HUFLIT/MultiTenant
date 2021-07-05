@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MultiTenant.Application.Exceptions;
 using MultiTenant.Application.Models.MultiTenants.Account;
-using MultiTenant.Application.Services.MultiTenants.User;
 using MultiTenant.Data.Contexts;
 using MultiTenant.Data.EntitiesTenant.MultiTenants;
 using ReflectionIT.Mvc.Paging;
@@ -15,7 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
 
-namespace MultiTenant.Application.Services.User
+namespace MultiTenant.Application.Services.MultiTenants.User
 {
     public class UserService : IUserService
     {
@@ -149,7 +148,6 @@ namespace MultiTenant.Application.Services.User
 
             if (listAccount != null)
             {
-
                 foreach (var account in listAccount)
                 {
                     var accountRequest = new AccountRequest
