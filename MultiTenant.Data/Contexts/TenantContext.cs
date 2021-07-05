@@ -12,7 +12,7 @@ namespace MultiTenant.Data.Contexts
         {
 
         }
-        public TenantContext(IHttpContextAccessor httpContextAccessor) 
+        public TenantContext(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }
@@ -25,17 +25,17 @@ namespace MultiTenant.Data.Contexts
                 dbName[0] = "Tenant";
 
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseSqlServer($@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database={dbName[0]};Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer($@"Server=HUYDESKTOP;Database={dbName[0]};Trusted_Connection=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           modelBuilder.Entity<Account>(entity =>
-           {
-               entity.HasKey(e => e.IdAcc);
-               entity.Property(p => p.Email).IsRequired();
-               entity.Property(p => p.Name).IsRequired();
+            modelBuilder.Entity<Account>(entity =>
+            {
+                entity.HasKey(e => e.IdAcc);
+                entity.Property(p => p.Email).IsRequired();
+                entity.Property(p => p.Name).IsRequired();
 
-           });
+            });
         }
     }
 }

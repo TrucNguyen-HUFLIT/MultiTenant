@@ -8,7 +8,7 @@ namespace MultiTenant.Application.Validators.MultiTenants.Tenant
         public TenantEditValidator()
         {
             RuleFor(tenant => tenant.TenantId).NotEmpty();
-            RuleFor(tenant => tenant.SubDomain).NotEmpty();
+            RuleFor(tenant => tenant.URL).NotEmpty();
             RuleFor(tenant => tenant.DbName).NotEmpty();
 
         }

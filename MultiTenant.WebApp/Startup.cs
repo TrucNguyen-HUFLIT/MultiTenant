@@ -1,16 +1,14 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MultiTenant.WebApp.Filter;
-using MultiTenant.Application.Validators.MultiTenants.User;
-using ReflectionIT.Mvc.Paging;
 using System.IdentityModel.Tokens.Jwt;
 
 using MultiTenant.Application.Services.MultiTenants.User;
 using MultiTenant.Application.Services.MultiTenants.Tenants;
+using MultiTenant.Application.Validators.MultiTenants.User;
+using MultiTenant.WebApp.Filter;
 
 namespace MultiTenant.WebApp
 {
@@ -32,14 +30,8 @@ namespace MultiTenant.WebApp
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
             services.AddDbContext<Data.Contexts.MultiTenantContext>();
-
-
-            services.AddPaging(options =>
-            {
-                options.ViewName = "Bootstrap4";
-                options.PageParameterName = "page";
-            });
 
             services.AddMvc(
                 option =>

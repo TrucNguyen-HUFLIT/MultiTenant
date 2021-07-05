@@ -25639,3 +25639,13 @@ a.fc-more {
     margin-bottom: 30px;
     background-size: 100%
 }
+.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 300px;
+}

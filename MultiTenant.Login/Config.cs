@@ -9,15 +9,6 @@ namespace MultiTenant.Login
 {
     internal class Clients
     {
-        private static IdentityResource CustomizeProfile
-        {
-            get
-            {
-                var standardProfile = new IdentityResources.Profile();
-                standardProfile.UserClaims.Add("tenant_id");
-                return standardProfile;
-            }
-        }
         public static IEnumerable<Client> Get()
         {
             return new List<Client> //Tenant
@@ -191,7 +182,7 @@ namespace MultiTenant.Login
                     }
                 },
 
-                new TestUser
+                 new TestUser
                 {
                     SubjectId = "5",
                     Username = "kha",

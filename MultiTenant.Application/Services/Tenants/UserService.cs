@@ -73,12 +73,13 @@ namespace MultiTenant.Application.Services.Tenants
 
         public async Task<string> GetURLFromUser(ClaimsPrincipal user)
         {
-            string tenantId  = user.Claims.Where(x=>x.Type == "tenant_id").FirstOrDefault().Value;
+            string tenantId = user.Claims
+                                .Where(x => x.Type == "tenant_id")
+                                .FirstOrDefault().Value;
             string URL = await _multiTenantContext.Tenants
                                 .Where(x => x.DbName == tenantId)
-                                .Select(x => x.SubDomain)
+                                .Select(x => x.URL)
                                 .FirstOrDefaultAsync();
-            
             return URL;
         }
     }

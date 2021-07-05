@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MultiTenant.Application.Exceptions;
 using MultiTenant.Application.Models.MultiTenants.Tenants;
 using MultiTenant.Data.Contexts;
-using MultiTenant.Data.EntitiesTenant.MultiTenants;
 using ReflectionIT.Mvc.Paging;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace MultiTenant.Application.Services.MultiTenants.Tenants
 {
@@ -37,7 +38,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
             }
 
             model.TenantId = tenantEdit.TenantId;
-            model.SubDomain = tenantEdit.SubDomain;
+            model.URL = tenantEdit.URL;
             model.DbName = tenantEdit.DbName;
 
             string wwwRootPath = hostEnvironment.WebRootPath;
@@ -59,25 +60,50 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
             return true;
         }
 
-        public async Task<PagingList<Tenant>> GetListTenantsAsync(string filter, int page, string sortEx = "TenantId")
+        public async Task<X.PagedList.IPagedList<TenantRequest>> GetListTenantRequestAsync(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            var qry = _context.Tenants.AsNoTracking().OrderBy(p => p.DbName).AsQueryable();
-            if (!string.IsNullOrWhiteSpace(filter))
+            var model = new List<TenantRequest>();
+            var listTenant = await _context.Tenants.ToListAsync();
+
+            if (listTenant != null)
             {
-                qry = qry.Where(p => p.DbName.StartsWith(filter));
+
+                foreach (var tenant in listTenant)
+                {
+                    var accountRequest = new TenantRequest
+                    {
+                        DbName = tenant.DbName,
+                        URL = tenant.URL,
+                        Favicon = tenant.Favicon,
+                        TenantId = tenant.TenantId
+                        
+                    };
+                    model.Add(accountRequest);
+                }
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    model = model.Where(s => s.DbName.Contains(searchString)
+                                            || s.DbName.Contains(searchString)).ToList();
+                }
+                model = sortOrder switch
+                {
+                    "name_desc" => model.OrderByDescending(x => x.DbName).ToList(),
+                    "name" => model.OrderBy(x => x.DbName).ToList(),
+                    "id_desc" => model.OrderByDescending(x => x.TenantId).ToList(),
+                    _ => model.OrderBy(x => x.TenantId).ToList(),
+                };
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+                return model.ToPagedList(pageNumber, pageSize);
             }
-
-            var model = await PagingList.CreateAsync(qry, 10, page, sortEx, "TenantId");
-            model.RouteValue = new RouteValueDictionary{ { "filter", filter}   };
-
-            return model;
+            return null;
         }
 
         public async Task<TenantEdit> GetTenantEditByIdAsync(int id)
         {
             var model = await _context.Tenants
                  .Where(x => x.TenantId == id)
-                 .Select(x => new { x.TenantId, x.DbName, x.SubDomain,x.Favicon })
+                 .Select(x => new { x.TenantId, x.DbName, x.URL,x.Favicon })
                  .FirstOrDefaultAsync();
             if (model != null)
             {
@@ -86,7 +112,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
 
                     TenantId = model.TenantId,
                     DbName=model.DbName,
-                    SubDomain=model.SubDomain,
+                    URL=model.URL,
                     Favicon=model.Favicon
                 };
                 return tenantEdit;
