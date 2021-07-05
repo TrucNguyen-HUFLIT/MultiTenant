@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MultiTenant.WebApp.Filter;
-using MultiTenant.Application.Models;
-using MultiTenant.Application.Services.User;
 using System.Threading.Tasks;
 using MultiTenant.Application.Services.MultiTenants.User;
 using MultiTenant.Application.Models.MultiTenants.Account;
@@ -33,7 +31,6 @@ namespace MultiTenant.WebApp.Controllers
             {
                 ListTenant = _accountservice.GetListTenant(),
                 AccountEdit = await _accountservice.GetAccountEditByIdAsync(id)
-
             };
             return View(model);
         }

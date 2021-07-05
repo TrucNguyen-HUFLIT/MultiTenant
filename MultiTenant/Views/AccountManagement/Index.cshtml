@@ -1,13 +1,9 @@
-﻿
-
-@{
+﻿@{
     ViewData["Title"] = "Account Mgmt";
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
-@model ReflectionIT.Mvc.Paging.PagingList<MultiTenant.Data.EntitiesTenant.MultiTenants.Account>
+@model ReflectionIT.Mvc.Paging.PagingList<MultiTenant.Data.EntitiesTenant.Tenants.Account>
 @using ReflectionIT.Mvc.Paging
-
-
 
 <div class="app-main__inner">
     <div class="app-page-title">
@@ -35,6 +31,7 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="card-body">
+                    
                     <form method="get" class="form-inline" style="display:block; float:right">
                         <input name="filter" class="form-control" placeholder="Search..."
                                value="@Model.RouteValue["Filter"]" />
@@ -42,15 +39,21 @@
                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
                         </button>
                     </form>
-                    <br />
-                    <br />
-                    <br />
 
+                    @*<form method="post" asp-action="UrlSubdomain" class="form-inline" style="display:block; float:right">
+                        <input name="subdomain" class="form-control" placeholder="Search..."/>
+                        <button type="submit" class="btn btn-smn btn-primary">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+                        </button>
+                    </form>*@
+                    <br />
+                    <br />
+                    <br />
                     <table class="table table-hover table-sm" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr class="table-success align-middle text-center">
                                 <th class="border-top-0">
-                                    ID
+                                    @Html.DisplayNameFor(model => model.IdAcc)
                                 </th>
                                 <th class="border-top-0">
                                     @Html.DisplayNameFor(model => model.Name)
@@ -59,23 +62,18 @@
                                     @Html.DisplayNameFor(model => model.Email)
                                 </th>
                                 <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.Role)
+                                    @Html.DisplayNameFor(model => model.Age)
                                 </th>
-                                <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.Avatar)
-                                </th>
-                                <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.TenantId)
-                                </th>
-                                <th class="border-top-0"></th>
+                                <th></th>
                             </tr>
                         </thead>
+
                         <tbody>
                             @foreach (var item in Model)
                             {
                                 <tr class="align-middle text-center">
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.AccId)
+                                        @Html.DisplayFor(modelItem => item.IdAcc)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Name)
@@ -84,24 +82,10 @@
                                         @Html.DisplayFor(modelItem => item.Email)
                                     </td>
                                     <td>
-                                        @if (item.Role == MultiTenant.Data.EntitiesTenant.MultiTenants.Role.Admin)
-                                        {
-                                            <span>Admin</span>
-                                        }
-                                        else
-                                        {
-                                            <span>Customer</span>
-
-                                        }
+                                        @Html.DisplayFor(modelItem => item.Age)
                                     </td>
                                     <td>
-                                        <img src="@item.Avatar" width="120" class="rounded-circle" />
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TenantId)
-                                    </td>
-                                    <td>
-                                        <a asp-action="Edit" asp-route-id="@item.AccId" asp-controller="AccountManagement" class="btn btn-outline-warning">Edit</a>
+                                        <a asp-action="Edit" asp-route-id="@item.IdAcc" asp-controller="AccountManagement" class="btn btn-outline-warning">Edit</a>
                                     </td>
                                 </tr>
                             }
@@ -112,7 +96,7 @@
                             <input type="submit" value="Go to" /> page <input type="number" max="@pages" min="1" name="page" value="@p" style="width: 45px" /> of @pages
                         </form>
                     </td>
-                    <td colspan="8" class="text-center">Tổng số: @Model.ListAccount.Count()</td>
+                    <td colspan="8" class="text-center">Tổng số: @Model.Count()</td>
                 </tr>*@
                         </tbody>
                     </table>
