@@ -40,7 +40,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
             }
 
             model.TenantId = tenantEdit.TenantId;
-            model.SubDomain = tenantEdit.SubDomain;
+            model.URL = tenantEdit.URL;
             model.DbName = tenantEdit.DbName;
 
             string wwwRootPath = hostEnvironment.WebRootPath;
@@ -75,7 +75,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
                     var accountRequest = new TenantRequest
                     {
                         DbName = tenant.DbName,
-                        SubDomain = tenant.SubDomain,
+                        URL = tenant.URL,
                         Favicon = tenant.Favicon,
                         TenantId = tenant.TenantId
                         
@@ -105,7 +105,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
         {
             var model = await _context.Tenants
                  .Where(x => x.TenantId == id)
-                 .Select(x => new { x.TenantId, x.DbName, x.SubDomain,x.Favicon })
+                 .Select(x => new { x.TenantId, x.DbName, x.URL,x.Favicon })
                  .FirstOrDefaultAsync();
             if (model != null)
             {
@@ -114,7 +114,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
 
                     TenantId = model.TenantId,
                     DbName=model.DbName,
-                    SubDomain=model.SubDomain,
+                    URL=model.URL,
                     Favicon=model.Favicon
                 };
                 return tenantEdit;
