@@ -31,6 +31,7 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="card-body">
+                    
                     <form method="get" class="form-inline" style="display:block; float:right">
                         <input name="filter" class="form-control" placeholder="Search..."
                                value="@Model.RouteValue["Filter"]" />
@@ -38,6 +39,13 @@
                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
                         </button>
                     </form>
+
+                    @*<form method="post" asp-action="UrlSubdomain" class="form-inline" style="display:block; float:right">
+                        <input name="subdomain" class="form-control" placeholder="Search..."/>
+                        <button type="submit" class="btn btn-smn btn-primary">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+                        </button>
+                    </form>*@
                     <br />
                     <br />
                     <br />
@@ -63,33 +71,33 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                            <tr class="align-middle text-center">
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.IdAcc)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Email)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Age)
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.IdAcc" asp-controller="AccountManagement" class="btn btn-outline-warning">Edit</a>
-                                </td>
-                            </tr>
+                                <tr class="align-middle text-center">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IdAcc)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Age)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.IdAcc" asp-controller="AccountManagement" class="btn btn-outline-warning">Edit</a>
+                                    </td>
+                                </tr>
                             }
                             @*<tr>
-                                    <td colspan="2">
-                                        @{ int pages = ((int)ViewData["Pages"]); int p = ((int)ViewData["Page"]);}
-                                        <form asp-action="Index" method="get">
-                                            <input type="submit" value="Go to" /> page <input type="number" max="@pages" min="1" name="page" value="@p" style="width: 45px" /> of @pages
-                                        </form>
-                                    </td>
-                                    <td colspan="8" class="text-center">Tổng số: @Model.Count()</td>
-                                </tr>*@
+                    <td colspan="2">
+                        @{ int pages = ((int)ViewData["Pages"]); int p = ((int)ViewData["Page"]);}
+                        <form asp-action="Index" method="get">
+                            <input type="submit" value="Go to" /> page <input type="number" max="@pages" min="1" name="page" value="@p" style="width: 45px" /> of @pages
+                        </form>
+                    </td>
+                    <td colspan="8" class="text-center">Tổng số: @Model.Count()</td>
+                </tr>*@
                         </tbody>
                     </table>
                 </div>

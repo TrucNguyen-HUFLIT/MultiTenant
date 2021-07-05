@@ -1,3 +1,5 @@
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -5,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MultiTenant.Application.Services.Tenants;
 using MultiTenant.Data.Contexts;
 using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 
 namespace MultiTenant
 {
@@ -50,6 +53,7 @@ namespace MultiTenant
                {
                    options.SignInScheme = "Cookies";
                    options.Authority = "https://localhost:5000";
+
                    options.RequireHttpsMetadata = true;
 
                    options.ClientId = "tenant";
@@ -62,8 +66,10 @@ namespace MultiTenant
 
                    // options.CallbackPath = "/signin-oidc"; // default redirect URI
 
-                   // options.Scope.Add("oidc"); // default scope
-                   // options.Scope.Add("profile"); // default scope
+                   //options.Scope.Add("oidc");
+                   //options.Scope.Add("profile");
+                   options.ClaimActions.MapUniqueJsonKey("tenant_id", "tenant_id");
+
                    options.SaveTokens = true;
                });
         }
@@ -90,29 +96,36 @@ namespace MultiTenant
                     name: "default",
                     pattern: "{controller=AccountManagement}/{action=Index}/{id?}");
             });
-
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapDynamicControllerRoute<SubdomainRouteTransformer>("{controller=Home}/{action=Index}/{id?}");
-            //});
         }
     }
 
-    //public class SubdomainRouteTransformer : DynamicRouteValueTransformer
-    //{
-    //    public override async ValueTask<RouteValueDictionary> TransformAsync(HttpContext httpContext, RouteValueDictionary values)
-    //    {
-    //        var subDomain = httpContext.Request.Host.Host.Split(".").First(); //tenant1.localhost --> tenant1
 
-    //        if (!string.IsNullOrEmpty(subDomain))
-    //        {
-    //            if (subDomain == "localhost")
-    //            {
-    //                return values;
-    //            }
-    //            values["controller"] = subDomain;
-    //        }
-    //        return values;
-    //    }
-    //}
+    public class AppCookieManager : ICookieManager
+    {
+        public void AppendResponseCookie(HttpContext context, string key, string value, CookieOptions options)
+        {
+            context.Response.Cookies.Append(key, value, options);
+            var subOptions = new CookieOptions()
+            {
+                Domain = ".localhost",
+                SameSite = SameSiteMode.Lax,
+                Secure = true,
+                IsEssential = true,
+                HttpOnly = true
+            };
+            context.Response.Cookies.Append(key, value, subOptions);
+        }
+
+        public void DeleteCookie(HttpContext context, string key, CookieOptions options)
+        {
+            context.Response.Cookies.Delete(key, options);
+        }
+
+        public string GetRequestCookie(HttpContext context, string key)
+        {
+            string val = null;
+            context.Request.Cookies.TryGetValue(key, out val);
+            return val;
+        }
+    }
 }

@@ -31,7 +31,6 @@ namespace MultiTenant.WebApp.Controllers
             {
                 ListTenant = _accountservice.GetListTenant(),
                 AccountEdit = await _accountservice.GetAccountEditByIdAsync(id)
-
             };
             return View(model);
         }

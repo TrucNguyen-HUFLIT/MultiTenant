@@ -9,6 +9,15 @@ namespace MultiTenant.Login
 {
     internal class Clients
     {
+        private static IdentityResource CustomizeProfile
+        {
+            get
+            {
+                var standardProfile = new IdentityResources.Profile();
+                standardProfile.UserClaims.Add("tenant_id");
+                return standardProfile;
+            }
+        }
         public static IEnumerable<Client> Get()
         {
             return new List<Client> //Tenant
@@ -50,7 +59,7 @@ namespace MultiTenant.Login
                     ClientSecrets = new List<Secret> {new Secret("SuperSecretPassword".Sha256())}, // change me!
                     
                     AllowedGrantTypes = GrantTypes.Code,
-                    RedirectUris = new List<string> {"https://localhost:5002/signin-oidc"},
+                    RedirectUris = new List<string> {"https://localhost:5002/signin-oidc", "https://tenant1.localhost:5002/signin-oidc", "https://tenant2.localhost:5002/signin-oidc"},
                     FrontChannelLogoutUri = "https://localhost:5002/signout-oidc",
                     PostLogoutRedirectUris = new List<string>  { "https://localhost:5002/signout-callback-oidc" },
 
@@ -71,13 +80,23 @@ namespace MultiTenant.Login
 
     internal class Resources
     {
+        private static IdentityResource CustomizeProfile
+        {
+            get
+            {
+                var standardProfile = new IdentityResources.Profile();
+                standardProfile.UserClaims.Add("tenant_id");
+                return standardProfile;
+            }
+        }
+
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
-            return new[]
+            return new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
-                //new IdentityResources.Email(),
+                //new IdentityResources.Profile(),
+                CustomizeProfile,
                 new IdentityResource
                 {
                     Name = "role",
@@ -127,7 +146,7 @@ namespace MultiTenant.Login
                     {
                         new Claim(JwtClaimTypes.Email, "ngoctruc020100@gmail.com"),
                         new Claim(JwtClaimTypes.Role, "admin"),
-                        new Claim(JwtClaimTypes.ClientId, "mgmt")
+                        new Claim(JwtClaimTypes.ClientId, "mgmt"),
                     }
                 },
 
@@ -140,7 +159,7 @@ namespace MultiTenant.Login
                     {
                         new Claim(JwtClaimTypes.Email, "giahuyngh16@gmail.com"),
                         new Claim(JwtClaimTypes.Role, "admin"),
-                        new Claim(JwtClaimTypes.ClientId, "mgmt")
+                        new Claim(JwtClaimTypes.ClientId, "mgmt"),
                     }
                 },
 
@@ -153,7 +172,36 @@ namespace MultiTenant.Login
                     {
                         new Claim(JwtClaimTypes.Email, "minhtam@gmail.com"),
                         new Claim(JwtClaimTypes.Role, "customer"),
-                        new Claim(JwtClaimTypes.ClientId, "tenant")
+                        new Claim(JwtClaimTypes.ClientId, "tenant"),
+                        new Claim("tenant_id", "Tenant")
+                    }
+                },
+
+                new TestUser
+                {
+                    SubjectId = "4",
+                    Username = "nhut",
+                    Password = "Password123!",
+                    Claims = new List<Claim>
+                    {
+                        new Claim(JwtClaimTypes.Email, "minhnhut@gmail.com"),
+                        new Claim(JwtClaimTypes.Role, "customer"),
+                        new Claim(JwtClaimTypes.ClientId, "tenant"),
+                        new Claim("tenant_id", "tenant1")
+                    }
+                },
+
+                new TestUser
+                {
+                    SubjectId = "5",
+                    Username = "kha",
+                    Password = "Password123!",
+                    Claims = new List<Claim>
+                    {
+                        new Claim(JwtClaimTypes.Email, "quockha@gmail.com"),
+                        new Claim(JwtClaimTypes.Role, "customer"),
+                        new Claim(JwtClaimTypes.ClientId, "tenant"),
+                        new Claim("tenant_id", "tenant2")
                     }
                 },
             };
