@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using MultiTenant.Application.Services.Tenants;
 using MultiTenant.Data.Contexts;
 using System.IdentityModel.Tokens.Jwt;
-using System.Threading.Tasks;
 
 namespace MultiTenant
 {
@@ -66,8 +65,8 @@ namespace MultiTenant
 
                    // options.CallbackPath = "/signin-oidc"; // default redirect URI
 
-                   //options.Scope.Add("oidc");
-                   //options.Scope.Add("profile");
+                   //options.Scope.Add("oidc"); //default
+                   //options.Scope.Add("profile"); //default
                    options.ClaimActions.MapUniqueJsonKey("tenant_id", "tenant_id");
 
                    options.SaveTokens = true;

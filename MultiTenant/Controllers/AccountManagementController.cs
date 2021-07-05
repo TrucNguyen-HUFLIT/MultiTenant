@@ -20,7 +20,7 @@ namespace MultiTenant.Controllers
         public async Task<IActionResult> Index(string filter, int page, string sortEx = "IdAcc")
         {
             string URL = await _userService.GetURLFromUser(User);
-            if(URL != "Tenant" && StaticAcc.CheckTenant)
+            if(URL != "https://localhost:5002" && StaticAcc.CheckTenant)
             {
                 StaticAcc.CheckTenant = false;
                 return Redirect(URL);

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MultiTenant.Application.Services.MultiTenants.User;
 using MultiTenant.Application.Models.MultiTenants.Account;
 using System;
+using MultiTenant.Data.EntitiesTenant.MultiTenants;
 
 namespace MultiTenant.WebApp.Controllers
 {
@@ -47,6 +48,7 @@ namespace MultiTenant.WebApp.Controllers
             };
             return View(model);
         }
+
         [ServiceFilter(typeof(ModelStateAjaxFilter))]
         [HttpPost]
         public async Task<IActionResult> Edit(AccountEdit accountEdit)
@@ -60,10 +62,18 @@ namespace MultiTenant.WebApp.Controllers
             await _accountservice.ChangeImageAsync(changeImage);
             return RedirectToAction("Edit", new { id = changeImage.AccId });
         }
+
         [HttpPost]
         public IActionResult Logout()
         {
             return SignOut("Cookies", "oidc");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(AccountCreate accountCreate)
+        {
+            await _accountservice.CreateAsync(accountCreate);
+            return Ok(accountCreate.AccId);
         }
     }
 }

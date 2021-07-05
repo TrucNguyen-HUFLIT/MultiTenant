@@ -16,8 +16,6 @@ namespace MultiTenant.Application.Models.MultiTenants.Account
         public string Avatar { get; set; }
         public Role Role { get; set; }
         public int TenantId { get; set; }
-
-        public string DbName { get; set; }
         [NotMapped]
         [Display(Name = "Avatar")]
         public IFormFile UploadAvt { get; set; }

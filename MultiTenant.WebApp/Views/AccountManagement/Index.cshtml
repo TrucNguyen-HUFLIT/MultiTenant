@@ -23,12 +23,12 @@
     <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
         <li class="nav-item">
             <a asp-action="Index" class="nav-link active ">
-                <span>List account</span>
+                <span>List Account</span>
             </a>
         </li>
         <li class="nav-item">
             <a asp-action="Create" class="nav-link ">
-                <span>Create</span>
+                <span>Create Account</span>
             </a>
         </li>
     </ul>
@@ -36,11 +36,11 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="card-body">
-                     @using (Html.BeginForm("Index", "AccountManagement", FormMethod.Get, new { @style = "float: right; width: 40%" }))
-                        {
-                            <input type="text" id="searchString" name="searchString" placeholder="Find by name or email">
-                            <input type="submit" value="Search" class="btn btn-outline-info" style="margin-bottom:5px" />
-                        }
+                    @using (Html.BeginForm("Index", "AccountManagement", FormMethod.Get, new { @style = "float: right; width: 40%" }))
+                    {
+                        <input type="text" id="searchString" name="searchString" placeholder="Find by name or email">
+                        <input type="submit" value="Search" class="btn btn-outline-info" style="margin-bottom:5px" />
+                    }
                     <br />
                     <br />
                     <br />
@@ -108,10 +108,10 @@
                     </table>
                     Page @(Model.ListAccountRequest.PageCount < Model.ListAccountRequest.PageNumber ? 0 : Model.ListAccountRequest.PageNumber) of @Model.ListAccountRequest.PageCount
 
-                                    @Html.PagedListPager(Model.ListAccountRequest, page => Url.Action("Index",
-                                        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                    @Html.PagedListPager(Model.ListAccountRequest, page => Url.Action("Index",
+                        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
                 </div>
-                
+
             </div>
         </div>
     </div>
