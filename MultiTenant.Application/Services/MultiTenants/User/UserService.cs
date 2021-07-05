@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using IdentityServer4.Test;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MultiTenant.Application.Exceptions;
@@ -20,11 +21,13 @@ namespace MultiTenant.Application.Services.User
     {
         private readonly MultiTenantContext _context;
         private readonly IWebHostEnvironment hostEnvironment;
+       // private readonly TenantContext _tenantContext;
 
         public UserService(MultiTenantContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
             this.hostEnvironment = hostEnvironment;
+            //_tenantContext = tenantContext;           
         }
 
         public async Task<bool> ChangeImageAsync(ChangeImage changeImage)
@@ -52,9 +55,40 @@ namespace MultiTenant.Application.Services.User
 
         }
 
-        public Task CreateAsync(AccountCreate accountCreate)
+        public async Task CreateAsync(AccountCreate accountCreate)
         {
-            throw new NotImplementedException();
+            var username = _context.Accounts.Where(x => x.UserName == accountCreate.UserName).Select(x=>x.UserName).FirstOrDefault();
+            if(username==null)
+            {
+                var model = new Account
+                {
+                    Name = accountCreate.Name,
+                    UserName = accountCreate.UserName,
+                    Password = accountCreate.Password,
+                    Role = accountCreate.Role,
+                    Email = accountCreate.Email,
+                    TenantId = accountCreate.TenantId,
+                    Avatar = accountCreate.Avatar
+                };
+                string wwwRootPath = hostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(accountCreate.UploadAvt.FileName);
+                string extension = Path.GetExtension(accountCreate.UploadAvt.FileName);
+                model.Avatar = fileName += extension;
+                string path1 = Path.Combine(wwwRootPath + "/img/", fileName);
+                using (var fileStream = new FileStream(path1, FileMode.Create))
+                {
+                    await accountCreate.UploadAvt.CopyToAsync(fileStream);
+                }
+
+                var modelTenant = new Tenant
+                {
+                    DbName = accountCreate.DbName,
+                };
+                _context.Add(modelTenant);
+                _context.Add(model);
+                await _context.SaveChangesAsync();
+            }    
+
         }
 
         public async Task<bool> EditAsync(AccountEdit accountEdit)

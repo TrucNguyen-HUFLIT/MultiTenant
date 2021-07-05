@@ -35,7 +35,7 @@ namespace MultiTenant
             //services.AddSingleton<SubdomainRouteTransformer>();
 
             services.AddDbContext<MultiTenantContext>();
-          //  services.AddDbContext<TenantContext>();
+            services.AddDbContext<TenantContext>();
 
             //get host name
             services.AddHttpContextAccessor();
