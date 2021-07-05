@@ -2,9 +2,9 @@
     ViewData["Title"] = "Account Mgmt";
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
-@model ReflectionIT.Mvc.Paging.PagingList<MultiTenant.Data.EntitiesTenant.Tenants.Account>
-@using ReflectionIT.Mvc.Paging
-
+@model MultiTenant.Application.Models.Tenants.Account.AccountViewModel
+@using X.PagedList.Mvc.Core;
+@using Microsoft.AspNetCore.Mvc;
 <div class="app-main__inner">
     <div class="app-page-title">
         <div class="page-title-wrapper">
@@ -31,21 +31,19 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="card-body">
-                    
-                    <form method="get" class="form-inline" style="display:block; float:right">
-                        <input name="filter" class="form-control" placeholder="Search..."
-                               value="@Model.RouteValue["Filter"]" />
-                        <button type="submit" class="btn btn-smn btn-primary">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
-                        </button>
-                    </form>
+
+                   @using (Html.BeginForm("Index", "AccountManagement", FormMethod.Get, new { @style = "float: right; width: 40%" }))
+                    {
+                        <input type="text" id="searchString" name="searchString" placeholder="Find by name or email">
+                        <input type="submit" value="Search" class="btn btn-outline-info" style="margin-bottom:5px" />
+                    }
 
                     @*<form method="post" asp-action="UrlSubdomain" class="form-inline" style="display:block; float:right">
-                        <input name="subdomain" class="form-control" placeholder="Search..."/>
-                        <button type="submit" class="btn btn-smn btn-primary">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
-                        </button>
-                    </form>*@
+                            <input name="subdomain" class="form-control" placeholder="Search..."/>
+                            <button type="submit" class="btn btn-smn btn-primary">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+                            </button>
+                        </form>*@
                     <br />
                     <br />
                     <br />
@@ -53,23 +51,23 @@
                         <thead>
                             <tr class="table-success align-middle text-center">
                                 <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.IdAcc)
+                                    @Html.ActionLink("ID", "Index", new { sortOrder = ViewBag.IDSortParm })
                                 </th>
                                 <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.Name)
+                                    @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
                                 </th>
                                 <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.Email)
+                                    @Html.DisplayNameFor(model => model.AccountRequest.Email)
                                 </th>
                                 <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.Age)
+                                    @Html.DisplayNameFor(model => model.AccountRequest.Age)
                                 </th>
                                 <th></th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            @foreach (var item in Model)
+                            @foreach (var item in Model.ListAccountRequest)
                             {
                                 <tr class="align-middle text-center">
                                     <td>
@@ -89,17 +87,13 @@
                                     </td>
                                 </tr>
                             }
-                            @*<tr>
-                    <td colspan="2">
-                        @{ int pages = ((int)ViewData["Pages"]); int p = ((int)ViewData["Page"]);}
-                        <form asp-action="Index" method="get">
-                            <input type="submit" value="Go to" /> page <input type="number" max="@pages" min="1" name="page" value="@p" style="width: 45px" /> of @pages
-                        </form>
-                    </td>
-                    <td colspan="8" class="text-center">Tổng số: @Model.Count()</td>
-                </tr>*@
+                         
                         </tbody>
                     </table>
+                      Page @(Model.ListAccountRequest.PageCount < Model.ListAccountRequest.PageNumber ? 0 : Model.ListAccountRequest.PageNumber) of @Model.ListAccountRequest.PageCount
+
+                    @Html.PagedListPager(Model.ListAccountRequest, page => Url.Action("Index",
+                        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
                 </div>
             </div>
         </div>

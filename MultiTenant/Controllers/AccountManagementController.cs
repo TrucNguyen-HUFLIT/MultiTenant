@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MultiTenant.Application.Models.Tenants.Account;
 using MultiTenant.Application.Services.Tenants;
 using MultiTenant.Filter;
+using System;
 using System.Threading.Tasks;
 
 namespace MultiTenant.Controllers
@@ -17,17 +18,30 @@ namespace MultiTenant.Controllers
             _userService = userService;
         }
 
-        public async Task<IActionResult> Index(string filter, int page, string sortEx = "IdAcc")
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             string URL = await _userService.GetURLFromUser(User);
-            if(URL != "https://localhost:5002" && StaticAcc.CheckTenant)
+            if (URL != "https://localhost:5002" && StaticAcc.CheckTenant)
             {
                 StaticAcc.CheckTenant = false;
                 return Redirect(URL);
-            }  
-            
+            }
             ViewBag.ActiveAccount = "active";
-            return View(await _userService.GetListUsersAsync(filter, page, sortEx));
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) || sortOrder.Equals("name") ? "name_desc" : "name";
+
+            ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+
+            if (searchString != null) page = 1;
+            else searchString = currentFilter;
+            ViewBag.CurrentFilter = searchString;
+
+            var model = new AccountViewModel
+            {
+                ListAccountRequest = await _userService.GetListAccountRequestAsync(sortOrder, currentFilter, searchString, page)
+            };
+            return View(model);
+
         }
 
         [HttpGet]

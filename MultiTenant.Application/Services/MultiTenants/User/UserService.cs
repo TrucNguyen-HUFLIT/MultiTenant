@@ -26,13 +26,12 @@ namespace MultiTenant.Application.Services.MultiTenants.User
         //private readonly IApplicationBuilder _app;
         private readonly MultiTenantContext _context;
         private readonly IWebHostEnvironment hostEnvironment;
-        private readonly UserManager<IdentityUser> _userManager;
 
-        public UserService(MultiTenantContext context, IWebHostEnvironment hostEnvironment /*IApplicationBuilder application*/, UserManager<IdentityUser> userManager)
+        public UserService(MultiTenantContext context, IWebHostEnvironment hostEnvironment /*IApplicationBuilder application*/)
         {
             _context = context;
             this.hostEnvironment = hostEnvironment;
-            _userManager = userManager;
+          
             //_app = application;
         }
 
@@ -108,22 +107,22 @@ namespace MultiTenant.Application.Services.MultiTenants.User
                     }
                 };
 
-                using (var serviceScope = _app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-                {
-                    var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-                    if (!userManager.Users.Any())
-                    {
-                        var identityUser = new IdentityUser(user.Username)
-                        {
-                            Id = user.SubjectId
-                        };
-                        userManager.CreateAsync(identityUser, user.Password.ToString()).Wait();
-                        userManager.AddClaimsAsync(identityUser, user.Claims.ToList()).Wait();
-                    }
-                    var identityUser1 = userManager.FindByIdAsync(user.SubjectId);
-                }
+                //using (var serviceScope = _app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+                //{
+                //    var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+                //    if (!userManager.Users.Any())
+                //    {
+                //        var identityUser = new IdentityUser(user.Username)
+                //        {
+                //            Id = user.SubjectId
+                //        };
+                //        userManager.CreateAsync(identityUser, user.Password.ToString()).Wait();
+                //        userManager.AddClaimsAsync(identityUser, user.Claims.ToList()).Wait();
+                //    }
+                //    var identityUser1 = userManager.FindByIdAsync(user.SubjectId);
+                //}
 
-                await _context.SaveChangesAsync();
+                //await _context.SaveChangesAsync();
 
             }
 

@@ -38,6 +38,19 @@ namespace MultiTenant.WebApp.Controllers
         }
 
         [HttpGet]
+        public IActionResult Create(string message)
+        {
+
+            ViewBag.error = message;
+            var model = new AccountViewModel
+            {
+                AccountCreate = new AccountCreate(),
+                ListTenant = _accountservice.GetListTenant(),
+            };
+            return View(model);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             ViewBag.ActiveAccount = "active";
