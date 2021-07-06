@@ -6,6 +6,7 @@ using MultiTenant.Application.Services.MultiTenants.User;
 using MultiTenant.Application.Models.MultiTenants.Account;
 using System;
 using MultiTenant.Data.EntitiesTenant.MultiTenants;
+using System.Linq;
 
 namespace MultiTenant.WebApp.Controllers
 {
@@ -20,11 +21,14 @@ namespace MultiTenant.WebApp.Controllers
         }
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+
             ViewBag.ActiveAccount = "active";
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) || sortOrder.Equals("name") ? "name_desc" : "name";
            
             ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+
+            StaticAcc.Name = User.Claims.Where(x => x.Type == "name").FirstOrDefault().Value;
 
             if (searchString != null) page = 1;
             else searchString = currentFilter;
@@ -76,7 +80,7 @@ namespace MultiTenant.WebApp.Controllers
             return RedirectToAction("Edit", new { id = changeImage.AccId });
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Logout()
         {
             return SignOut("Cookies", "oidc");

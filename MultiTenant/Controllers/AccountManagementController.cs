@@ -26,6 +26,9 @@ namespace MultiTenant.Controllers
                 StaticAcc.CheckTenant = false;
                 return Redirect(URL);
             }
+
+            await _userService.GetModelByClaimAsync(User);
+           
             ViewBag.ActiveAccount = "active";
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) || sortOrder.Equals("name") ? "name_desc" : "name";
@@ -59,7 +62,7 @@ namespace MultiTenant.Controllers
             return Ok(accountRequest.IdAcc);
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Logout()
         {
             StaticAcc.CheckTenant = true;

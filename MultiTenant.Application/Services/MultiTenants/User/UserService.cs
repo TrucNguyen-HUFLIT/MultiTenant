@@ -31,7 +31,7 @@ namespace MultiTenant.Application.Services.MultiTenants.User
         {
             _context = context;
             this.hostEnvironment = hostEnvironment;
-          
+
             //_app = application;
         }
 
@@ -179,7 +179,7 @@ namespace MultiTenant.Application.Services.MultiTenants.User
         }
 
 
-        public async Task<X.PagedList.IPagedList<AccountRequest>> GetListAccountRequestAsync(string sortOrder, string currentFilter, string searchString, int? page)
+        public async Task<IPagedList<AccountRequest>> GetListAccountRequestAsync(string sortOrder, string currentFilter, string searchString, int? page)
         {
             var model = new List<AccountRequest>();
             var listAccount = await _context.Accounts.ToListAsync();
@@ -213,9 +213,11 @@ namespace MultiTenant.Application.Services.MultiTenants.User
                 };
                 int pageSize = 10;
                 int pageNumber = (page ?? 1);
+
                 return model.ToPagedList(pageNumber, pageSize);
             }
             return null;
         }
+       
     }
 }

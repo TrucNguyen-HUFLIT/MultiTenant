@@ -25,7 +25,7 @@ namespace MultiTenant.Data.Contexts
                 dbName[0] = "Tenant";
 
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseSqlServer($@"Server=HUYDESKTOP;Database={dbName[0]};Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer($@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database={dbName[0]};Trusted_Connection=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
