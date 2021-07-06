@@ -55,7 +55,7 @@
                             <button class="close"></button>
                         </div>*@
                     <div class="dropdown">
-                        <ul class="header-menu nav">
+                        <ul class="header-menu nav" style="margin-top:12px; margin-bottom:12px">
                             <li class="btn-group nav-item">
                                 <a id="name" class="nav-link">
                                     @MultiTenant.Application.Models.MultiTenants.Account.StaticAcc.Name
@@ -83,23 +83,23 @@
                             <br />
                             <li class="app-sidebar__heading" style="font-size:20px;">Management</li>
                             <li class="nav-item">
-                                <a href="@Url.ActionLink("Index", "TenantManagement")" class="nav-link @ViewBag.ActiveTenant" style="font-size:17px;width: 222px;padding:18px">
-                                    <span>Tenant Management</span>
+                                <a href="@Url.ActionLink("Index", "AccountManagement")" class="nav-link @ViewBag.ActiveAccount" style="font-size:17px;width: 222px;padding:18px">
+                                    <span>Account Management</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="@Url.ActionLink("Index", "AccountManagement")" class="nav-link @ViewBag.ActiveAccount" style="font-size:17px;width: 222px;padding:18px">
-                                    <span>Account Management</span>
+                                <a href="@Url.ActionLink("Index", "TenantManagement")" class="nav-link @ViewBag.ActiveTenant" style="font-size:17px;width: 222px;padding:18px">
+                                    <span>Tenant Management</span>
                                 </a>
                             </li>
                             <br />
                             <br />
                             @*@if (User.Identity.IsAuthenticated)
-                            {
-                                <li class="nav-item">
-                                    <a href="@Url.ActionLink("Logout", "AccountManagement")" class="btn submit-logout">Logout</a>
-                                </li>
-                            }*@
+        {
+            <li class="nav-item">
+                <a href="@Url.ActionLink("Logout", "AccountManagement")" class="btn submit-logout">Logout</a>
+            </li>
+        }*@
                         </ul>
                     </div>
                 </div>

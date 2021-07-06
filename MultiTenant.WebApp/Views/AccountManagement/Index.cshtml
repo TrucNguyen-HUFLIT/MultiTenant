@@ -61,10 +61,10 @@
                                     @Html.DisplayNameFor(model => model.AccountRequest.Role)
                                 </th>
                                 <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.AccountRequest.Avatar)
+                                    @Html.DisplayNameFor(model => model.AccountRequest.TenantId)
                                 </th>
                                 <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.AccountRequest.TenantId)
+                                    @Html.DisplayNameFor(model => model.AccountRequest.Avatar)
                                 </th>
                                 <th class="border-top-0"></th>
                             </tr>
@@ -94,10 +94,10 @@
                                         }
                                     </td>
                                     <td>
-                                        <img src="@item.Avatar" width="120" class="rounded-circle" />
+                                        @Html.DisplayFor(modelItem => item.TenantId)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.TenantId)
+                                        <img src="@item.Avatar" width="120" class="rounded-circle" />
                                     </td>
                                     <td>
                                         <a asp-action="Edit" asp-route-id="@item.AccId" asp-controller="AccountManagement" class="btn btn-outline-warning">Edit</a>

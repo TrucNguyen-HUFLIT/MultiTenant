@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MultiTenant.Application.Services.Tenants;
 using MultiTenant.Data.Contexts;
+using MultiTenant.Filter;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace MultiTenant
@@ -33,6 +34,7 @@ namespace MultiTenant
 
             //services.AddSingleton<SubdomainRouteTransformer>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<TenantFilter>();
 
             services.AddDbContext<MultiTenantContext>();
             services.AddDbContext<TenantContext>();

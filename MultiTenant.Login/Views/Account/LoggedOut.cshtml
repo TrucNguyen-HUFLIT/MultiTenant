@@ -5,8 +5,6 @@
     ViewData["signed-out"] = true;
 }
 
-
-
 @section scripts
 {
     @if (Model.AutomaticRedirectAfterSignOut)
@@ -19,9 +17,7 @@
     Layout = null; }
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -62,23 +58,24 @@
 
                                     <span class="text-danger" style="font-size:20px;" id="invalidAcc">@ViewBag.ErrorClient</span>
                                     <br />  <br />                                  
-                                    <form class="user">
-                                        <h2>
-                                            You are now logged out
-                                        </h2>
-                                        @if (Model.PostLogoutRedirectUri != null)
-                                        {
-                                            <div>
-                                                Click <a class="PostLogoutRedirectUri" href="@Model.PostLogoutRedirectUri">here</a> to return to the application.
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div>
-                                                Click <a class="PostLogoutRedirectUri" href="https://localhost:5002/signout-callback-oidc?state=CfDJ8NgLmmRGnNtAjzsh9-W5W3SM3WYEZmxDV7fL2NTR73Nitg-VRrdUI9XNZeRItdzszWlffjfwKzU4-bQiH8VZfUyscZBW1Q-gW3FyCZ5S_QCk5ziIdygVyxVU_76mQs7eMMBNsW9PB_WTUxMxNZxEJ4IGFYG60XIhS5wQkXuM9YGv">here</a> to return to the application.
-                                            </div>
-                                        }
-                                    </form>
+                                            <form class="user">
+                                                <h2>
+                                                    You are now logged out
+                                                </h2>
+                                                @if (Model.PostLogoutRedirectUri != null)
+                                                {
+                                                    <div>
+                                                        Click <a class="PostLogoutRedirectUri" href="@Model.PostLogoutRedirectUri">here</a> to return to the application.
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div>
+                                                        Click <a class="PostLogoutRedirectUri" href="javascript:history.back()">here</a> to return to the application.
+
+                                                    </div>
+                                                }
+                                            </form>
                                 </div>
                             </div>
                         </div>
