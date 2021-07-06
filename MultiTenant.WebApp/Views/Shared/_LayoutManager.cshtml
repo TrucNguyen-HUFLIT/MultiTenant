@@ -55,29 +55,21 @@
                             <button class="close"></button>
                         </div>*@
                     <div class="dropdown">
-                        <ul class="header-menu nav">
-                            <li class="nav-item">
-                                <a class="nav-link">
-                                    <img class="avt" src="@MultiTenant.Application.Models.MultiTenants.Account.StaticAcc.Avatar" />
-                                    @*<img class="avt" src="/img/main/avatar-default-icon.png" />*@
-
-                                </a>
-                            </li>
+                        <ul class="header-menu nav" style="margin-top:12px; margin-bottom:12px">
                             <li class="btn-group nav-item">
                                 <a id="name" class="nav-link">
-                                    Name
+                                    @MultiTenant.Application.Models.MultiTenants.Account.StaticAcc.Name
                                 </a>
                                 <a class="nav-link">:</a>
                             </li>
                             <li class="btn-group  nav-item">
                                 <a id="role" class="nav-link">
-                                    Email
+                                    Admin
                                 </a>
                             </li>
                         </ul>
                         <div class="dropdown-content">
-                            <a href="@Url.ActionLink("Index", "Profile")" class="@ViewBag.ActiveProfile">Profile</a>
-                            @Html.ActionLink("Logout", "Logout", "Login")
+                            <a href="@Url.ActionLink("Logout", "AccountManagement")">Logout</a>
                         </div>
                     </div>
                 </div>
@@ -91,25 +83,23 @@
                             <br />
                             <li class="app-sidebar__heading" style="font-size:20px;">Management</li>
                             <li class="nav-item">
-                                <a href="@Url.ActionLink("Index", "TenantManagement")" class="nav-link @ViewBag.ActiveTenant" style="font-size:17px;width: 222px;padding:18px">
-                                    <span>Tenant Management</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="@Url.ActionLink("Index", "AccountManagement")" class="nav-link @ViewBag.ActiveAccount" style="font-size:17px;width: 222px;padding:18px">
                                     <span>Account Management</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="@Url.ActionLink("Index", "TenantManagement")" class="nav-link @ViewBag.ActiveTenant" style="font-size:17px;width: 222px;padding:18px">
+                                    <span>Tenant Management</span>
+                                </a>
+                            </li>
                             <br />
                             <br />
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                <li class="nav-item">
-                                    <form asp-controller="AccountManagement" asp-action="Logout" method="post">
-                                        <input type="submit" value="Logout" class="btn submit-logout"/>
-                                    </form>
-                                </li>
-                            }
+                            @*@if (User.Identity.IsAuthenticated)
+        {
+            <li class="nav-item">
+                <a href="@Url.ActionLink("Logout", "AccountManagement")" class="btn submit-logout">Logout</a>
+            </li>
+        }*@
                         </ul>
                     </div>
                 </div>

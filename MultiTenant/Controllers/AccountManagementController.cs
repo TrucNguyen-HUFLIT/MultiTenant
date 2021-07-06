@@ -4,6 +4,8 @@ using MultiTenant.Application.Models.Tenants.Account;
 using MultiTenant.Application.Services.Tenants;
 using MultiTenant.Filter;
 using System;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MultiTenant.Controllers
@@ -18,6 +20,7 @@ namespace MultiTenant.Controllers
             _userService = userService;
         }
 
+        [ServiceFilter(typeof(TenantFilter))]
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             string URL = await _userService.GetURLFromUser(User);
@@ -26,6 +29,9 @@ namespace MultiTenant.Controllers
                 StaticAcc.CheckTenant = false;
                 return Redirect(URL);
             }
+
+            await _userService.GetModelByClaimAsync(User);
+           
             ViewBag.ActiveAccount = "active";
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) || sortOrder.Equals("name") ? "name_desc" : "name";
@@ -59,7 +65,7 @@ namespace MultiTenant.Controllers
             return Ok(accountRequest.IdAcc);
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Logout()
         {
             StaticAcc.CheckTenant = true;

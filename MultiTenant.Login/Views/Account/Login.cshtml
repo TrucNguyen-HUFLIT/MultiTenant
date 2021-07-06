@@ -42,7 +42,7 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <img class="login-logo" src="https://identity.saigontechnology.vn/LoginTemplate/image/STS_Logo_white.svg" />
+                                        <a href="https://localhost:5000/"><img class="login-logo" src="https://identity.saigontechnology.vn/LoginTemplate/image/STS_Logo_white.svg" /></a>
                                     </div>
 
                                     <span class="text-danger" style="font-size:20px;" id="invalidAcc">@ViewBag.ErrorClient</span>
@@ -63,14 +63,12 @@
                                                    placeholder="Password" type="password">
                                             <span asp-validation-for="Password" class="text-danger" id="Err_PasswordLogin"></span>
                                         </div>
-                                        <button class="btn btn-primary btn-user btn-block" name="button" value="login">Login</button>
+                                        <button class="btn btn-primary btn-user btn-block font-weight-bold" name="button" value="login" >Login</button>
 
                                         @*<input type="submit" value="Login" class="btn btn-primary btn-user btn-block" />*@
                                         <hr>
                                     </form>
                                     <div class="text-center">
-
-                                        <a class="small" asp-controller="Account" asp-action="ForgotPassword">Forgot Password </a>
                                         Password123!
                                     </div>
                                 </div>

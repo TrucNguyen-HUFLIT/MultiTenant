@@ -57,7 +57,7 @@ namespace MultiTenant.Application.Services.Tenants
             return null;
         }
 
-        public async Task<X.PagedList.IPagedList<AccountRequest>> GetListAccountRequestAsync(string sortOrder, string currentFilter, string searchString, int? page)
+        public async Task<IPagedList<AccountRequest>> GetListAccountRequestAsync(string sortOrder, string currentFilter, string searchString, int? page)
         {
             var model = new List<AccountRequest>();
             var listAccount = await _tenantContext.Accounts.ToListAsync();
@@ -104,6 +104,36 @@ namespace MultiTenant.Application.Services.Tenants
                                 .Select(x => x.URL)
                                 .FirstOrDefaultAsync();
             return URL;
+        }
+
+        public async Task<AccountLogged> GetModelByClaimAsync(ClaimsPrincipal claimsPrincipal)
+        {
+            string name = claimsPrincipal.Claims
+                                .Where(x => x.Type == "name")
+                                .FirstOrDefault().Value;
+            var account = await _multiTenantContext.Accounts.Where(x => x.UserName == name).FirstOrDefaultAsync();
+
+            if (account != null)
+            {
+                var model = new AccountLogged
+                {
+                    IdAcc = account.AccId,
+                    Email = account.Email,
+                    Name = account.Name,
+                    Avatar = account.Avatar,
+                };
+
+                StaticAcc.Avatar = model.Avatar;
+                StaticAcc.Name = model.Name;
+                StaticAcc.Email = model.Email;
+                StaticAcc.Favicon = await _multiTenantContext.Tenants.Where(x => x.TenantId == account.TenantId).Select(x => x.Favicon).FirstOrDefaultAsync();
+
+                return model;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ namespace MultiTenant.Application.Services.Tenants
 {
     public interface IUserService
     {
+        Task<AccountLogged> GetModelByClaimAsync(ClaimsPrincipal claimsPrincipal);
         Task<IPagedList<AccountRequest>> GetListAccountRequestAsync(string sortOrder, string currentFilter, string searchString, int? page);
         Task<AccountRequest> GetAccountRequestByIdAsync(int id);
         Task<bool> EditAsync(AccountRequest accountRequest);

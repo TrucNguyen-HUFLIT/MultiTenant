@@ -7,8 +7,10 @@ namespace MultiTenant.Application.Models.MultiTenants.Account
     {
         [Display(Name = "ID Account")]
         public int AccId { get; set; }
+
         [Display(Name = "Avatar")]
         public string Avatar { get; set; }
+
         public IFormFile UploadAvt { get; set; }
     }
 }

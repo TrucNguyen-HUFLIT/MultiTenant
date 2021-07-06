@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title> @ViewData["Title"]</title>
-    @*<link rel="icon" type="image/jpg" href="~/img/Background/favicon.jpg" />*@
+    <link rel="icon" type="image/jpg" href="@MultiTenant.Application.Models.Tenants.Account.StaticAcc.Favicon" />
 
     <link href="~/css/main.css" rel="stylesheet">
     <link href="~/css/style.css" rel="stylesheet">
@@ -58,26 +58,24 @@
                         <ul class="header-menu nav">
                             <li class="nav-item">
                                 <a class="nav-link">
-                                    <img class="avt" src="@MultiTenant.Application.Models.MultiTenants.Account.StaticAcc.Avatar" />
+                                    <img class="avt" src="@MultiTenant.Application.Models.Tenants.Account.StaticAcc.Avatar" />
                                     @*<img class="avt" src="/img/main/avatar-default-icon.png" />*@
-
                                 </a>
                             </li>
                             <li class="btn-group nav-item">
                                 <a id="name" class="nav-link">
-                                    Name
+                                    @MultiTenant.Application.Models.Tenants.Account.StaticAcc.Name
                                 </a>
                                 <a class="nav-link">:</a>
                             </li>
                             <li class="btn-group  nav-item">
                                 <a id="role" class="nav-link">
-                                    Email
+                                    @MultiTenant.Application.Models.Tenants.Account.StaticAcc.Email
                                 </a>
                             </li>
                         </ul>
                         <div class="dropdown-content">
-                            <a href="@Url.ActionLink("Index", "Profile")" class="@ViewBag.ActiveProfile">Profile</a>
-                            @Html.ActionLink("Logout", "Logout", "Login")
+                            <a href="@Url.ActionLink("Logout", "AccountManagement")">Logout</a>
                         </div>
                     </div>
                 </div>
@@ -91,21 +89,18 @@
                             <br />
                             <li class="app-sidebar__heading" style="font-size:20px;">Management</li>
                             <li class="nav-item">
-                                <a href="@Url.ActionLink("Index", "TenantManagement")" class="nav-link @ViewBag.ActiveTenant" style="font-size:17px;width: 222px;padding:18px">
-                                    <span>Tenant Management</span>
+                                <a href="@Url.ActionLink("Index", "AccountManagement")" class="nav-link @ViewBag.ActiveAccount" style="font-size:17px;width: 222px;padding:18px">
+                                    <span>Account Management</span>
                                 </a>
                             </li>
-
                             <br />
                             <br />
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                <li class="nav-item">
-                                    <form asp-controller="AccountManagement" asp-action="Logout" method="post">
-                                        <input type="submit" value="Logout" class="btn submit-logout"/>
-                                    </form>
-                                </li>
-                            }
+                            @*@if (User.Identity.IsAuthenticated)
+                                {
+                                    <li class="nav-item">
+                                        <a href="@Url.ActionLink("Logout", "AccountManagement")" class="btn submit-logout">Logout</a>
+                                    </li>
+                                }*@
                         </ul>
                     </div>
                 </div>

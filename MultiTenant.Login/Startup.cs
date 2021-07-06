@@ -18,7 +18,7 @@ namespace MultiTenant.Login
             services.AddControllersWithViews();
 
             const string connectionString =
-                @"Data Source=HUYDESKTOP;database=IdentityServer4;trusted_connection=yes;";
+                @"Data Source=DESKTOP-I7EOLFR\SQLEXPRESS;database=IdentityServer4;trusted_connection=yes;";
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddDbContext<ApplicationDbContext>(builder =>
@@ -64,7 +64,7 @@ namespace MultiTenant.Login
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=Login}/{id?}");
+                    pattern: "{controller=Account}/{action=Home}/{id?}");
             });
         }
 

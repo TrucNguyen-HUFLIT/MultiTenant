@@ -1,8 +1,8 @@
 ﻿
 using MultiTenant.Application.Models.MultiTenants.Account;
 using MultiTenant.Data.EntitiesTenant.MultiTenants;
-using ReflectionIT.Mvc.Paging;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using X.PagedList;
 
@@ -10,7 +10,6 @@ namespace MultiTenant.Application.Services.MultiTenants.User
 {
     public interface IUserService
     {
-        
         Task<AccountEdit> GetAccountEditByIdAsync(int id);
         Task<bool> ChangeImageAsync(ChangeImage changeImage);
         Task<bool> EditAsync(AccountEdit accountEdit);

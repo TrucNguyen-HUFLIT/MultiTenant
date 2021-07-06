@@ -1,27 +1,16 @@
-﻿@model LoggedOutViewModel
-
-@{
-    // set this so the layout rendering sees an anonymous user
-    ViewData["signed-out"] = true;
-}
-
-@section scripts
-{
-    @if (Model.AutomaticRedirectAfterSignOut)
-    {
-        <script src="~/js/signout-redirect.js"></script>
-    }
-}
+﻿@model LoginViewModel
 
 @{
     Layout = null; }
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title> Logged Out </title>
+    <title> App SSO + MultiTenat </title>
 
     <!-- Custom fonts for this template-->
     <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -51,24 +40,22 @@
 
                             </div>
                             <div class="col-lg-6">
-                                <div class="p-5">
+                                <div class="p-5" >
                                     <div class="text-center">
                                         <a href="https://localhost:5000/"><img class="login-logo" src="https://identity.saigontechnology.vn/LoginTemplate/image/STS_Logo_white.svg" /></a>
                                     </div>
+                                    <br />
+                                    <h2 style="color:black">Login to:</h2>
 
-                                    <span class="text-danger" style="font-size:20px;" id="invalidAcc">@ViewBag.ErrorClient</span>
-                                    <br />  <br />                                  
-                                            <form class="user">
-                                                <h2>
-                                                    You are now logged out
-                                                </h2>
-                                                @if (Model.PostLogoutRedirectUri != null)
-                                                {
-                                                    <div>
-                                                        Click <a class="PostLogoutRedirectUri" href="@Model.PostLogoutRedirectUri">here</a> to return to the application.
-                                                    </div>
-                                                }
-                                            </form>
+                                    <ul>
+                                        <li class="font-weight-bold" style="color:#007900"><a href="https://localhost:5001" class="card-link" style="color:#007900">Manage Customer's Account</a></li>
+                                        <li class="font-weight-bold" style="color:#00b300">Manage Customer's User's Account:</li>
+                                        <ul>
+                                            <li class="font-weight-bold" style="color:#007900"><a href="https://localhost:5002" class="card-link" style="color:#007900">Main Tenant</a></li>
+                                            <li class="font-weight-bold" style="color:#007900"><a href="https://tenant1.localhost:5002" class="card-link" style="color:#007900">Tenant 1</a></li>
+                                            <li class="font-weight-bold" style="color:#007900"><a href="https://tenant2.localhost:5002" class="card-link" style="color:#007900">Tenant 2</a></li></li>
+                                        </ul>
+                                    </ul>
                                 </div>
                             </div>
                         </div>

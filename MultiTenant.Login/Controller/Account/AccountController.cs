@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Events;
@@ -120,14 +121,14 @@ namespace IdentityServerHost.Quickstart.UI
                     {
                         userClientId = claim.Value;
                         break;
-                    } 
+                    }
                 }
                 // check Client ID
                 if (userClientId != context?.Client.ClientId)
                 {
                     ViewBag.ErrorClient = "Account was wrong!";
                     return View();
-                }    
+                }
 
                 // validate username/password against in-memory store
                 if (user != null && (await _signInManager.CheckPasswordSignInAsync(user, model.Password, true)) == SignInResult.Success)
@@ -150,7 +151,7 @@ namespace IdentityServerHost.Quickstart.UI
                     var isuser = new IdentityServerUser(user.Id)
                     {
                         DisplayName = user.UserName,
-                        AdditionalClaims =  claims
+                        AdditionalClaims = claims
                     };
 
                     await HttpContext.SignInAsync(isuser, props);
@@ -184,7 +185,7 @@ namespace IdentityServerHost.Quickstart.UI
                     }
                 }
 
-                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId:context?.Client.ClientId));
+                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.Client.ClientId));
                 ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
             }
 
@@ -193,7 +194,7 @@ namespace IdentityServerHost.Quickstart.UI
             return View(vm);
         }
 
-        
+
         /// <summary>
         /// Show logout page
         /// </summary>
@@ -385,7 +386,8 @@ namespace IdentityServerHost.Quickstart.UI
             return vm;
         }
 
-        public IActionResult ForgotPassword()
+        [HttpGet]
+        public IActionResult Home()
         {
             return View();
         }

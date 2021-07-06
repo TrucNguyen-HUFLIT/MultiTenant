@@ -100,7 +100,7 @@ namespace MultiTenant.WebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Profile}/{action=Index}/{id?}");
+                    pattern: "{controller=AccountManagement}/{action=Index}/{id?}");
             });
         }
     }
