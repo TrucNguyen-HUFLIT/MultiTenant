@@ -386,7 +386,8 @@ namespace IdentityServerHost.Quickstart.UI
             return vm;
         }
 
-        public IActionResult ForgotPassword()
+        [HttpGet]
+        public IActionResult Home()
         {
             return View();
         }
