@@ -80,6 +80,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
                     };
                     model.Add(accountRequest);
                 }
+
                 if (!String.IsNullOrEmpty(searchString))
                 {
                     model = model.Where(s => s.DbName.Contains(searchString)
@@ -95,7 +96,9 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
                 int pageSize = 10;
                 int pageNumber = (page ?? 1);
                 return model.ToPagedList(pageNumber, pageSize);
+
             }
+
             return null;
         }
 
@@ -117,7 +120,9 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
                 };
                 return tenantEdit;
             }
+
             return null;
+
         }
     }
 }

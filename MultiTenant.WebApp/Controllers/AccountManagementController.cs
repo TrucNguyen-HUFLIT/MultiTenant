@@ -19,6 +19,8 @@ namespace MultiTenant.WebApp.Controllers
         {
             _accountservice = accountService;
         }
+
+
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
 
@@ -36,10 +38,13 @@ namespace MultiTenant.WebApp.Controllers
 
             var model = new AccountViewModel
             {
-                ListAccountRequest = await _accountservice.GetListAccountRequestAsync(sortOrder, currentFilter, searchString, page)
+                ListAccountRequest = await _accountservice.GetListAccountRequestAsync(sortOrder, currentFilter, searchString, page),
+                ListTenant=  _accountservice.GetListTenant(),
             };
             return View(model);
+
         }
+
 
         [HttpGet]
         public IActionResult Create(string message)
@@ -52,11 +57,14 @@ namespace MultiTenant.WebApp.Controllers
                 ListTenant = _accountservice.GetListTenant(),
             };
             return View(model);
+
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+
             ViewBag.ActiveAccount = "active";
             var model = new AccountViewModel
             {
@@ -64,33 +72,46 @@ namespace MultiTenant.WebApp.Controllers
                 AccountEdit = await _accountservice.GetAccountEditByIdAsync(id)
             };
             return View(model);
+
         }
+
 
         [ServiceFilter(typeof(ModelStateAjaxFilter))]
         [HttpPost]
         public async Task<IActionResult> Edit(AccountEdit accountEdit)
         {
+
             await _accountservice.EditAsync(accountEdit);
             return Ok(accountEdit.AccId);
+
         }
+
 
         public async Task<IActionResult> ChangeImageEdit(ChangeImage changeImage)
         {
+
             await _accountservice.ChangeImageAsync(changeImage);
             return RedirectToAction("Edit", new { id = changeImage.AccId });
+
         }
+
 
         [HttpGet]
         public IActionResult Logout()
         {
+
             return SignOut("Cookies", "oidc");
+
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Create(AccountCreate accountCreate)
         {
+
             await _accountservice.CreateAsync(accountCreate);
             return Ok(accountCreate.AccId);
+
         }
     }
 }

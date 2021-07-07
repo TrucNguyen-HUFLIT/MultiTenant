@@ -20,11 +20,12 @@ namespace MultiTenant.Data.Contexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseSqlServer(@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database=MultiTenant;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(@"Server=HUYDESKTOP;Database=MultiTenant;Trusted_Connection=True;");
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<Account>(entity =>
             {
                 entity.HasKey(e => e.AccId);
@@ -35,10 +36,12 @@ namespace MultiTenant.Data.Contexts
                 entity.Property(p => p.Password).IsRequired();
 
             });
+
             modelBuilder.Entity<Tenant>(entity =>
             {
                 entity.HasKey(e => e.TenantId);
             });
+
         }
 
     }

@@ -10,6 +10,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
     public interface ITenantService
     {
         Task<TenantEdit> GetTenantEditByIdAsync(int id);
+
         Task<bool> EditAsync(TenantEdit tenantEdit);
 
         Task<IPagedList<TenantRequest>> GetListTenantRequestAsync(string sortOrder, string currentFilter, string searchString, int? page);

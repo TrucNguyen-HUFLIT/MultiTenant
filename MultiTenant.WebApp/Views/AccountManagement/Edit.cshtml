@@ -114,7 +114,7 @@
                                 <label asp-for="AccountEdit.TenantId" class="control-label col-md-12 mb-0 "></label>
                                 <div class="col-md-12">
                                     <div class="col-md-12">
-                                        <select name="AccountEdit.TenantId" class="form-control ps-0 form-control-line label-color" style="width:200px">
+                                        <select asp-for="AccountEdit.TenantId" class="form-control ps-0 form-control-line label-color" style="width:200px">
                                             @foreach (var item in Model.ListTenant)
                                             {
 

@@ -42,7 +42,7 @@
 
                         <div class="form-group">
                             <label asp-for="TenantEdit.DbName" class="control-label"></label><span class="text-danger"> *</span>
-                            <input asp-for="TenantEdit.DbName" class="form-control" />
+                            <input asp-for="TenantEdit.DbName" class="form-control" readonly />
                             <span asp-validation-for="TenantEdit.DbName" class="text-danger" id="Err_Name"></span>
                             <span class="text-danger" style="font-size:20px;" id="dataAlready"></span>
                         </div>
@@ -55,10 +55,10 @@
                             <label asp-for="TenantEdit.UploadFavicon" class="control-label"></label>
                         </div>
                         <div class="form-group">
-                            <input asp-for="TenantEdit.UploadFavicon" accept="image/*" />
+                            <input asp-for="TenantEdit.UploadFavicon" accept="image/*" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" >
                             @if (Model.TenantEdit != null)
                             {
-                                <img src="@Model.TenantEdit.Favicon" asp-append-version="true" width="120" height="90" />
+                                <img src="@Model.TenantEdit.Favicon" asp-append-version="true" width="120" height="90" id="output" />
                             }
                             <span asp-validation-for="TenantEdit.UploadFavicon" class="text-danger" hidden></span>
                         </div>

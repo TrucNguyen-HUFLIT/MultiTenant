@@ -91,7 +91,9 @@ namespace MultiTenant.Application.Services.Tenants
                 int pageNumber = (page ?? 1);
                 return model.ToPagedList(pageNumber, pageSize);
             }
+
             return null;
+
         }
 
         public async Task<string> GetURLFromUser(ClaimsPrincipal user)
@@ -106,8 +108,10 @@ namespace MultiTenant.Application.Services.Tenants
             return URL;
         }
 
+
         public async Task<AccountLogged> GetModelByClaimAsync(ClaimsPrincipal claimsPrincipal)
         {
+
             string name = claimsPrincipal.Claims
                                 .Where(x => x.Type == "name")
                                 .FirstOrDefault().Value;
@@ -134,6 +138,7 @@ namespace MultiTenant.Application.Services.Tenants
             {
                 return null;
             }
+
         }
     }
 }

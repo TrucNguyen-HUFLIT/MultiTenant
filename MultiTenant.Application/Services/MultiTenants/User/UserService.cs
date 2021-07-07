@@ -31,7 +31,6 @@ namespace MultiTenant.Application.Services.MultiTenants.User
         {
             _context = context;
             this.hostEnvironment = hostEnvironment;
-
             //_app = application;
         }
 
@@ -56,6 +55,7 @@ namespace MultiTenant.Application.Services.MultiTenants.User
 
             _context.Update(model);
             await _context.SaveChangesAsync();
+
             return true;
 
         }
@@ -130,6 +130,7 @@ namespace MultiTenant.Application.Services.MultiTenants.User
 
         public async Task<bool> EditAsync(AccountEdit accountEdit)
         {
+
             var model = await _context.Accounts
                   .Where(x => x.AccId == accountEdit.AccId)
                   .FirstOrDefaultAsync();
@@ -144,13 +145,17 @@ namespace MultiTenant.Application.Services.MultiTenants.User
             model.Name = accountEdit.Name;
             model.TenantId = accountEdit.TenantId;
             model.Email = accountEdit.Email;
+
             _context.Update(model);
             await _context.SaveChangesAsync();
+
             return true;
+
         }
 
         public async Task<AccountEdit> GetAccountEditByIdAsync(int id)
         {
+
             var model = await _context.Accounts
                 .Where(x => x.AccId == id)
                 .Select(x => new { x.AccId, x.Avatar, x.Email, x.TenantId, x.Role, x.Name })
@@ -169,18 +174,23 @@ namespace MultiTenant.Application.Services.MultiTenants.User
                 };
                 return accountEdit;
             }
+
             return null;
+
         }
 
         public List<Tenant> GetListTenant()
         {
+
             var model = _context.Tenants.ToList();
             return model;
+
         }
 
 
         public async Task<IPagedList<AccountRequest>> GetListAccountRequestAsync(string sortOrder, string currentFilter, string searchString, int? page)
         {
+
             var model = new List<AccountRequest>();
             var listAccount = await _context.Accounts.ToListAsync();
 
@@ -199,6 +209,7 @@ namespace MultiTenant.Application.Services.MultiTenants.User
                     };
                     model.Add(accountRequest);
                 }
+
                 if (!String.IsNullOrEmpty(searchString))
                 {
                     model = model.Where(s => s.Name.Contains(searchString)
@@ -216,7 +227,9 @@ namespace MultiTenant.Application.Services.MultiTenants.User
 
                 return model.ToPagedList(pageNumber, pageSize);
             }
+
             return null;
+
         }
        
     }

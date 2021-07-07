@@ -71,6 +71,7 @@ namespace MultiTenant.Login
 
     internal class Resources
     {
+
         private static IdentityResource CustomizeProfile
         {
             get

@@ -106,10 +106,12 @@ namespace IdentityServerHost.Quickstart.UI
                     // since we don't have a valid context, then we just go back to the home page
                     return Redirect("~/");
                 }
+
             }
 
             if (ModelState.IsValid)
             {
+
                 var user = await _signInManager.UserManager.FindByNameAsync(model.Username);
 
                 var claims = await _signInManager.UserManager.GetClaimsAsync(user);
@@ -192,6 +194,7 @@ namespace IdentityServerHost.Quickstart.UI
             // something went wrong, show form with error
             var vm = await BuildLoginViewModelAsync(model);
             return View(vm);
+
         }
 
 
@@ -201,6 +204,7 @@ namespace IdentityServerHost.Quickstart.UI
         [HttpGet]
         public async Task<IActionResult> Logout(string logoutId)
         {
+
             // build a model so the logout page knows what to display
             var vm = await BuildLogoutViewModelAsync(logoutId);
 
@@ -318,10 +322,12 @@ namespace IdentityServerHost.Quickstart.UI
 
         private async Task<LoginViewModel> BuildLoginViewModelAsync(LoginInputModel model)
         {
+
             var vm = await BuildLoginViewModelAsync(model.ReturnUrl);
             vm.Username = model.Username;
             vm.RememberLogin = model.RememberLogin;
             return vm;
+
         }
 
         private async Task<LogoutViewModel> BuildLogoutViewModelAsync(string logoutId)

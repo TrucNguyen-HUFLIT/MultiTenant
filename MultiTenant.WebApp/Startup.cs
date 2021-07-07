@@ -52,6 +52,7 @@ namespace MultiTenant.WebApp
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITenantService, TenantService>();
 
+
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication(options =>
             {

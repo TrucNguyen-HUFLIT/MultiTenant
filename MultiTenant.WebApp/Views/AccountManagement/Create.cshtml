@@ -62,20 +62,14 @@
                             <input asp-for="AccountCreate.Email" class="form-control" />
                             <span asp-validation-for="AccountCreate.Email" class="text-danger"></span>
                         </div>
-                         <div class="form-group">
-                                <label class="control-label col-md-12 mb-0 ">Role</label>
-                                <div class="col-md-12">
-                                    @*@if (Model.AccountEdit.Role == MultiTenant.Data.Entities_Tenant.Role.Admin)
-                                    {
+                        <div class="form-group">
+                            <label class="control-label col-md-12 mb-0 ">Role</label>
+                            <select asp-for="AccountCreate.Role" class="form-control">
 
-                                        <label class="form-control ps-0 form-control-line label-color">Admin</label> }
-                                    else
-                                    {
-                                        <label class="form-control ps-0 form-control-line label-color">Customer</label>}*@
-                                    <input value="@Model.AccountEdit.Role" name="AccountEdit.Role" readonly class="form-control ps-0 form-control-line label-color " />
-
-                                </div>
-                            </div>
+                                <option value="1">Admin</option>
+                                <option value="2">Customer</option>
+                            </select>
+                        </div>
                         <div class="position-relative form-group">
                             <label asp-for="AccountCreate.TenantId" class="control-label"></label>
                             <select asp-for="AccountCreate.TenantId" class="form-control">

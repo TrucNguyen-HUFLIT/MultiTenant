@@ -20,6 +20,7 @@ namespace MultiTenant.WebApp.Controllers
 
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+
             ViewBag.ActiveTenant = "active";
             ViewBag.CurrentSort = sortOrder;
             ViewBag.DbNameSortParm = String.IsNullOrEmpty(sortOrder) || sortOrder.Equals("name") ? "name_desc" : "name";
@@ -35,7 +36,9 @@ namespace MultiTenant.WebApp.Controllers
                 ListTenantRequest = await _tenantservice.GetListTenantRequestAsync(sortOrder, currentFilter, searchString, page)
             };
             return View(model);
+
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -47,6 +50,8 @@ namespace MultiTenant.WebApp.Controllers
             };
             return View(model);
         }
+
+
         [ServiceFilter(typeof(ModelStateAjaxFilter))]
         [TypeFilter(typeof(ExceptionFilter))]
         [HttpPost]
