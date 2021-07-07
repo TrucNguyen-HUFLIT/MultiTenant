@@ -17,35 +17,20 @@
             try {
                 var objectValidation = data.responseJSON;
 
-                if (objectValidation["accountEdit.Name"] != undefined)
-                    document.getElementById("Err_Name").innerHTML = objectValidation["accountEdit.Name"];
+                if (objectValidation["Name"] != undefined)
+                    document.getElementById("Err_Name").innerHTML = objectValidation["Name"];
                 else
                     document.getElementById("Err_Name").innerHTML = "";
-
+                if (objectValidation["Age"] != undefined)
+                    document.getElementById("Err_Age").innerHTML = objectValidation["Age"];
+                else
+                    document.getElementById("Err_Age").innerHTML = "";
                }
             catch {
                 document.getElementById("Err_Name").innerHTML = "";
-            }
+                document.getElementById("Err_Age").innerHTML = "";
+}
         },
 
     });
 });
-
-
-$(document).ready(function () {
-});
-
-
-function ActiveProfile() {
-    var y = document.getElementById("ActiveProfile").value;
-
-    if (y == "active") {
-        var x = document.getElementById("addActiveProfile");
-        x.classList.add("active");
-    }
-
-};
-window.onload = function () {
-    Active();
-    ActiveProfile();
-};
