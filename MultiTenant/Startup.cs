@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MultiTenant.Application.Services.Tenants;
-using MultiTenant.Application.Validators.Tennants;
+using MultiTenant.Application.Validators.Tenants;
 using MultiTenant.Data.Contexts;
 using MultiTenant.Filter;
 using System.IdentityModel.Tokens.Jwt;
@@ -44,8 +44,12 @@ namespace MultiTenant
                 option.RegisterValidatorsFromAssemblyContaining<AccountEditValidator>();
 
             });
+            services.AddMvc().AddFluentValidation(option =>
+            {
+                option.RegisterValidatorsFromAssemblyContaining<AccountEditValidator>();
+            });
 
-            //services.AddSingleton<SubdomainRouteTransformer>();
+            services.AddScoped<ModelStateAjaxFilter>();
             services.AddScoped<IUserService, UserService>();
             //services.AddScoped<TenantFilter>();
             services.AddScoped<ModelStateAjaxFilter>();
@@ -98,7 +102,6 @@ namespace MultiTenant
             app.UseStaticFiles();
 
             app.UseCookiePolicy();
-            //app.UseCookiePolicy( new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
 
             app.UseRouting();
 

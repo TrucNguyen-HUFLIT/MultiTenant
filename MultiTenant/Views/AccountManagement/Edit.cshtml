@@ -43,6 +43,7 @@
                                     <input asp-for="AccountEdit.IdAcc" readonly class="form-control ps-0 form-control-line label-color " />
                                 </div>
                             </div>
+                          
                             <div class="form-group">
                                 <label asp-for="AccountEdit.Name" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
                                 <div class="col-md-12">
@@ -50,6 +51,7 @@
                                     <span asp-validation-for="AccountEdit.Name" id="Err_Name" class="text-danger"></span>
                                 </div>
                             </div>
+                          
                             <div class="form-group">
                                 <label asp-for="AccountEdit.Age" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
                                 <div class="col-md-12">
@@ -57,6 +59,7 @@
                                     <span asp-validation-for="AccountEdit.Age" id="Err_Age" class="text-danger"></span>
                                 </div>
                             </div>
+                          
                             <div class="form-group">
                                 <label asp-for="AccountEdit.Email" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
                                 <div class="col-md-12">
@@ -65,10 +68,9 @@
                                 </div>
                             </div>
 
-
                             <div class="form-group">
                                 <input type="submit" value="Save" class="btn btn-primary" />
-                                <input type="button" value="Delete" class="btn btn-outline-danger" onclick="DeleteAcc()" />
+                                @*<input type="button" value="Delete" class="btn btn-outline-danger" onclick="DeleteAcc()" />*@
                                 <a asp-action="Index" class="btn btn-outline-secondary">Back</a>
                                 @*<a asp-action="Delete" class="btn btn-outline-danger" onclick="">Delete</a>*@
                                 @*<div id="toastDelete">Deleted successfully!</div>*@
