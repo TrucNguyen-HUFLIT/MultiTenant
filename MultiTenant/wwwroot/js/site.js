@@ -13,7 +13,7 @@
         },
         error: function (data) {
             console.log(data);
-            
+
             try {
                 var objectValidation = data.responseJSON;
 
@@ -21,15 +21,16 @@
                     document.getElementById("Err_Name").innerHTML = objectValidation["Name"];
                 else
                     document.getElementById("Err_Name").innerHTML = "";
-                if (objectValidation["Age"] != undefined)
-                    document.getElementById("Err_Age").innerHTML = objectValidation["Age"];
+
+                if (objectValidation["accountEdit.Age"] != undefined)
+                    document.getElementById("Err_Age").innerHTML = objectValidation["accountEdit.Age"];
                 else
                     document.getElementById("Err_Age").innerHTML = "";
-               }
+            }
             catch {
                 document.getElementById("Err_Name").innerHTML = "";
                 document.getElementById("Err_Age").innerHTML = "";
-}
+            }
         },
 
     });

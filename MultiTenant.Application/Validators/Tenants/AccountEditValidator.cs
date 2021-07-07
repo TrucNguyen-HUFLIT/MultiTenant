@@ -1,17 +1,21 @@
 ﻿using FluentValidation;
 using MultiTenant.Application.Models.Tenants.Account;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MultiTenant.Application.Validators.Tenants
 {
-    public class AccountEditValidator :AbstractValidator<AccountRequest>
+    class AccountEditValidator : AbstractValidator<AccountEdit>
     {
         public AccountEditValidator()
         {
-            RuleFor(account => account.IdAcc).NotEmpty();
-            RuleFor(account => account.Age).NotEmpty();
-            RuleFor(account => account.Email).NotEmpty();
-            RuleFor(account => account.Name).NotEmpty();
+            RuleFor(actor => actor.Name).NotEmpty();
+            RuleFor(actor => actor.Age).NotEmpty();
+            RuleFor(actor => actor.Email).NotEmpty();
+            RuleFor(actor => actor.IdAcc).NotEmpty();
         }
-
     }
 }

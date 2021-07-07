@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MultiTenant.Application.Models.Tenants.Account
 {
-    public class AccountRequest
+    public class AccountEdit
     {
         [Display(Name = "ID Account")]
         public int IdAcc { get; set; }
@@ -17,5 +12,7 @@ namespace MultiTenant.Application.Models.Tenants.Account
         public string Age { get; set; }
 
         public string Email { get; set; }
+
+
     }
 }

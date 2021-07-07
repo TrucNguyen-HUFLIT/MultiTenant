@@ -9,8 +9,8 @@ namespace MultiTenant.Application.Services.Tenants
     {
         Task<AccountLogged> GetModelByClaimAsync(ClaimsPrincipal claimsPrincipal);
         Task<IPagedList<AccountRequest>> GetListAccountRequestAsync(string sortOrder, string currentFilter, string searchString, int? page);
-        Task<AccountRequest> GetAccountRequestByIdAsync(int id);
-        Task<bool> EditAsync(AccountRequest accountRequest);
+        Task<AccountEdit> GetAccountEditByIdAsync(int id);
+        Task<bool> EditAsync(AccountEdit accountEdit);
         Task<string> GetURLFromUser(ClaimsPrincipal claimsPrincipal);
     }
 }

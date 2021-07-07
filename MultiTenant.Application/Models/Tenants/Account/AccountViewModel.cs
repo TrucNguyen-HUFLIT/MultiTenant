@@ -4,7 +4,8 @@ namespace MultiTenant.Application.Models.Tenants.Account
 {
     public  class AccountViewModel
     {
-        public AccountRequest AccountRequest { get; set; }
+        public AccountEdit AccountEdit { get; set; }
         public IPagedList<AccountRequest> ListAccountRequest { get; set; }
+        public AccountRequest AccountRequest { get; set; }
     }
 }

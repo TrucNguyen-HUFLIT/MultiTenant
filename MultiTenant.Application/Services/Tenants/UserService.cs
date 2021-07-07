@@ -24,28 +24,28 @@ namespace MultiTenant.Application.Services.Tenants
             _multiTenantContext = multiTenantContext;
         }
 
-        public async Task<bool> EditAsync(AccountRequest accountRequest)
+        public async Task<bool> EditAsync(AccountEdit accountEdit)
         {
             var model = await _tenantContext.Accounts
-                  .Where(x => x.IdAcc == accountRequest.IdAcc)
+                  .Where(x => x.IdAcc == accountEdit.IdAcc)
                   .FirstOrDefaultAsync();
 
-            model.Name = accountRequest.Name;
-            model.Age = accountRequest.Age;
+            model.Name = accountEdit.Name;
+            model.Age = accountEdit.Age;
 
             _tenantContext.Update(model);
             await _tenantContext.SaveChangesAsync();
             return true;
         }
 
-        public async Task<AccountRequest> GetAccountRequestByIdAsync(int id)
+        public async Task<AccountEdit> GetAccountEditByIdAsync(int id)
         {
             var model = await _tenantContext.Accounts
                 .Where(x => x.IdAcc == id)
                 .FirstOrDefaultAsync();
             if(model!=null)
             {
-                var accountEdit = new AccountRequest
+                var accountEdit = new AccountEdit
                 {
                     IdAcc = model.IdAcc,
                     Name = model.Name,
