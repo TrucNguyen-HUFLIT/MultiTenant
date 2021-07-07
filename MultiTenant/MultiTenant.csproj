@@ -5,13 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\AccountManagement\Edit.cshtml" />
     <Content Remove="wwwroot\js\jquery.min.js" />
     <Content Remove="wwwroot\js\main.js" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\AccountManagement\Edit.cshtml" />
     <None Include="wwwroot\js\jquery.min.js" />
     <None Include="wwwroot\js\main.js" />
   </ItemGroup>

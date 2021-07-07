@@ -20,7 +20,7 @@ namespace MultiTenant.Controllers
             _userService = userService;
         }
 
-        [ServiceFilter(typeof(TenantFilter))]
+        //[ServiceFilter(typeof(TenantFilter))]
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             string URL = await _userService.GetURLFromUser(User);

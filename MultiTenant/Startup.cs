@@ -30,11 +30,14 @@ namespace MultiTenant
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
            
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options => 
+            {
+                options.Filters.Add(typeof(TenantFilter));
+            });
 
             //services.AddSingleton<SubdomainRouteTransformer>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<TenantFilter>();
+            //services.AddScoped<TenantFilter>();
 
             services.AddDbContext<MultiTenantContext>();
             services.AddDbContext<TenantContext>();
