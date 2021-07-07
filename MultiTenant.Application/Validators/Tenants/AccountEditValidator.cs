@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MultiTenant.Application.Validators.Tennants
+namespace MultiTenant.Application.Validators.Tenants
 {
-    public class AccountEditValidator: AbstractValidator<AccountEdit>
+    class AccountEditValidator : AbstractValidator<AccountEdit>
     {
         public AccountEditValidator()
         {
