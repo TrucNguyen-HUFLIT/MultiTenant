@@ -59,11 +59,11 @@ $("#edit-tenant-form").submit(function (e) {
         },
         error: function (data) {
             console.log(data);
-            var error = data.responseText;
-            if (error == " Database is already ") {
-                document.getElementById("dataAlready").innerHTML = data.responseText;
-                return;
-            }
+            //var error = data.responseText;
+            //if (error == " Database is already ") {
+            //    document.getElementById("dataAlready").innerHTML = data.responseText;
+            //    return;
+            //}
             try {
                 var objectValidation = data.responseJSON;
 

@@ -29,13 +29,6 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
             var model = await _context.Tenants.Where(x => x.TenantId == tenantEdit.TenantId).FirstOrDefaultAsync();
             var dbName = await _context.Tenants.Select(x => x.DbName).ToListAsync();
 
-            foreach (var e in dbName)
-            {
-                if (e == tenantEdit.DbName)
-                {
-                    throw new SameDbExceptions(model.DbName);
-                }
-            }
 
             model.TenantId = tenantEdit.TenantId;
             model.URL = tenantEdit.URL;
@@ -48,12 +41,13 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
             {
                 fileName1 = Path.GetFileNameWithoutExtension(tenantEdit.UploadFavicon.FileName);
                 extension1 = Path.GetExtension(tenantEdit.UploadFavicon.FileName);
-                model.Favicon = fileName1 += extension1;
+                fileName1 += extension1;
                 string path1 = Path.Combine(wwwRootPath + "/img/", fileName1);
                 using (var fileStream = new FileStream(path1, FileMode.Create))
                 {
                     await tenantEdit.UploadFavicon.CopyToAsync(fileStream);
                 }
+                model.Favicon = "/img/" + fileName1;
             }
             _context.Update(model);
             await _context.SaveChangesAsync();
