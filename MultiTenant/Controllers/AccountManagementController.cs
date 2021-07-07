@@ -54,15 +54,19 @@ namespace MultiTenant.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             ViewBag.ActiveAccount = "active";
-            return View(await _userService.GetAccountRequestByIdAsync(id));
+            var model = new AccountViewModel
+            {
+                AccountEdit = await _userService.GetAccountEditByIdAsync(id)
+            };
+            return View(model);
         }
 
         [ServiceFilter(typeof(ModelStateAjaxFilter))]
         [HttpPost]
-        public async Task<IActionResult> Edit(AccountRequest accountRequest)
+        public async Task<IActionResult> Edit(AccountEdit accountEdit)
         {
-            await _userService.EditAsync(accountRequest);
-            return Ok(accountRequest.IdAcc);
+            await _userService.EditAsync(accountEdit);
+            return Ok(accountEdit.IdAcc);
         }
 
         [HttpGet]

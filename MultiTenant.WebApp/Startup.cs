@@ -42,7 +42,7 @@ namespace MultiTenant.WebApp
                 .AddFluentValidation(option =>
                 {
                     option.RegisterValidatorsFromAssemblyContaining<AccountEditValidator>();
-                   
+
                 });
 
             services.AddControllersWithViews();
@@ -74,10 +74,10 @@ namespace MultiTenant.WebApp
                    options.ResponseMode = "query";
                    options.GetClaimsFromUserInfoEndpoint = true;
 
-                    // options.CallbackPath = "/signin-oidc"; // default redirect URI
+                   // options.CallbackPath = "/signin-oidc"; // default redirect URI
 
-                    // options.Scope.Add("oidc"); // default scope
-                    // options.Scope.Add("profile"); // default scope
+                   // options.Scope.Add("oidc"); // default scope
+                   // options.Scope.Add("profile"); // default scope
                    options.SaveTokens = true;
                });
 

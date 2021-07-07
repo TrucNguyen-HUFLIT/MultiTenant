@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MultiTenant.Application.Services.Tenants;
+using MultiTenant.Application.Validators.Tennants;
 using MultiTenant.Data.Contexts;
 using MultiTenant.Filter;
 using System.IdentityModel.Tokens.Jwt;
@@ -21,7 +23,7 @@ namespace MultiTenant
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services) 
+        public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -29,15 +31,24 @@ namespace MultiTenant
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-           
-            services.AddControllersWithViews(options => 
+
+            services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(typeof(TenantFilter));
+
+            });
+
+            services.AddFluentValidation(option =>
+            {
+
+                option.RegisterValidatorsFromAssemblyContaining<AccountEditValidator>();
+
             });
 
             //services.AddSingleton<SubdomainRouteTransformer>();
             services.AddScoped<IUserService, UserService>();
             //services.AddScoped<TenantFilter>();
+            services.AddScoped<ModelStateAjaxFilter>();
 
             services.AddDbContext<MultiTenantContext>();
             services.AddDbContext<TenantContext>();

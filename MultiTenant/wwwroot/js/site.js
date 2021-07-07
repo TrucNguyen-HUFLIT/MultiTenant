@@ -13,7 +13,7 @@
         },
         error: function (data) {
             console.log(data);
-            
+
             try {
                 var objectValidation = data.responseJSON;
 
@@ -22,9 +22,14 @@
                 else
                     document.getElementById("Err_Name").innerHTML = "";
 
-               }
+                if (objectValidation["accountEdit.Age"] != undefined)
+                    document.getElementById("Err_Age").innerHTML = objectValidation["accountEdit.Age"];
+                else
+                    document.getElementById("Err_Age").innerHTML = "";
+            }
             catch {
                 document.getElementById("Err_Name").innerHTML = "";
+                document.getElementById("Err_Age").innerHTML = "";
             }
         },
 
