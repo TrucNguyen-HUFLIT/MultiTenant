@@ -135,13 +135,7 @@ namespace MultiTenant.Application.Services.MultiTenants.User
                   .Where(x => x.AccId == accountEdit.AccId)
                   .FirstOrDefaultAsync();
             var email = await _context.Accounts.Select(x => x.Email).ToListAsync();
-            foreach (var e in email)
-            {
-                if (e == accountEdit.Email)
-                {
-                    throw new SameEmailException(model.Email);
-                }
-            }
+
             model.Name = accountEdit.Name;
             model.TenantId = accountEdit.TenantId;
             model.Email = accountEdit.Email;

@@ -22,11 +22,11 @@
                 <span>List Account</span>
             </a>
         </li>
-        <li class="nav-item">
+        @*<li class="nav-item">
             <a asp-action="Create" class="nav-link ">
                 <span>Create</span>
             </a>
-        </li>
+        </li>*@
     </ul>
     <div class="container-fluid">
         <div class="row">
@@ -43,7 +43,7 @@
                                             <img src="@Model.AccountEdit.Avatar" id="output" class="rounded-circle image" asp-append-version="true" width=250 height=250 />}
                                     </div>
                                     <div class="btn-middle">
-                                        <input asp-for="ChangeImage.UploadAvt" accept="image/*" class="btn rounded-circle middle" placeholder="Change Avatar" onchange="ChangeImg(this); ShowBtnSave()">
+                                        <input asp-for="ChangeImage.UploadAvt" accept="image/*" class="btn middle" placeholder="Change Avatar" onchange="ChangeImg(this); ShowBtnSave()">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -88,12 +88,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label asp-for="AccountEdit.Email" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
+                                <label asp-for="AccountEdit.Email" style="display:inline" class="control-label col-md-12 mb-0"></label>
                                 <div class="col-md-12">
-                                    <input asp-for="AccountEdit.Email" class="form-control ps-0 form-control-line label-color " />
+                                    <input asp-for="AccountEdit.Email" class="form-control ps-0 form-control-line label-color " readonly />
                                     <span asp-validation-for="AccountEdit.Name" id="Err_Email" class="text-danger"></span>
                                 </div>
-                                <span class="text-danger" style="font-size:20px;" id="emailAlready"></span>
+                                @*<span class="text-danger" style="font-size:20px;" id="emailAlready"></span>*@
                             </div>
 
                             <div class="form-group">

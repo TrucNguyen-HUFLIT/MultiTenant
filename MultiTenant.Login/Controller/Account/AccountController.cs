@@ -111,12 +111,10 @@ namespace IdentityServerHost.Quickstart.UI
 
             if (ModelState.IsValid)
             {
-
                 var user = await _signInManager.UserManager.FindByNameAsync(model.Username);
-
                 var claims = await _signInManager.UserManager.GetClaimsAsync(user);
-
                 string userClientId = context?.Client.ClientId;
+
                 foreach (var claim in claims)
                 {
                     if (claim.Type == "client_id")
@@ -127,6 +125,30 @@ namespace IdentityServerHost.Quickstart.UI
                 }
                 // check Client ID
                 if (userClientId != context?.Client.ClientId)
+                {
+                    ViewBag.ErrorClient = "Account was wrong!";
+                    return View();
+                }
+
+                string RedirectUri = context?.RedirectUri;
+                string[] split1 = RedirectUri.Split(".");
+                string[] split2 = split1[0].Split("https://");
+                string subdomain = split2[1];
+                string tenantId = "";
+
+                foreach (var claim in claims)
+                {
+                    if (claim.Type == "tenant_id")
+                    {
+                        tenantId = claim.Value;
+                        break;
+                    }
+                }
+
+                if (subdomain == "localhost:5002/signin-oidc")
+                    subdomain = "Tenant";
+                //check Tenant ID
+                if (subdomain != tenantId)
                 {
                     ViewBag.ErrorClient = "Account was wrong!";
                     return View();

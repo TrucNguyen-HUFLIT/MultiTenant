@@ -44,10 +44,6 @@ namespace MultiTenant
                 option.RegisterValidatorsFromAssemblyContaining<AccountEditValidator>();
 
             });
-            services.AddMvc().AddFluentValidation(option =>
-            {
-                option.RegisterValidatorsFromAssemblyContaining<AccountEditValidator>();
-            });
 
             services.AddScoped<ModelStateAjaxFilter>();
             services.AddScoped<IUserService, UserService>();

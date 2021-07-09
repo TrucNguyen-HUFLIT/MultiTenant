@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using MultiTenant.Application.Services.MultiTenants.User;
 using MultiTenant.Application.Models.MultiTenants.Account;
 using System;
-using MultiTenant.Data.EntitiesTenant.MultiTenants;
 using System.Linq;
 
 namespace MultiTenant.WebApp.Controllers
