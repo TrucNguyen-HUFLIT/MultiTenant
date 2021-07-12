@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MultiTenant.Application.Models.Tenants.Account;
-using MultiTenant.Application.Services.Tenants;
+using MultiTenant.Application.Services.Tenants.User;
 using MultiTenant.Filter;
 using System;
 using System.Threading.Tasks;
