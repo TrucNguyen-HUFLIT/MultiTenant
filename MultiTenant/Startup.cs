@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MultiTenant.Application.Services.Tenants;
+using MultiTenant.Application.Provider.Tenant;
+using MultiTenant.Application.Services.Tenants.User;
 using MultiTenant.Application.Validators.Tenants;
 using MultiTenant.Data.Contexts;
 using MultiTenant.Filter;
@@ -43,15 +45,21 @@ namespace MultiTenant
                 option.RegisterValidatorsFromAssemblyContaining<AccountEditValidator>();
             });
 
-            services.AddScoped<ModelStateAjaxFilter>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<ModelStateAjaxFilter>();
-
-            services.AddDbContext<MultiTenantContext>();
-            services.AddDbContext<TenantContext>();
-
             //get host name
             services.AddHttpContextAccessor();
+
+            services.AddScoped<ModelStateAjaxFilter>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITenantProvider, TenantProvider>();
+
+            services.AddDbContext<MultiTenantContext>();
+            services.AddDbContext<TenantContext>(async (provider, options) =>
+            {
+                var tenantProvider = provider.GetRequiredService<ITenantProvider>();
+                var dbName = await tenantProvider.GetSubDomainFromHost();
+
+                options.UseSqlServer($@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database={dbName};Trusted_Connection=True;");
+            });
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication(options =>

@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using X.PagedList;
 
-namespace MultiTenant.Application.Services.Tenants
+namespace MultiTenant.Application.Services.Tenants.User
 {
     public interface IUserService
     {
