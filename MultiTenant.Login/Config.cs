@@ -50,7 +50,7 @@ namespace MultiTenant.Login
                     ClientSecrets = new List<Secret> {new Secret("SuperSecretPassword".Sha256())}, // change me!
                     
                     AllowedGrantTypes = GrantTypes.Code,
-                    RedirectUris = new List<string> {"https://localhost:5002/signin-oidc", "https://tenant1.localhost:5002/signin-oidc", "https://tenant2.localhost:5002/signin-oidc"},
+                    RedirectUris = new List<string> {"https://tenant.localhost:5002/signin-oidc", "https://tenant1.localhost:5002/signin-oidc", "https://tenant2.localhost:5002/signin-oidc"},
                     FrontChannelLogoutUri = "https://localhost:5002/signout-oidc",
                     PostLogoutRedirectUris = new List<string>  { "https://localhost:5002/signout-callback-oidc" },
 
@@ -165,7 +165,7 @@ namespace MultiTenant.Login
                         new Claim(JwtClaimTypes.Email, "minhtam@gmail.com"),
                         new Claim(JwtClaimTypes.Role, "customer"),
                         new Claim(JwtClaimTypes.ClientId, "tenant"),
-                        new Claim("tenant_id", "Tenant")
+                        new Claim("tenant_id", "tenant")
                     }
                 },
 

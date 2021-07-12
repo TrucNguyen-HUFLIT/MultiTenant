@@ -19,7 +19,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
-using System.Security.Claims;
 
 namespace IdentityServerHost.Quickstart.UI
 {
@@ -130,28 +129,28 @@ namespace IdentityServerHost.Quickstart.UI
                     return View();
                 }
 
-                string RedirectUri = context?.RedirectUri;
-                string[] split1 = RedirectUri.Split(".");
-                string[] split2 = split1[0].Split("https://");
-                string subdomain = split2[1];
-                string tenantId = "";
-
-                foreach (var claim in claims)
+                if (userClientId == "tenant")
                 {
-                    if (claim.Type == "tenant_id")
+                    string RedirectUri = context?.RedirectUri;
+                    string[] split1 = RedirectUri.Split(".");
+                    string[] split2 = split1[0].Split("https://");
+                    string tenantId = split2[1];
+
+                    foreach (var claim in claims)
                     {
-                        tenantId = claim.Value;
-                        break;
+                        if (claim.Type == "tenant_id")
+                        {
+                            tenantId = claim.Value;
+                            break;
+                        }
                     }
-                }
 
-                if (subdomain == "localhost:5002/signin-oidc")
-                    subdomain = "Tenant";
-                //check Tenant ID
-                if (subdomain != tenantId)
-                {
-                    ViewBag.ErrorClient = "Account was wrong!";
-                    return View();
+                    //check Tenant ID
+                    if (split2[1] != tenantId)
+                    {
+                        ViewBag.ErrorClient = "Account was wrong!";
+                        return View();
+                    }
                 }
 
                 // validate username/password against in-memory store

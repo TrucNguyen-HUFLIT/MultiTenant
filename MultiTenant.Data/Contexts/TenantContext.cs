@@ -22,8 +22,6 @@ namespace MultiTenant.Data.Contexts
             //get host name
             string host = _httpContextAccessor.HttpContext.Request.Host.Value;
             string[] dbName = host.Split(".");
-            if (dbName.Length == 1)
-                dbName[0] = "Tenant";
 
             if (!optionsBuilder.IsConfigured)
                 optionsBuilder.UseSqlServer($@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database={dbName[0]};Trusted_Connection=True;");

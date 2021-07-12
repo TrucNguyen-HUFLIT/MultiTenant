@@ -40,14 +40,11 @@ namespace MultiTenant
 
             services.AddFluentValidation(option =>
             {
-
                 option.RegisterValidatorsFromAssemblyContaining<AccountEditValidator>();
-
             });
 
             services.AddScoped<ModelStateAjaxFilter>();
             services.AddScoped<IUserService, UserService>();
-            //services.AddScoped<TenantFilter>();
             services.AddScoped<ModelStateAjaxFilter>();
 
             services.AddDbContext<MultiTenantContext>();
@@ -114,32 +111,32 @@ namespace MultiTenant
     }
 
 
-    public class AppCookieManager : ICookieManager
-    {
-        public void AppendResponseCookie(HttpContext context, string key, string value, CookieOptions options)
-        {
-            context.Response.Cookies.Append(key, value, options);
-            var subOptions = new CookieOptions()
-            {
-                Domain = ".localhost",
-                SameSite = SameSiteMode.Lax,
-                Secure = true,
-                IsEssential = true,
-                HttpOnly = true
-            };
-            context.Response.Cookies.Append(key, value, subOptions);
-        }
+    //public class AppCookieManager : ICookieManager
+    //{
+    //    public void AppendResponseCookie(HttpContext context, string key, string value, CookieOptions options)
+    //    {
+    //        context.Response.Cookies.Append(key, value, options);
+    //        var subOptions = new CookieOptions()
+    //        {
+    //            Domain = ".localhost",
+    //            SameSite = SameSiteMode.Lax,
+    //            Secure = true,
+    //            IsEssential = true,
+    //            HttpOnly = true
+    //        };
+    //        context.Response.Cookies.Append(key, value, subOptions);
+    //    }
 
-        public void DeleteCookie(HttpContext context, string key, CookieOptions options)
-        {
-            context.Response.Cookies.Delete(key, options);
-        }
+    //    public void DeleteCookie(HttpContext context, string key, CookieOptions options)
+    //    {
+    //        context.Response.Cookies.Delete(key, options);
+    //    }
 
-        public string GetRequestCookie(HttpContext context, string key)
-        {
-            string val = null;
-            context.Request.Cookies.TryGetValue(key, out val);
-            return val;
-        }
-    }
+    //    public string GetRequestCookie(HttpContext context, string key)
+    //    {
+    //        string val = null;
+    //        context.Request.Cookies.TryGetValue(key, out val);
+    //        return val;
+    //    }
+    //}
 }
