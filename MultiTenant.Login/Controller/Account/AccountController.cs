@@ -19,7 +19,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
-using System.Security.Claims;
 
 namespace IdentityServerHost.Quickstart.UI
 {
@@ -111,12 +110,10 @@ namespace IdentityServerHost.Quickstart.UI
 
             if (ModelState.IsValid)
             {
-
                 var user = await _signInManager.UserManager.FindByNameAsync(model.Username);
-
                 var claims = await _signInManager.UserManager.GetClaimsAsync(user);
-
                 string userClientId = context?.Client.ClientId;
+
                 foreach (var claim in claims)
                 {
                     if (claim.Type == "client_id")
@@ -130,6 +127,30 @@ namespace IdentityServerHost.Quickstart.UI
                 {
                     ViewBag.ErrorClient = "Account was wrong!";
                     return View();
+                }
+
+                if (userClientId == "tenant")
+                {
+                    string RedirectUri = context?.RedirectUri;
+                    string[] split1 = RedirectUri.Split(".");
+                    string[] split2 = split1[0].Split("https://");
+                    string tenantId = split2[1];
+
+                    foreach (var claim in claims)
+                    {
+                        if (claim.Type == "tenant_id")
+                        {
+                            tenantId = claim.Value;
+                            break;
+                        }
+                    }
+
+                    //check Tenant ID
+                    if (split2[1] != tenantId)
+                    {
+                        ViewBag.ErrorClient = "Account was wrong!";
+                        return View();
+                    }
                 }
 
                 // validate username/password against in-memory store

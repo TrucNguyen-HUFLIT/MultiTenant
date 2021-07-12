@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MultiTenant.Application.Services.Tenants;
+using MultiTenant.Application.Provider.Tenant;
+using MultiTenant.Application.Services.Tenants.User;
 using MultiTenant.Application.Validators.Tenants;
 using MultiTenant.Data.Contexts;
 using MultiTenant.Filter;
@@ -40,25 +42,24 @@ namespace MultiTenant
 
             services.AddFluentValidation(option =>
             {
-
-                option.RegisterValidatorsFromAssemblyContaining<AccountEditValidator>();
-
-            });
-            services.AddMvc().AddFluentValidation(option =>
-            {
                 option.RegisterValidatorsFromAssemblyContaining<AccountEditValidator>();
             });
-
-            services.AddScoped<ModelStateAjaxFilter>();
-            services.AddScoped<IUserService, UserService>();
-            //services.AddScoped<TenantFilter>();
-            services.AddScoped<ModelStateAjaxFilter>();
-
-            services.AddDbContext<MultiTenantContext>();
-            services.AddDbContext<TenantContext>();
 
             //get host name
             services.AddHttpContextAccessor();
+
+            services.AddScoped<ModelStateAjaxFilter>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITenantProvider, TenantProvider>();
+
+            services.AddDbContext<MultiTenantContext>();
+            services.AddDbContext<TenantContext>(async (provider, options) =>
+            {
+                var tenantProvider = provider.GetRequiredService<ITenantProvider>();
+                var dbName = await tenantProvider.GetSubDomainFromHost();
+
+                options.UseSqlServer($@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database={dbName};Trusted_Connection=True;");
+            });
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication(options =>
@@ -118,32 +119,32 @@ namespace MultiTenant
     }
 
 
-    public class AppCookieManager : ICookieManager
-    {
-        public void AppendResponseCookie(HttpContext context, string key, string value, CookieOptions options)
-        {
-            context.Response.Cookies.Append(key, value, options);
-            var subOptions = new CookieOptions()
-            {
-                Domain = ".localhost",
-                SameSite = SameSiteMode.Lax,
-                Secure = true,
-                IsEssential = true,
-                HttpOnly = true
-            };
-            context.Response.Cookies.Append(key, value, subOptions);
-        }
+    //public class AppCookieManager : ICookieManager
+    //{
+    //    public void AppendResponseCookie(HttpContext context, string key, string value, CookieOptions options)
+    //    {
+    //        context.Response.Cookies.Append(key, value, options);
+    //        var subOptions = new CookieOptions()
+    //        {
+    //            Domain = ".localhost",
+    //            SameSite = SameSiteMode.Lax,
+    //            Secure = true,
+    //            IsEssential = true,
+    //            HttpOnly = true
+    //        };
+    //        context.Response.Cookies.Append(key, value, subOptions);
+    //    }
 
-        public void DeleteCookie(HttpContext context, string key, CookieOptions options)
-        {
-            context.Response.Cookies.Delete(key, options);
-        }
+    //    public void DeleteCookie(HttpContext context, string key, CookieOptions options)
+    //    {
+    //        context.Response.Cookies.Delete(key, options);
+    //    }
 
-        public string GetRequestCookie(HttpContext context, string key)
-        {
-            string val = null;
-            context.Request.Cookies.TryGetValue(key, out val);
-            return val;
-        }
-    }
+    //    public string GetRequestCookie(HttpContext context, string key)
+    //    {
+    //        string val = null;
+    //        context.Request.Cookies.TryGetValue(key, out val);
+    //        return val;
+    //    }
+    //}
 }

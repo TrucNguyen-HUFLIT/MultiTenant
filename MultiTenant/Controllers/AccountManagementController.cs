@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MultiTenant.Application.Models.Tenants.Account;
-using MultiTenant.Application.Services.Tenants;
+using MultiTenant.Application.Services.Tenants.User;
 using MultiTenant.Filter;
 using System;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MultiTenant.Controllers
@@ -24,7 +22,7 @@ namespace MultiTenant.Controllers
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             string URL = await _userService.GetURLFromUser(User);
-            if (URL != "https://localhost:5002" && StaticAcc.CheckTenant)
+            if (StaticAcc.CheckTenant)
             {
                 StaticAcc.CheckTenant = false;
                 return Redirect(URL);

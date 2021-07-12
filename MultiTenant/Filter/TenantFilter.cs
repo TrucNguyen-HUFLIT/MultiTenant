@@ -22,22 +22,22 @@ namespace MultiTenant.Filter
         {
             string host = _httpContextAccessor.HttpContext.Request.Host.Value;
             string[] subDomain = host.Split(".");
-            if (subDomain.Length == 1)
-                subDomain[0] = null;
+            //if (subDomain.Length == 1)
+            //    subDomain[0] = null;
 
             string tenant_id = context.HttpContext.User.Claims
                                 .Where(x => x.Type == "tenant_id")
                                 .FirstOrDefault().Value;
-            string sub = tenant_id + ".";
-            if (tenant_id == "Tenant")
-            {
-                tenant_id = null;
-                sub = tenant_id;
-            }
+
+            //if (tenant_id == "Tenant")
+            //{
+            //    tenant_id = null;
+            //    sub = tenant_id;
+            //}
 
             if (subDomain[0] != tenant_id)
             {
-                context.Result = new RedirectResult($"https://{sub}localhost:5002");
+                context.Result = new RedirectResult($"{tenant_id}.{subDomain[1]}");
             }    
         }
     }

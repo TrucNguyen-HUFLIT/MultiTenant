@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MultiTenant.Application.Models.Tenants.Account;
 using MultiTenant.Data.Contexts;
-using MultiTenant.Data.EntitiesTenant.Tenants;
 using ReflectionIT.Mvc.Paging;
 using System;
 using System.Collections.Generic;
@@ -11,7 +9,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using X.PagedList;
 
-namespace MultiTenant.Application.Services.Tenants
+namespace MultiTenant.Application.Services.Tenants.User
 {
     public class UserService : IUserService
     {
