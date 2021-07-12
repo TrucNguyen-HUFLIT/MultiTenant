@@ -38,9 +38,9 @@
                             <form asp-action="ChangeImageEdit" enctype="multipart/form-data" class="form-horizontal form-material mx-2">
                                 <div class="form-group text-center container-avt">
                                     <div>
-                                        @if (Model.AccountEdit != null)
+                                        @if (Model.accountEdit != null)
                                         {
-                                            <img src="@Model.AccountEdit.Avatar" id="output" class="rounded-circle image" asp-append-version="true" width=250 height=250 />}
+                                            <img src="@Model.accountEdit.Avatar" id="output" class="rounded-circle image" asp-append-version="true" width=250 height=250 />}
                                     </div>
                                     <div class="btn-middle">
                                         <input asp-for="ChangeImage.UploadAvt" accept="image/*" class="btn rounded-circle middle" placeholder="Change Avatar" onchange="ChangeImg(this); ShowBtnSave()">
@@ -48,11 +48,11 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <input asp-for="ChangeImage.AccId" value="@Model.AccountEdit.AccId" hidden  readonly />
+                                        <input asp-for="ChangeImage.AccId" value="@Model.accountEdit.AccId" hidden  readonly />
                                     </div>
-                                    @if (@Model.AccountEdit.Email != null)
+                                    @if (@Model.accountEdit.Email != null)
                                     {
-                                        <p class="label-color">@Model.AccountEdit.Email </p>
+                                        <p class="label-color">@Model.accountEdit.Email </p>
                                     }
                                 </div>
                                 <br />
@@ -73,27 +73,27 @@
                         <form asp-action="Edit" id="edit-acc-form" class="form-horizontal form-material mx-2">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group">
-                                <label asp-for="AccountEdit.AccId" class="control-label col-md-12 mb-0"></label>
+                                <label asp-for="accountEdit.AccId" class="control-label col-md-12 mb-0"></label>
                                 <div class="col-md-12">
                                     @*<label class="form-control ps-0 form-control-line label-color">@Model.AccountEdit.AccId</label>s*@
-                                    <input asp-for="AccountEdit.AccId" readonly class="form-control ps-0 form-control-line label-color " />
+                                    <input asp-for="accountEdit.AccId" readonly class="form-control ps-0 form-control-line label-color " />
                                 </div>
                             </div>
-                            <input asp-for="AccountEdit.Avatar" hidden>
+                            <input asp-for="accountEdit.Avatar" hidden>
                             <div class="form-group">
-                                <label asp-for="AccountEdit.Name" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
+                                <label asp-for="accountEdit.Name" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
                                 <div class="col-md-12">
-                                    <input asp-for="AccountEdit.Name" class="form-control ps-0 form-control-line label-color" onchange="ShowBtnSave_PW()" />
-                                    <span asp-validation-for="AccountEdit.Name" id="Err_Name" class="text-danger"></span>
+                                    <input asp-for="accountEdit.Name" class="form-control ps-0 form-control-line label-color" onchange="ShowBtnSave_PW()" />
+                                    <span asp-validation-for="accountEdit.Name" id="Err_Name" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label asp-for="AccountEdit.Email" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
+                                <label asp-for="accountEdit.Email" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
                                 <div class="col-md-12">
-                                    <input asp-for="AccountEdit.Email" class="form-control ps-0 form-control-line label-color " />
-                                    <span asp-validation-for="AccountEdit.Name" id="Err_Email" class="text-danger"></span>
+                                    <input asp-for="accountEdit.Email" class="form-control ps-0 form-control-line label-color "readonly />
+                                    <span asp-validation-for="accountEdit.Email" id="Err_Email" class="text-danger"></span>
                                 </div>
-                                <span class="text-danger" style="font-size:20px;" id="emailAlready"></span>
+                                @*<span class="text-danger" style="font-size:20px;" id="emailAlready"></span>*@
                             </div>
 
                             <div class="form-group">
@@ -106,22 +106,8 @@
                                     else
                                     {
                                         <label class="form-control ps-0 form-control-line label-color">Customer</label>}*@
-                                    <input value="@Model.AccountEdit.Role" name="AccountEdit.Role" readonly class="form-control ps-0 form-control-line label-color " />
+                                    <input value="@Model.accountEdit.Role" name="AccountEdit.Role" readonly class="form-control ps-0 form-control-line label-color " />
 
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="AccountEdit.TenantId" class="control-label col-md-12 mb-0 "></label>
-                                <div class="col-md-12">
-                                    <div class="col-md-12">
-                                        <select asp-for="AccountEdit.TenantId" class="form-control ps-0 form-control-line label-color" style="width:200px">
-                                            @foreach (var item in Model.ListTenant)
-                                            {
-
-                                                <option value="@item.TenantId">@item.DbName</option>
-                                            }
-                                        </select>
-                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">

@@ -16,5 +16,7 @@ namespace MultiTenant.Application.Services.MultiTenants.User
         Task CreateAsync(AccountCreate accountCreate);
         List<Tenant> GetListTenant();
         Task<IPagedList<AccountRequest>> GetListAccountRequestAsync(string sortOrder, string currentFilter, string searchString, int? page);
+
+       // Task<AccountRequest> Details(int id);
     }
 }

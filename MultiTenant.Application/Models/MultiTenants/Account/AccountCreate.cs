@@ -7,8 +7,8 @@ namespace MultiTenant.Application.Models.MultiTenants.Account
 {
     public class AccountCreate
     {
-        [Display(Name = "ID Account")]
-        public int AccId { get; set; }
+        //[Display(Name = "ID Account")]
+        //public int AccId { get; set; }
 
         public string Name { get; set; }
 
@@ -22,9 +22,6 @@ namespace MultiTenant.Application.Models.MultiTenants.Account
         public string Avatar { get; set; }
 
         public Role Role { get; set; }
-
-        [Display(Name = "ID Tenant")]
-        public int TenantId { get; set; }
 
         [NotMapped]
         [Display(Name = "Avatar")]

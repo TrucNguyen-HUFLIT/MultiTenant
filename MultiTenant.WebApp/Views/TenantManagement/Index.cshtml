@@ -11,7 +11,7 @@
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div>
-                    <h2 style="font-weight:500">List Account</h2>
+                    <h2 style="font-weight:500">Tenant Management</h2>
                 </div>
             </div>
         </div>
@@ -49,19 +49,19 @@
                                 </th>
 
                                 <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.TenantRequest.URL)
+                                    @Html.DisplayNameFor(model => model.tenantRequest.URL)
                                 </th>
                                 <th class="border-top-0">
                                     @Html.ActionLink("Database Name", "Index", new { sortOrder = ViewBag.DbNameSortParm })
                                 </th>
                                 <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.TenantRequest.Favicon)
+                                    @Html.DisplayNameFor(model => model.tenantRequest.Favicon)
                                 </th>
                                 <th class="border-top-0"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.ListTenantRequest)
+                            @foreach (var item in Model.listTenantRequest)
                             {
                                 <tr class="align-middle text-center">
                                     <td>
@@ -84,9 +84,9 @@
 
                         </tbody>
                     </table>
-                    Page @(Model.ListTenantRequest.PageCount < Model.ListTenantRequest.PageNumber ? 0 : Model.ListTenantRequest.PageNumber) of @Model.ListTenantRequest.PageCount
+                    Page @(Model.listTenantRequest.PageCount < Model.listTenantRequest.PageNumber ? 0 : Model.listTenantRequest.PageNumber) of @Model.listTenantRequest.PageCount
 
-                    @Html.PagedListPager(Model.ListTenantRequest, page => Url.Action("Index",
+                    @Html.PagedListPager(Model.listTenantRequest, page => Url.Action("Index",
                         new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
                 </div>
             </div>

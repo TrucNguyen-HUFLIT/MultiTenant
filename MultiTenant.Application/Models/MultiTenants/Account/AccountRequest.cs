@@ -17,7 +17,5 @@ namespace MultiTenant.Application.Models.MultiTenants.Account
 
         public Role Role { get; set; }
 
-        [Display(Name = "ID Tenant")]
-        public int TenantId { get; set; }
     }
 }

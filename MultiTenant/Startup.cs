@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MultiTenant.Application.Services.Tenants;
-using MultiTenant.Application.Validators.Tennants;
+using MultiTenant.Application.Validators.Tenants;
 using MultiTenant.Data.Contexts;
 using MultiTenant.Filter;
 using System.IdentityModel.Tokens.Jwt;

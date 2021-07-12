@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MultiTenant.Application.Validators.Tenants
 {
-    class AccountEditValidator : AbstractValidator<AccountEdit>
+    public class AccountEditValidator : AbstractValidator<AccountEdit>
     {
         public AccountEditValidator()
         {

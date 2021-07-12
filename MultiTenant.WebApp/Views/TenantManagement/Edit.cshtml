@@ -35,32 +35,32 @@
                     <form asp-action="Edit" id="edit-tenant-form" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
-                            <label asp-for="TenantEdit.TenantId" class="control-label"></label>
-                            <input asp-for="TenantEdit.TenantId" class="form-control" readonly />
-                            <span asp-validation-for="TenantEdit.TenantId" class="text-danger"></span>
+                            <label asp-for="tenantEdit.TenantId" class="control-label"></label>
+                            <input asp-for="tenantEdit.TenantId" class="form-control" readonly />
+                            <span asp-validation-for="tenantEdit.TenantId" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="TenantEdit.DbName" class="control-label"></label><span class="text-danger"> *</span>
-                            <input asp-for="TenantEdit.DbName" class="form-control" readonly />
-                            <span asp-validation-for="TenantEdit.DbName" class="text-danger" id="Err_Name"></span>
+                            <label asp-for="tenantEdit.DbName" class="control-label"></label><span class="text-danger"> *</span>
+                            <input asp-for="tenantEdit.DbName" class="form-control" readonly />
+                            <span asp-validation-for="tenantEdit.DbName" class="text-danger" id="Err_DbName"></span>
                             <span class="text-danger" style="font-size:20px;" ></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="TenantEdit.URL" class="control-label"></label>
-                            <input asp-for="TenantEdit.URL" class="form-control"  readonly/>
-                            <span asp-validation-for="TenantEdit.URL" class="text-danger"></span>
+                            <label asp-for="tenantEdit.URL" class="control-label"></label>
+                            <input asp-for="tenantEdit.URL" class="form-control"  readonly/>
+                            <span asp-validation-for="tenantEdit.URL" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="TenantEdit.UploadFavicon" class="control-label"></label>
+                            <label asp-for="tenantEdit.UploadFavicon" class="control-label"></label>
                         </div>
                         <div class="form-group">
-                            <input asp-for="TenantEdit.UploadFavicon" accept="image/*" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" >
-                            @if (Model.TenantEdit != null)
+                            <input asp-for="tenantEdit.UploadFavicon" accept="image/*" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" >
+                            @if (Model.tenantEdit != null)
                             {
-                                <img src="@Model.TenantEdit.Favicon" asp-append-version="true" width="120" height="90" id="output" />
+                                <img src="@Model.tenantEdit.Favicon" asp-append-version="true" width="120" height="90" id="output" />
                             }
-                            <span asp-validation-for="TenantEdit.UploadFavicon" class="text-danger" hidden></span>
+                            <span asp-validation-for="tenantEdit.UploadFavicon" class="text-danger" hidden></span>
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Save" class="btn btn-primary" />

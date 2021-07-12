@@ -9,8 +9,8 @@ using MultiTenant.Data.Contexts;
 namespace MultiTenant.Data.Migrations
 {
     [DbContext(typeof(MultiTenantContext))]
-    [Migration("20210626090104_CreateMultiTenantDB")]
-    partial class CreateMultiTenantDB
+    [Migration("20210710082123_CreateMultiTenantDB1")]
+    partial class CreateMultiTenantDB1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,20 +31,15 @@ namespace MultiTenant.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserName")
@@ -52,9 +47,22 @@ namespace MultiTenant.Data.Migrations
 
                     b.HasKey("AccId");
 
+                    b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("MultiTenant.Data.EntitiesTenant.MultiTenants.AccountTenant", b =>
+                {
+                    b.Property<int>("AccId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AccId", "TenantId");
+
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("AccountTenants");
                 });
 
             modelBuilder.Entity("MultiTenant.Data.EntitiesTenant.MultiTenants.Tenant", b =>
@@ -64,16 +72,13 @@ namespace MultiTenant.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("DataConnectionString")
+                    b.Property<string>("DbName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Favicon")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SubDomain")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenantName")
+                    b.Property<string>("URL")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TenantId");
@@ -81,20 +86,33 @@ namespace MultiTenant.Data.Migrations
                     b.ToTable("Tenants");
                 });
 
-            modelBuilder.Entity("MultiTenant.Data.EntitiesTenant.MultiTenants.Account", b =>
+            modelBuilder.Entity("MultiTenant.Data.EntitiesTenant.MultiTenants.AccountTenant", b =>
                 {
+                    b.HasOne("MultiTenant.Data.EntitiesTenant.MultiTenants.Account", "Account")
+                        .WithMany("AccountTenants")
+                        .HasForeignKey("AccId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MultiTenant.Data.EntitiesTenant.MultiTenants.Tenant", "Tenant")
-                        .WithMany("Accounts")
+                        .WithMany("AccountTenants")
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Account");
+
                     b.Navigation("Tenant");
+                });
+
+            modelBuilder.Entity("MultiTenant.Data.EntitiesTenant.MultiTenants.Account", b =>
+                {
+                    b.Navigation("AccountTenants");
                 });
 
             modelBuilder.Entity("MultiTenant.Data.EntitiesTenant.MultiTenants.Tenant", b =>
                 {
-                    b.Navigation("Accounts");
+                    b.Navigation("AccountTenants");
                 });
 #pragma warning restore 612, 618
         }

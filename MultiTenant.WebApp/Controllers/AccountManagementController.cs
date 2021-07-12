@@ -7,6 +7,9 @@ using MultiTenant.Application.Models.MultiTenants.Account;
 using System;
 using MultiTenant.Data.EntitiesTenant.MultiTenants;
 using System.Linq;
+using MultiTenant.WebApp.Helper;
+using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace MultiTenant.WebApp.Controllers
 {
@@ -14,7 +17,7 @@ namespace MultiTenant.WebApp.Controllers
     public class AccountManagementController : Controller
     {
         private readonly IUserService _accountservice;
-        
+        UserID4API _api = new UserID4API();
         public AccountManagementController(IUserService accountService)
         {
             _accountservice = accountService;
@@ -39,22 +42,7 @@ namespace MultiTenant.WebApp.Controllers
             var model = new AccountViewModel
             {
                 ListAccountRequest = await _accountservice.GetListAccountRequestAsync(sortOrder, currentFilter, searchString, page),
-                ListTenant=  _accountservice.GetListTenant(),
-            };
-            return View(model);
-
-        }
-
-
-        [HttpGet]
-        public IActionResult Create(string message)
-        {
-
-            ViewBag.error = message;
-            var model = new AccountViewModel
-            {
-                AccountCreate = new AccountCreate(),
-                ListTenant = _accountservice.GetListTenant(),
+                listTenant=  _accountservice.GetListTenant(),
             };
             return View(model);
 
@@ -68,8 +56,8 @@ namespace MultiTenant.WebApp.Controllers
             ViewBag.ActiveAccount = "active";
             var model = new AccountViewModel
             {
-                ListTenant = _accountservice.GetListTenant(),
-                AccountEdit = await _accountservice.GetAccountEditByIdAsync(id)
+                listTenant = _accountservice.GetListTenant(),
+                accountEdit = await _accountservice.GetAccountEditByIdAsync(id)
             };
             return View(model);
 
@@ -104,14 +92,33 @@ namespace MultiTenant.WebApp.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            ViewBag.ActiveAccount = "active";
+            var model = new AccountViewModel
+            {
+                accountCreate = new AccountCreate(),
+            };
+            return View(model);
+        }
 
+        [TypeFilter(typeof(ExceptionFilter))]
+        [ServiceFilter(typeof(ModelStateAjaxFilter))]
         [HttpPost]
         public async Task<IActionResult> Create(AccountCreate accountCreate)
         {
+            HttpClient client = _api.Initial();
+            var postTask = client.PostAsJsonAsync("api/registeruser", accountCreate);
+            postTask.Wait();
 
-            await _accountservice.CreateAsync(accountCreate);
-            return Ok(accountCreate.AccId);
+            var result = postTask.Result;
+            if(result.IsSuccessStatusCode)
+            {
+                await _accountservice.CreateAsync(accountCreate);
+            }
 
+            return Ok(accountCreate);
         }
     }
 }

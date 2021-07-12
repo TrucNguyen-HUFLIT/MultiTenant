@@ -33,7 +33,7 @@ namespace MultiTenant.WebApp.Controllers
 
             var model = new TenantViewModel
             {
-                ListTenantRequest = await _tenantservice.GetListTenantRequestAsync(sortOrder, currentFilter, searchString, page)
+                listTenantRequest = await _tenantservice.GetListTenantRequestAsync(sortOrder, currentFilter, searchString, page)
             };
             return View(model);
 
@@ -46,7 +46,7 @@ namespace MultiTenant.WebApp.Controllers
             ViewBag.ActiveTenant = "active";
             var model = new TenantViewModel
             {
-                TenantEdit = await _tenantservice.GetTenantEditByIdAsync(id),
+                tenantEdit = await _tenantservice.GetTenantEditByIdAsync(id),
             };
             return View(model);
         }

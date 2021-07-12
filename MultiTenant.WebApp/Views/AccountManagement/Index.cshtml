@@ -8,14 +8,12 @@
 @using X.PagedList.Mvc.Core;
 @using Microsoft.AspNetCore.Mvc;
 
-
-
 <div class="app-main__inner">
     <div class="app-page-title">
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div>
-                    <h2 style="font-weight:500">List Account</h2>
+                    <h2 style="font-weight:500">Account Management</h2>
                 </div>
             </div>
         </div>
@@ -55,16 +53,14 @@
                                     @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
                                 </th>
                                 <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.AccountRequest.Email)
+                                    @Html.DisplayNameFor(model => model.accountRequest.Email)
                                 </th>
                                 <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.AccountRequest.Role)
+                                    @Html.DisplayNameFor(model => model.accountRequest.Role)
                                 </th>
+                          
                                 <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.AccountRequest.TenantId)
-                                </th>
-                                <th class="border-top-0">
-                                    @Html.DisplayNameFor(model => model.AccountRequest.Avatar)
+                                    @Html.DisplayNameFor(model => model.accountRequest.Avatar)
                                 </th>
                                 <th class="border-top-0"></th>
                             </tr>
@@ -90,17 +86,6 @@
                                         else
                                         {
                                             <span>Customer</span>
-
-                                        }
-                                    </td>
-                                    <td>
-                                        @foreach(var tenant in Model.ListTenant)
-                                        {
-                                            if(tenant.TenantId==item.TenantId)
-                                            {
-                                                @tenant.DbName
-                                                break;
-                                            }
                                         }
                                     </td>
                                     <td>

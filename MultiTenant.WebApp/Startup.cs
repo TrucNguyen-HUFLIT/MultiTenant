@@ -47,11 +47,10 @@ namespace MultiTenant.WebApp
 
             services.AddControllersWithViews();
 
-            services.AddScoped<ModelStateAjaxFilter>();
-
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITenantService, TenantService>();
 
+            services.AddScoped<ModelStateAjaxFilter>();
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication(options =>
