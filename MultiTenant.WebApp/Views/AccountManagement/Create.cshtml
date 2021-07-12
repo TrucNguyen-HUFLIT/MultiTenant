@@ -1,8 +1,9 @@
 ﻿
 @model MultiTenant.Application.Models.MultiTenants.Account.AccountViewModel
-@{ ViewData["Title"] = "Create";
-
-    Layout = "~/Views/Shared/_LayoutManager.cshtml"; }
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+}
 <div class="app-main__inner">
     <div class="app-page-title">
         <div class="page-title-wrapper">
@@ -24,14 +25,14 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="card-body">
-                    <form asp-action="Create" enctype="multipart/form-data">
+                    <form asp-action="Create" id="create-acc-form" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <div class="card-img ">
                                 @*<img src="@(Model.nhanVien != null? Url.Content("/img"+Model.nhanVien.Avt) :"/img/icon.png")" height="200" width="200" id="previewImg" style="margin-left: auto; width: 100%; margin-right: auto; max-width: 240px; display: block;" />*@
-                                <img src="@(Model.AccountCreate.Avatar != null? Url.Content(Model.AccountCreate.Avatar) :"/img/Avatar/avt-default.png")" id="output" height="240" width="240" style="margin-left: auto; width: 100%; margin-right: auto; max-width: 240px; display: block; border-radius: 50%;" />
+                                <img src="@(Model.accountCreate.Avatar != null? Url.Content(Model.accountCreate.Avatar) :"/img/main/avatar-default-icon.png")" id="output" height="240" width="240" style="margin-left: auto; width: 100%; margin-right: auto; max-width: 240px; display: block; border-radius: 50%;" />
                                 <br />
-                                <input asp-for="AccountCreate.UploadAvt" accept="image/*" style="margin-left: auto; margin-right: auto; display: block;" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" />
+                                <input asp-for="accountCreate.UploadAvt" accept="image/*" style="margin-left: auto; margin-right: auto; display: block;" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" />
                             </div>
 
                         </div>
@@ -40,43 +41,34 @@
                         @*<input asp-for="nhanVien.UpLoadAvt" accept="image/*" onchange="ChangeImage(this,'#previewImg')" />*@
 
                         <div class="form-group">
-                            <label asp-for="AccountCreate.UserName" class="control-label"></label>
-                            <input asp-for="AccountCreate.UserName" class="form-control" />
-                            <span asp-validation-for="AccountCreate.UserName" class="text-danger"></span>
-                            <span class="text-danger">@ViewBag.error</span>
+                            <label asp-for="accountCreate.UserName" class="control-label"></label>
+                            <input asp-for="accountCreate.UserName" class="form-control" />
+                            <span asp-validation-for="accountCreate.UserName" id="Err_UserName" class="text-danger"></span>
+                            <span class="text-danger" id="UserNameExist">
                         </div>
                         <div class="form-group">
-                            <label asp-for="AccountCreate.Password" class="control-label"></label>
-                            <input asp-for="AccountCreate.Password" class="form-control" type="password" />
-                            <span asp-validation-for="AccountCreate.Password" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label asp-for="AccountCreate.Name" class="control-label"></label>
-                            <input asp-for="AccountCreate.Name" class="form-control" />
-                            <span asp-validation-for="AccountCreate.Name" class="text-danger"></span>
+                            <label asp-for="accountCreate.Password" class="control-label"></label>
+                            <input asp-for="accountCreate.Password" class="form-control" type="password" />
+                            <span asp-validation-for="accountCreate.Password" class="text-danger" id="Err_Password"></span>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="AccountCreate.Email" class="control-label"></label>
-                            <input asp-for="AccountCreate.Email" class="form-control" />
-                            <span asp-validation-for="AccountCreate.Email" class="text-danger"></span>
+                            <label asp-for="accountCreate.Name" class="control-label"></label>
+                            <input asp-for="accountCreate.Name" class="form-control" />
+                            <span asp-validation-for="accountCreate.Name" id="Err_Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="accountCreate.Email" class="control-label"></label>
+                            <input asp-for="accountCreate.Email" class="form-control" />
+                            <span asp-validation-for="accountCreate.Email" id="Err_Email" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-12 mb-0 ">Role</label>
-                            <select asp-for="AccountCreate.Role" class="form-control">
+                            <select asp-for="accountCreate.Role" class="form-control">
 
                                 <option value="1">Admin</option>
                                 <option value="2">Customer</option>
-                            </select>
-                        </div>
-                        <div class="position-relative form-group">
-                            <label asp-for="AccountCreate.TenantId" class="control-label"></label>
-                            <select asp-for="AccountCreate.TenantId" class="form-control">
-                                @foreach (var item in Model.ListTenant)
-                                {
-                                   <option value="@item.TenantId">@item.DbName </option>
-                               }
                             </select>
                         </div>
                         @*<input asp-for="nhanVien.UpLoadAvt" accept="image/*" onchange="ChangeImage(this,'#previewImg')" />*@

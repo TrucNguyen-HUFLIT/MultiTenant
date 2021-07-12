@@ -13,11 +13,11 @@
         },
         error: function (data) {
             console.log(data);
-            var error = data.responseText;
-            if (error == " Email is already ") {
-                document.getElementById("emailAlready").innerHTML = data.responseText;
-                return;
-            }
+            //var error = data.responseText;
+            //if (error == " Email is already ") {
+            //    document.getElementById("emailAlready").innerHTML = data.responseText;
+            //    return;
+            //}
             try {
                 var objectValidation = data.responseJSON;
 
@@ -26,14 +26,14 @@
                 else
                     document.getElementById("Err_Name").innerHTML = "";
 
-                if (objectValidation["accountEdit.Email"] != undefined)
-                    document.getElementById("Err_Email").innerHTML = objectValidation["accountEdit.Email"];
-                else
-                    document.getElementById("Err_Email").innerHTML = "";
+                //if (objectValidation["accountEdit.Email"] != undefined)
+                //    document.getElementById("Err_Email").innerHTML = objectValidation["accountEdit.Email"];
+                //else
+                //    document.getElementById("Err_Email").innerHTML = "";
             }
             catch {
                 document.getElementById("Err_Name").innerHTML = "";
-                document.getElementById("Err_Email").innerHTML = "";
+               // document.getElementById("Err_Email").innerHTML = "";
             }
         },
 
@@ -68,19 +68,78 @@ $("#edit-tenant-form").submit(function (e) {
                 var objectValidation = data.responseJSON;
 
                 if (objectValidation["tenantEdit.DbName"] != undefined)
-                    document.getElementById("Err_Name").innerHTML = objectValidation["tenantEdit.DbName"];
+                    document.getElementById("Err_DbName").innerHTML = objectValidation["tenantEdit.DbName"];
                 else
-                    document.getElementById("Err_Name").innerHTML = "";
+                    document.getElementById("Err_DbName").innerHTML = "";
 
             }
             catch {
-                document.getElementById("Err_Name").innerHTML = "";
+                document.getElementById("Err_DbName").innerHTML = "";
             }
         },
 
     });
 });
 
+$("#create-acc-form").submit(function (e) {
+    e.preventDefault();
+
+    let formData = new FormData($(this)[0]);
+    $.ajax({
+        url: '/accountmanagement/create',
+        type: "post",
+        async: false,
+        cache: false,
+        contentType: false,
+        enctype: 'multipart/form-data',
+        processData: false,
+        data: formData,
+        success: function () {
+            window.location.replace("/accountmanagement/index");
+        },
+        error: function (data) {
+            console.log(data)
+            var errors = data.responseJSON;
+            if (errors == undefined)
+            {
+                document.getElementById("UserNameExist").innerHTML = data.responseText;
+                return;
+            }
+            try {
+
+                var objectValid = data.responseJSON;
+
+                if (objectValid["accountCreate.UserName"] != undefined)
+                    document.getElementById("Err_UserName").innerHTML = objectValid["accountCreate.UserName"];
+                else
+                    document.getElementById("Err_UserName").innerHTML = "";
+
+                if (objectValid["accountCreate.Password"] != undefined)
+                    document.getElementById("Err_Password").innerHTML = objectValid["accountCreate.UserName"];
+                else
+                    document.getElementById("Err_Password").innerHTML = "";
+
+                if (objectValid["accountCreate.Name"] != undefined)
+                    document.getElementById("Err_Name").innerHTML = objectValid["accountCreate.Name"];
+                else
+                    document.getElementById("Err_Name").innerHTML = "";
+
+                if (objectValid["accountCreate.Email"] != undefined)
+                    document.getElementById("Err_Email").innerHTML = objectValid["accountCreate.Email"];
+                else
+                    document.getElementById("Err_Email").innerHTML = "";
+
+
+            }
+            catch {
+                document.getElementById("Err_UserName").innerHTML = "";
+                document.getElementById("Err_Password").innerHTML = "";
+                document.getElementById("Err_Name").innerHTML = "";
+                document.getElementById("Err_Email").innerHTML = "";
+            }
+        },
+    });
+});
 
 $(document).ready(function () {
 });
@@ -117,3 +176,7 @@ window.onload = function () {
     Active();
     ActiveProfile();
 };
+
+function ChangeImg(src) {
+    document.getElementById('output').src = window.URL.createObjectURL(src.files[0])
+}

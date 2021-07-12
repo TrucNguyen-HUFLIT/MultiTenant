@@ -8,6 +8,7 @@ namespace MultiTenant.Data.Contexts
 
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<AccountTenant> AccountTenants { get; set; }
 
         public MultiTenantContext()
         {
@@ -25,22 +26,21 @@ namespace MultiTenant.Data.Contexts
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AccountTenant>().HasKey(ac => new { ac.AccId, ac.TenantId });
 
-            modelBuilder.Entity<Account>(entity =>
-            {
-                entity.HasKey(e => e.AccId);
-                entity.HasOne<Tenant>(s => s.Tenant)
-                      .WithMany(g => g.Accounts)
-                      .HasForeignKey(s => s.TenantId);
-                entity.Property(p => p.Email).IsRequired();
-                entity.Property(p => p.Password).IsRequired();
+            modelBuilder.Entity<AccountTenant>()
+                .HasOne(ac => ac.Account)
+                .WithMany(s => s.AccountTenants)
+                .HasForeignKey(ac => ac.AccId);
 
-            });
+            modelBuilder.Entity<AccountTenant>()
+                .HasOne(ac=>ac.Tenant)
+                .WithMany(s=>s.AccountTenants)
+                .HasForeignKey(ac=>ac.TenantId);
 
-            modelBuilder.Entity<Tenant>(entity =>
-            {
-                entity.HasKey(e => e.TenantId);
-            });
+
+
+          
 
         }
 

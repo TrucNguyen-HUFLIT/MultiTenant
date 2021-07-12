@@ -6,8 +6,8 @@ namespace MultiTenant.Application.Models.MultiTenants.Tenants
 {
     public class TenantViewModel
     {
-        public TenantEdit TenantEdit { get; set; }
-        public IPagedList<TenantRequest> ListTenantRequest { get; set; }
-        public TenantRequest TenantRequest { get; set; }
+        public TenantEdit tenantEdit { get; set; }
+        public IPagedList<TenantRequest> listTenantRequest { get; set; }
+        public TenantRequest tenantRequest { get; set; }
     }
 }

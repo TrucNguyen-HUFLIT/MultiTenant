@@ -26,6 +26,17 @@ namespace MultiTenant.Login
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
             IIdentityServerBuilder ids = services.AddIdentityServer()
                 .AddDeveloperSigningCredential();
 

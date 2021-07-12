@@ -5,6 +5,7 @@ namespace MultiTenant.Data.EntitiesTenant.MultiTenants
 {
     public class Tenant
     {
+        [Key]
         [Display(Name = "ID Tenant")]
         public int TenantId { get; set; }
 
@@ -15,8 +16,7 @@ namespace MultiTenant.Data.EntitiesTenant.MultiTenants
 
         public string Favicon { get; set; }
 
-
-        public ICollection<Account> Accounts { get; set; }
+        public ICollection<AccountTenant> AccountTenants { get; set; }
 
     }
 }

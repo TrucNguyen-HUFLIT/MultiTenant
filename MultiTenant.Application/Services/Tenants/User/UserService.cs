@@ -128,7 +128,7 @@ namespace MultiTenant.Application.Services.Tenants.User
                 StaticAcc.Avatar = model.Avatar;
                 StaticAcc.Name = model.Name;
                 StaticAcc.Email = model.Email;
-                StaticAcc.Favicon = await _multiTenantContext.Tenants.Where(x => x.TenantId == account.TenantId).Select(x => x.Favicon).FirstOrDefaultAsync();
+               // StaticAcc.Favicon = await _multiTenantContext.Tenants.Where(x => x.TenantId == account.TenantId).Select(x => x.Favicon).FirstOrDefaultAsync();
 
                 return model;
             }

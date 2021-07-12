@@ -29,4 +29,9 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MultiTenant.Data\MultiTenant.Data.csproj" />
+    <ProjectReference Include="..\MultiTenant.WebApp\MultiTenant.WebApp.csproj" />
+  </ItemGroup>
+
 </Project>

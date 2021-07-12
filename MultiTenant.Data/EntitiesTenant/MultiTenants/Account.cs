@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MultiTenant.Data.EntitiesTenant.MultiTenants
 {
     public class Account
     {
+        [Key]
         [Display(Name = "ID Account")]
         public int AccId { get; set; } //Id
 
@@ -14,16 +16,11 @@ namespace MultiTenant.Data.EntitiesTenant.MultiTenants
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
-        public string Password { get; set; }
-
         public string Avatar { get; set; } //Picture
 
         public Role Role { get; set; }
 
-        [Display(Name = "ID Tenant")]
-        public int TenantId { get; set; } //ClientID
-
-        public Tenant Tenant { get; set; }
+        public ICollection<AccountTenant> AccountTenants { get; set; }
     }
     public enum Role
     {
