@@ -18,7 +18,7 @@ namespace MultiTenant.Login
             services.AddControllersWithViews();
 
             const string connectionString =
-                @"Data Source=DESKTOP-I7EOLFR\SQLEXPRESS;database=IdentityServer4;trusted_connection=yes;";
+                @"Data Source=HUYDESKTOP;database=IdentityServer4;trusted_connection=yes;";
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddDbContext<ApplicationDbContext>(builder =>
@@ -26,17 +26,6 @@ namespace MultiTenant.Login
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Password settings
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = true;
-
-                // User settings
-                options.User.RequireUniqueEmail = true;
-            });
             IIdentityServerBuilder ids = services.AddIdentityServer()
                 .AddDeveloperSigningCredential();
 

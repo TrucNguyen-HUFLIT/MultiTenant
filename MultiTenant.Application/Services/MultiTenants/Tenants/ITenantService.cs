@@ -13,6 +13,8 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
 
         Task<bool> EditAsync(TenantEdit tenantEdit);
 
+        Task CreateAsync(TenantCreate tenantCreate);
+
         Task<IPagedList<TenantRequest>> GetListTenantRequestAsync(string sortOrder, string currentFilter, string searchString, int? page);
     }
 }
