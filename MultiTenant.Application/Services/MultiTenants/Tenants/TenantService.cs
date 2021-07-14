@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MultiTenant.Application.Exceptions;
 using MultiTenant.Application.Models.MultiTenants.Tenants;
 using MultiTenant.Data.Contexts;
+using MultiTenant.Data.EntitiesTenant.MultiTenants;
 using ReflectionIT.Mvc.Paging;
 using System;
 using System.Collections.Generic;
@@ -16,19 +17,52 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
     public class TenantService : ITenantService
     {
         private readonly MultiTenantContext _context;
+       // private readonly TenantContext _tenantcontext;
         private readonly IWebHostEnvironment hostEnvironment;
 
-        public TenantService(MultiTenantContext context, IWebHostEnvironment hostEnvironment)
+        public TenantService(MultiTenantContext context, IWebHostEnvironment hostEnvironment /*TenantContext tenantcontext*/)
         {
+          //  _tenantcontext = tenantcontext;
             _context = context;
             this.hostEnvironment = hostEnvironment;
+        }
+
+        public async Task CreateAsync(TenantCreate tenantCreate)
+        {
+            var dbName = _context.Tenants.Where(x => x.TenantId == tenantCreate.TenantId).Select(x => x.DbName).FirstOrDefault();
+            if (dbName != null)
+            {
+                throw new SameDbExceptions(dbName);
+            }
+
+            var model = new Tenant
+            {
+                DbName = tenantCreate.DbName,
+                URL = "https://" + tenantCreate.DbName + ".localhost:5002",
+            };
+
+            string wwwrootpath = hostEnvironment.WebRootPath;
+            string filename = Path.GetFileNameWithoutExtension(tenantCreate.UploadFavicon.FileName);
+            string extension = Path.GetExtension(tenantCreate.UploadFavicon.FileName);
+            filename += extension;
+            string path1 = Path.Combine(wwwrootpath + "/img/", filename);
+
+            using (var filestream = new FileStream(path1, FileMode.Create))
+            {
+                await tenantCreate.UploadFavicon.CopyToAsync(filestream);
+            }
+            model.Favicon = "/img/" + filename;
+
+          //  var dbmigrate =  _tenantcontext.Database.MigrateAsync();
+            _context.Add(model);
+            await _context.SaveChangesAsync();
+            
         }
 
         public async Task<bool> EditAsync(TenantEdit tenantEdit)
         {
             var model = await _context.Tenants.Where(x => x.TenantId == tenantEdit.TenantId).FirstOrDefaultAsync();
             var dbName = await _context.Tenants.Select(x => x.DbName).ToListAsync();
-
 
             model.TenantId = tenantEdit.TenantId;
             model.URL = tenantEdit.URL;
@@ -70,7 +104,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
                         URL = tenant.URL,
                         Favicon = tenant.Favicon,
                         TenantId = tenant.TenantId
-                        
+
                     };
                     model.Add(accountRequest);
                 }
@@ -100,7 +134,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
         {
             var model = await _context.Tenants
                  .Where(x => x.TenantId == id)
-                 .Select(x => new { x.TenantId, x.DbName, x.URL,x.Favicon })
+                 .Select(x => new { x.TenantId, x.DbName, x.URL, x.Favicon })
                  .FirstOrDefaultAsync();
             if (model != null)
             {
@@ -108,9 +142,9 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
                 {
 
                     TenantId = model.TenantId,
-                    DbName=model.DbName,
-                    URL=model.URL,
-                    Favicon=model.Favicon
+                    DbName = model.DbName,
+                    URL = model.URL,
+                    Favicon = model.Favicon
                 };
                 return tenantEdit;
             }

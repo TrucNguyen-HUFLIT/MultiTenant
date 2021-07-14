@@ -25,7 +25,7 @@ namespace MultiTenant.Login.Controller.Account
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] RegisterViewModel model)
+        public IActionResult Create([FromBody] RegisterViewModel model)
         {
 
             //DbName = Subdomain
@@ -34,7 +34,7 @@ namespace MultiTenant.Login.Controller.Account
             TestUser user = new()
             {
                 Username = model.UserName,
-                Password = model.Password, 
+                Password = model.Password,
                 Claims = new List<Claim>
                     {
                         new Claim(JwtClaimTypes.Email, model.Email),
@@ -49,7 +49,7 @@ namespace MultiTenant.Login.Controller.Account
             };
             _userManager.CreateAsync(identityUser, user.Password.ToString()).Wait();
             _userManager.AddClaimsAsync(identityUser, user.Claims.ToList()).Wait();
-          
+
             return Ok();
 
         }

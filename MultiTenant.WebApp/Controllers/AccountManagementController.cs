@@ -112,7 +112,7 @@ namespace MultiTenant.WebApp.Controllers
             postTask.Wait();
 
             var result = postTask.Result;
-            if(result.IsSuccessStatusCode)
+            if (result.IsSuccessStatusCode)
             {
                 await _accountservice.CreateAsync(accountCreate);
             }
