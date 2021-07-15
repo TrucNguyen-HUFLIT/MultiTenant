@@ -115,6 +115,8 @@ namespace MultiTenant.Application.Services.Tenants.User
                                 .FirstOrDefault().Value;
             var account = await _multiTenantContext.Accounts.Where(x => x.UserName == name).FirstOrDefaultAsync();
 
+            var acc = await _multiTenantContext.AccountTenants.Where(x => x.AccId == account.AccId).FirstOrDefaultAsync();
+
             if (account != null)
             {
                 var model = new AccountLogged
@@ -128,7 +130,7 @@ namespace MultiTenant.Application.Services.Tenants.User
                 StaticAcc.Avatar = model.Avatar;
                 StaticAcc.Name = model.Name;
                 StaticAcc.Email = model.Email;
-               // StaticAcc.Favicon = await _multiTenantContext.Tenants.Where(x => x.TenantId == account.TenantId).Select(x => x.Favicon).FirstOrDefaultAsync();
+                StaticAcc.Favicon = await _multiTenantContext.Tenants.Where(x => x.TenantId == acc.TenantId).Select(x=>x.Favicon).FirstOrDefaultAsync();
 
                 return model;
             }

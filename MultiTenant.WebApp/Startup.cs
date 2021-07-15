@@ -9,6 +9,7 @@ using MultiTenant.Application.Services.MultiTenants.User;
 using MultiTenant.Application.Services.MultiTenants.Tenants;
 using MultiTenant.Application.Validators.MultiTenants.User;
 using MultiTenant.WebApp.Filter;
+using MultiTenant.Application.Services.MultiTenants.AccTenants;
 
 namespace MultiTenant.WebApp
 {
@@ -47,6 +48,7 @@ namespace MultiTenant.WebApp
 
             services.AddControllersWithViews();
 
+            services.AddScoped<AccTenantService, AccTenantService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITenantService, TenantService>();
 
