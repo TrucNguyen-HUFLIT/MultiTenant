@@ -62,10 +62,10 @@ namespace MultiTenant.Application.Services.MultiTenants.User
 
         public async Task CreateAsync(AccountCreate accountCreate)
         {
-            var username = _context.Accounts.Where(x => x.UserName == accountCreate.UserName).Select(x => x.UserName).FirstOrDefault();
+            var username = _context.Accounts.Where(x => x.UserName == accountCreate.UserName).FirstOrDefault();
             if (username != null)
             {
-                throw new UserNameExistedException(username);
+                throw new UserNameExistedException(username.UserName);
             }
             var model = new Account
             {
@@ -85,7 +85,7 @@ namespace MultiTenant.Application.Services.MultiTenants.User
                 {
                     await accountCreate.UploadAvt.CopyToAsync(fileStream);
                 }
-                model.Avatar = "/img/" + fileName;
+                model.Avatar = "/img/" + fileName + extension;
             }
             else
             {

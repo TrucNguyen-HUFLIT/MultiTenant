@@ -1,4 +1,5 @@
 ﻿using IdentityModel;
+using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.Test;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +14,12 @@ namespace MultiTenant.Login.Controller.Account
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegisterUserController : ControllerBase
+    public class RegisterController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
       
 
-        public RegisterUserController( UserManager<IdentityUser> userManager)
+        public RegisterController( UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
       
@@ -27,6 +28,7 @@ namespace MultiTenant.Login.Controller.Account
         [HttpPost]
         public IActionResult Create([FromBody] RegisterViewModel model)
         {
+            var user1 = _userManager.FindByNameAsync("kha");
 
             //DbName = Subdomain
             //string tenant = await _context.Tenants.Where(x => x.TenantId == model.TenantId).Select(x => x.DbName).FirstOrDefaultAsync();
@@ -47,12 +49,27 @@ namespace MultiTenant.Login.Controller.Account
             {
                 Email = model.Email,
             };
+
             _userManager.CreateAsync(identityUser, user.Password.ToString()).Wait();
             _userManager.AddClaimsAsync(identityUser, user.Claims.ToList()).Wait();
+
 
             return Ok();
 
         }
+
+        //[HttpPost]
+        //public IActionResult CreateTenant([FromBody] TenantViewModel model)
+        //{
+        //    var tenant = new ClientRedirectUri()
+        //    {
+        //       RedirectUri=model.RedirectURI,
+        //       ClientId=model.ClientID,
+        //    };
+
+
+
+        //}
 
     }
 }

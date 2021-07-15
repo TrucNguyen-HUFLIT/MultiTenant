@@ -29,7 +29,7 @@ namespace MultiTenant.WebApp.Controllers
             ViewBag.ActiveAccount = "active";
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) || sortOrder.Equals("name") ? "name_desc" : "name";
-           
+
             ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
 
             StaticAcc.Name = User.Claims.Where(x => x.Type == "name").FirstOrDefault().Value;
@@ -41,7 +41,7 @@ namespace MultiTenant.WebApp.Controllers
             var model = new AccountViewModel
             {
                 ListAccountRequest = await _accountservice.GetListAccountRequestAsync(sortOrder, currentFilter, searchString, page),
-                listTenant=  _accountservice.GetListTenant(),
+                listTenant = _accountservice.GetListTenant(),
             };
             return View(model);
 
@@ -107,17 +107,37 @@ namespace MultiTenant.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(AccountCreate accountCreate)
         {
+            await _accountservice.CreateAsync(accountCreate);
+
             HttpClient client = _api.Initial();
-            var postTask = client.PostAsJsonAsync("api/registeruser", accountCreate);
+            var postTask = client.PostAsJsonAsync("api/register", accountCreate);
             postTask.Wait();
 
             var result = postTask.Result;
             if (result.IsSuccessStatusCode)
             {
-                await _accountservice.CreateAsync(accountCreate);
+                return Ok(accountCreate);
             }
 
-            return Ok(accountCreate);
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(AccountCreate accountCreate)
+        {
+            await _accountservice.CreateAsync(accountCreate);
+
+            HttpClient client = _api.Initial();
+            var postTask = client.PostAsJsonAsync("api/edit", accountCreate);
+            postTask.Wait();
+
+            var result = postTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                return Ok(accountCreate);
+            }
+
+            return View(accountCreate);
         }
     }
 }

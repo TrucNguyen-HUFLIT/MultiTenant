@@ -51,7 +51,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
             {
                 await tenantCreate.UploadFavicon.CopyToAsync(filestream);
             }
-            model.Favicon = "/img/" + filename;
+            model.Favicon = "/img/" + filename+extension;
 
           //  var dbmigrate =  _tenantcontext.Database.MigrateAsync();
             _context.Add(model);

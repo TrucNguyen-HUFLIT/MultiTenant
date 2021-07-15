@@ -9,7 +9,7 @@ namespace MultiTenant.Application.Exceptions
     public  class UserNameExistedException:Exception
     {
         public UserNameExistedException(string username)
-         : base($"Email '{username}' already exists!")
+         : base($"UserName '{username}' already exists!")
         {
 
         }
