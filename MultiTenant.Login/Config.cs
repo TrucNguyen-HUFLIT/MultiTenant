@@ -181,6 +181,7 @@ namespace MultiTenant.Login
                         new Claim(JwtClaimTypes.ClientId, "tenant"),
                         new Claim("tenant_id", "tenant"),
                         new Claim("tenant_id", "tenant1")
+
                     }
                 },
 

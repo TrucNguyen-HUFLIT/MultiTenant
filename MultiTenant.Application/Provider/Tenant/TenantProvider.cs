@@ -18,6 +18,12 @@ namespace MultiTenant.Application.Provider.Tenant
 
             return subdomain[0];
         }
+        public async Task<string> GetDomainFromHost()
+        {
+            string host = _httpContextAccessor.HttpContext.Request.Host.Value;
+            string[] subdomain = host.Split(".");
 
+            return subdomain[1];
+        }
     }
 }

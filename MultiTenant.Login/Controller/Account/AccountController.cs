@@ -141,7 +141,10 @@ namespace IdentityServerHost.Quickstart.UI
                         if (claim.Type == "tenant_id")
                         {
                             tenantId = claim.Value;
-                            break;
+                            if (split2[1] == tenantId)
+                            {
+                                break;
+                            }
                         }
                     }
 

@@ -45,6 +45,21 @@ namespace MultiTenant.Application.Services.MultiTenants.AccTenants
             return listTenant;
         }
 
+        public async Task<List<string>> GetListTenantByUserName(string username)
+        {
+            int accId = await _context.Accounts.Where(x => x.UserName == username).Select(x => x.AccId).FirstOrDefaultAsync();
+            var listTenantId = _context.AccountTenants.Where(x => x.AccId == accId).Select(x => x.TenantId).ToList();
+
+            var listTenant = new List<string>();
+            foreach (var TenantId in listTenantId)
+            {
+                //var tn = await _context.Tenants.Where(x => x.TenantId == TenantId).FirstOrDefaultAsync();
+                listTenant.Add(await _context.Tenants.Where(x => x.TenantId == TenantId).Select(x=>x.DbName).FirstOrDefaultAsync());
+            }
+
+            return listTenant;
+        }
+
         public async Task<AccTenantRequest> GetAccID(int id)
         {
 
