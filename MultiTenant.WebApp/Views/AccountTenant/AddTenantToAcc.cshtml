@@ -1,0 +1,64 @@
+﻿@{ ViewData["Title"] = "Add Tenant To Account";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+}
+@model MultiTenant.Application.Models.AccTenants.AccTenantViewModel
+
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+
+                    <h2 style="font-weight:500">List Tenant Of Account</h2>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+        <li class="nav-item">
+            <a asp-action="Index" class="nav-link ">
+                <span>List Tenant</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-action="Index" class="nav-link active">
+                <span>Add Tenant To Account</span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                     <form asp-action="AddTenantToAcc">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label class="control-label"> Account </label>
+                            <input asp-for="accTenantRequest.NameAcc" class="form-control" readonly />
+                            <input asp-for="accTenantRequest.AccId" class="form-control" hidden />
+                            <span asp-validation-for="accTenantRequest.NameAcc" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Tenant </label>
+                            <select asp-for="accTenantRequest.TenantId" class="form-control">
+                                @foreach (var tenant in Model.ListTenant)
+                                {   
+                                    <option value="@tenant.TenantId"> @tenant.DbName</option>
+                                         
+                                }
+                            </select>
+                            <span class="text-danger">@ViewBag.Error</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Add" class="btn btn-primary" />
+                            <a asp-action="Details" asp-route-id="@Model.accTenantRequest.AccId" class="btn btn-secondary">Back</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

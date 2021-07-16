@@ -35,5 +35,24 @@ namespace MultiTenant.WebApp.Controllers
             await _acctenantservice.Delete(tenantId,accId);
             return RedirectToAction("Detail" ,new {id=accId });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> AddTenantToAcc(int id)
+        {
+            var model = new AccTenantViewModel
+            {
+                ListTenant = _acctenantservice.GetAllListTenant(),
+                accTenantRequest = await _acctenantservice.GetAccID(id),
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddTenantToAcc(AccTenantRequest accTenantRequest)
+        {
+            await _acctenantservice.AddTenantToAcc(accTenantRequest);
+            return RedirectToAction("Detail", new { id = accTenantRequest.AccId });
+        }
+
     }
 }

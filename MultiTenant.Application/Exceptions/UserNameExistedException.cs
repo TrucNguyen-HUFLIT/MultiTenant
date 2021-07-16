@@ -8,8 +8,8 @@ namespace MultiTenant.Application.Exceptions
 {
     public  class UserNameExistedException:Exception
     {
-        public UserNameExistedException(string username)
-         : base($"UserName '{username}' already exists!")
+        public UserNameExistedException(string username,string name)
+         : base($"UserName Or Name Already Exists!")
         {
 
         }
