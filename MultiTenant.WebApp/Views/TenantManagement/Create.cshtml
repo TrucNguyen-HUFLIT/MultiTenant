@@ -1,0 +1,67 @@
+﻿@model MultiTenant.Application.Models.MultiTenants.Tenants.TenantViewModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+
+                    <h2 style="font-weight:500">Create Tenant</h2>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+        <li class="nav-item">
+            <a asp-action="Index" class="nav-link  ">
+                <span>Tenant Management</span>
+            </a>
+        </li>
+      
+    </ul>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <form asp-action="Create" id="create-tenant-form"  enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group" hidden>
+                            <label asp-for="tenantCreate.TenantId" class="control-label"></label>
+                            <input asp-for="tenantCreate.TenantId" class="form-control" />
+                            <span asp-validation-for="tenantCreate.TenantId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="tenantCreate.DbName" class="control-label"></label>
+                            <input asp-for="tenantCreate.DbName" class="form-control" />
+                            <span asp-validation-for="tenantCreate.DbName" class="text-danger" id="Err_DbName"></span>
+                            <span class="text-danger"  id="DbNameExist"></span>
+                        </div>
+                        <div class="form-group" hidden>
+                            <label asp-for="tenantCreate.URL" class="control-label"></label>
+                            <input asp-for="tenantCreate.URL" class="form-control" />
+                            <span asp-validation-for="tenantCreate.URL" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="tenantCreate.UploadFavicon" class="control-label"></label>
+                            <input asp-for="tenantCreate.UploadFavicon" accept="image/*" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" />
+                            @if (Model.tenantCreate != null)
+                            {
+                               <img src="@Model.tenantCreate.Favicon" asp-append-version="true" width="120" height="90" id="output" />
+                            }
+                            <span asp-validation-for="tenantCreate.Favicon" class="text-danger" hidden></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Add" class="btn btn-primary" />
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
