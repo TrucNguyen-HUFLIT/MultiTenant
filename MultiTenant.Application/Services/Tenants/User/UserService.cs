@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MultiTenant.Application.Models.Tenants.Account;
+using MultiTenant.Application.Provider.Tenant;
 using MultiTenant.Data.Contexts;
 using ReflectionIT.Mvc.Paging;
 using System;
@@ -15,9 +16,11 @@ namespace MultiTenant.Application.Services.Tenants.User
     {
         private readonly TenantContext _tenantContext;
         private readonly MultiTenantContext _multiTenantContext;
+        private readonly ITenantProvider _tenantProvider;
 
-        public UserService(TenantContext tenantContext, MultiTenantContext multiTenantContext)
+        public UserService(TenantContext tenantContext, MultiTenantContext multiTenantContext, ITenantProvider tenantProvider)
         {
+            _tenantProvider = tenantProvider;
             _tenantContext = tenantContext;
             _multiTenantContext = multiTenantContext;
         }
@@ -96,13 +99,25 @@ namespace MultiTenant.Application.Services.Tenants.User
 
         public async Task<string> GetURLFromUser(ClaimsPrincipal user)
         {
-            string tenantId = user.Claims
+            string domain = await _tenantProvider.GetDomainFromHost();
+            string subdomain = await _tenantProvider.GetSubDomainFromHost();
+
+            var claimsVlue = user.Claims
                                 .Where(x => x.Type == "tenant_id")
                                 .FirstOrDefault().Value;
-            string URL = await _multiTenantContext.Tenants
-                                .Where(x => x.DbName == tenantId)
-                                .Select(x => x.URL)
-                                .FirstOrDefaultAsync();
+
+            var listTenantId = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(claimsVlue);
+
+            string URL = $"https://{listTenantId[0]}.{domain}";
+            foreach (var tenant_id in listTenantId)
+            {
+                if (subdomain == tenant_id)
+                {
+                    URL =$"https://{tenant_id}.{domain}";
+                    break;
+                }
+            }
+
             return URL;
         }
 

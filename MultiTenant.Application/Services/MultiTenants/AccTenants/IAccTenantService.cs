@@ -14,5 +14,6 @@ namespace MultiTenant.Application.Services.MultiTenants.AccTenants
 
         Task<bool> Delete(int tenantId, int accId);
         Task <List<Tenant>> GetListTenantOfAccountAsync(int id);
+        Task<List<string>> GetListTenantByUserName(string username);
     }
 }
