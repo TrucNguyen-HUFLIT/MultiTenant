@@ -105,18 +105,29 @@ namespace MultiTenant.Application.Services.Tenants.User
             var claimsVlue = user.Claims
                                 .Where(x => x.Type == "tenant_id")
                                 .FirstOrDefault().Value;
-
-            var listTenantId = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(claimsVlue);
-
-            string URL = $"https://{listTenantId[0]}.{domain}";
-            foreach (var tenant_id in listTenantId)
+            string URL = "";
+            try
             {
-                if (subdomain == tenant_id)
+                var listTenantId = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(claimsVlue);
+
+                 URL = $"https://{listTenantId[0]}.{domain}";
+                foreach (var tenant_id in listTenantId)
                 {
-                    URL =$"https://{tenant_id}.{domain}";
-                    break;
+                    if (subdomain == tenant_id)
+                    {
+                        URL = $"https://{tenant_id}.{domain}";
+                        break;
+                    }
                 }
             }
+            catch (Exception)
+            {
+                if (subdomain == claimsVlue)
+                {
+                    URL = $"https://{claimsVlue}.{domain}";
+                }
+            }
+           
 
             return URL;
         }

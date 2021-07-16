@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using MultiTenant.Application.Provider.Tenant;
-using MultiTenant.Application.Services.MultiTenants.AccTenants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,7 +11,7 @@ namespace MultiTenant.Filter
     {
         private readonly ITenantProvider _tenantProvider;
 
-        public TenantFilter(ITenantProvider tenantProvider, )
+        public TenantFilter(ITenantProvider tenantProvider)
         {
             _tenantProvider = tenantProvider;
         }
@@ -30,21 +30,33 @@ namespace MultiTenant.Filter
                                 .Where(x => x.Type == "tenant_id")
                                 .FirstOrDefault().Value;
 
-            var listTenantId = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(claimsVlue);
-
-            bool check = true;
-            foreach (var tenant_id in listTenantId)
+            try
             {
-                if (subdomain == tenant_id)
+                var listTenantId = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(claimsVlue);
+                bool check = true;
+                foreach (var tenant_id in listTenantId)
                 {
-                    check = false;
-                    break;
+                    if (subdomain == tenant_id)
+                    {
+                        check = false;
+                        break;
+                    }
+                }
+                if (check)
+                {
+                    context.Result = new RedirectResult($"https://{listTenantId[0]}.{domain}");
                 }
             }
-            if (check)
+            catch (Exception)
             {
-                context.Result = new RedirectResult($"https://{listTenantId[0]}.{domain}");
+                if (subdomain != claimsVlue)
+                {
+                    context.Result = new RedirectResult($"https://{claimsVlue}.{domain}");
+                }
             }
+
+
+           
         }
     }
 }
