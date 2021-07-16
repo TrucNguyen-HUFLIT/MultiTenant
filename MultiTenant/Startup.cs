@@ -49,7 +49,6 @@ namespace MultiTenant
             services.AddScoped<ModelStateAjaxFilter>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITenantProvider, TenantProvider>();
-            services.AddScoped<IAccTenantService, AccTenantService>();
 
             services.AddDbContext<MultiTenantContext>();
             services.AddDbContext<TenantContext>(async (provider, options) =>

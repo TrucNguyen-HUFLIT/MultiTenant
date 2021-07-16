@@ -10,12 +10,10 @@ namespace MultiTenant.Filter
     public class TenantFilter : IActionFilter
     {
         private readonly ITenantProvider _tenantProvider;
-        private readonly IAccTenantService _accTenantService;
 
-        public TenantFilter(ITenantProvider tenantProvider, IAccTenantService accTenantService)
+        public TenantFilter(ITenantProvider tenantProvider, )
         {
             _tenantProvider = tenantProvider;
-            _accTenantService = accTenantService;
         }
 
         public void OnActionExecuted(ActionExecutedContext context)
