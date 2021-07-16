@@ -81,48 +81,6 @@ $("#edit-tenant-form").submit(function (e) {
     });
 });
 
-$("#create-tenant-form").submit(function (e) {
-    e.preventDefault();
-
-    let formData = new FormData($(this)[0]);
-    $.ajax({
-        url: '/tenantmanagement/create',
-        type: "post",
-        async: false,
-        cache: false,
-        contentType: false,
-        enctype: 'multipart/form-data',
-        processData: false,
-        data: formData,
-        success: function (data) {
-            console.log(data);
-            window.location.replace("/tenantmanagement/index");
-        },
-        error: function (data) {
-            console.log(data);
-            var errors = data.responseJSON;
-            if (errors == undefined)
-            {
-                document.getElementById("DbNameExist").innerHTML = data.responseText;
-                return;
-            }
-            try
-            {
-                var objectValidation = data.responseJSON;
-
-                if (objectValidation["tenantCreate.DbName"] != undefined)
-                    document.getElementById("Err_DbName").innerHTML = objectValidation["tenantCreate.DbName"];
-                else
-                    document.getElementById("Err_DbName").innerHTML = "";
-            }
-            catch
-            {
-                document.getElementById("Err_DbName").innerHTML = "";
-            }
-        },
-    });
-});
-
 $("#create-acc-form").submit(function (e) {
     e.preventDefault();
 
