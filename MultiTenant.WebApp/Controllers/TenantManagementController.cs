@@ -60,26 +60,5 @@ namespace MultiTenant.WebApp.Controllers
             await _tenantservice.EditAsync(tenantEdit);
             return Ok(tenantEdit.TenantId);
         }
-
-
-        [HttpGet]
-        public async Task<IActionResult> Create()
-        {
-            ViewBag.ActiveTenant = "active";
-            var model = new TenantViewModel
-            {
-                tenantCreate=new TenantCreate(),
-            };
-            return View(model);
-        }
-
-        [ServiceFilter(typeof(ModelStateAjaxFilter))]
-        [TypeFilter(typeof(ExceptionFilter))]
-        [HttpPost]
-        public async Task<IActionResult> Create(TenantCreate tenantCreate)
-        {
-            await _tenantservice.CreateAsync(tenantCreate);
-            return Ok(tenantCreate);
-        }
     }
 }

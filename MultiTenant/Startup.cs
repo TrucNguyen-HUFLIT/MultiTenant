@@ -56,7 +56,7 @@ namespace MultiTenant
                 var tenantProvider = provider.GetRequiredService<ITenantProvider>();
                 var dbName = await tenantProvider.GetSubDomainFromHost();
 
-                options.UseSqlServer($@"Server=HUYDESKTOP;Database={dbName};Trusted_Connection=True;");
+                options.UseSqlServer($@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database={dbName};Trusted_Connection=True;");
             });
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();

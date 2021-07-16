@@ -9,7 +9,5 @@ namespace MultiTenant.Application.Models.MultiTenants.Tenants
         public TenantEdit tenantEdit { get; set; }
         public IPagedList<TenantRequest> listTenantRequest { get; set; }
         public TenantRequest tenantRequest { get; set; }
-        public TenantCreate tenantCreate { get; set; }
-
     }
 }
