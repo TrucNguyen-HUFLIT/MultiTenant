@@ -68,11 +68,32 @@ namespace MultiTenant.Application.Services.MultiTenants.AccTenants
             var accTenantRequest = new AccTenantRequest()
             {
                 AccId = model.AccId,
+                NameAcc=model.Name,
             };
 
             return accTenantRequest;
 
         }
 
+        public List<Tenant> GetAllListTenant()
+        {
+
+            var model = _context.Tenants.ToList();
+            return model;
+
+        }
+
+        public async Task AddTenantToAcc(AccTenantRequest accTenantRequest)
+        {
+           // var tenantId = await _context.AccountTenants.Where(x => x.TenantId == accTenantRequest.TenantId).FirstOrDefaultAsync();
+
+            var model = new AccountTenant()
+            {
+                AccId=accTenantRequest.AccId,
+                TenantId=accTenantRequest.TenantId,
+            };
+            _context.AccountTenants.Add(model);
+            await _context.SaveChangesAsync();
+        }
     }
 }

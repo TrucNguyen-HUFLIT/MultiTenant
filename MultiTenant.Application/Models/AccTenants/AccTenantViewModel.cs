@@ -12,5 +12,9 @@ namespace MultiTenant.Application.Models.AccTenants
         public AccTenantRequest accTenantRequest;
 
         public List<Tenant> ListAccTenant;
+
+        public List<Tenant> ListTenant;
+
+     
     }
 }
