@@ -179,7 +179,9 @@ namespace MultiTenant.Login
                         new Claim(JwtClaimTypes.Email, "minhtam@gmail.com"),
                         new Claim(JwtClaimTypes.Role, "customer"),
                         new Claim(JwtClaimTypes.ClientId, "tenant"),
-                        new Claim("tenant_id", "tenant")
+                        new Claim("tenant_id", "tenant"),
+                        new Claim("tenant_id", "tenant1")
+
                     }
                 },
 
@@ -193,7 +195,8 @@ namespace MultiTenant.Login
                         new Claim(JwtClaimTypes.Email, "minhnhut@gmail.com"),
                         new Claim(JwtClaimTypes.Role, "customer"),
                         new Claim(JwtClaimTypes.ClientId, "tenant"),
-                        new Claim("tenant_id", "tenant1")
+                        new Claim("tenant_id", "tenant1"),
+                        new Claim("tenant_id", "tenant2")
                     }
                 },
 
