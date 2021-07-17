@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using MultiTenant.Application.Models.MultiTenants.Tenants;
 using MultiTenant.Application.Services.MultiTenants.Tenants;
 using MultiTenant.WebApp.Filter;
+using MultiTenant.WebApp.Helper;
 using System;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace MultiTenant.WebApp.Controllers
@@ -12,7 +15,7 @@ namespace MultiTenant.WebApp.Controllers
     public class TenantManagementController : Controller
     {
         private readonly ITenantService _tenantservice;
-
+        UserID4API _api = new UserID4API();
         public TenantManagementController(ITenantService tenantService)
         {
             _tenantservice = tenantService;
@@ -79,7 +82,18 @@ namespace MultiTenant.WebApp.Controllers
         public async Task<IActionResult> Create(TenantCreate tenantCreate)
         {
             await _tenantservice.CreateAsync(tenantCreate);
-            return Ok(tenantCreate);
+
+            HttpClient client = _api.Initial();
+            var postTask = client.PostAsJsonAsync("api/register", tenantCreate);
+            postTask.Wait();
+
+            var result = postTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                return Ok(tenantCreate);
+            }
+
+            return View();
         }
     }
 }

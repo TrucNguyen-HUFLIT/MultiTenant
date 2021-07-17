@@ -18,13 +18,10 @@ namespace MultiTenant.Login.Controller.Account
     public class RegisterController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly ConfigurationDbContext _configurationDbContext;
-
-
         public RegisterController( UserManager<IdentityUser> userManager, ConfigurationDbContext configurationDbContext)
         {
             _userManager = userManager;
-            _configurationDbContext = configurationDbContext;
+          
         }
 
         [HttpPost]
@@ -54,25 +51,9 @@ namespace MultiTenant.Login.Controller.Account
 
             _userManager.CreateAsync(identityUser, user.Password.ToString()).Wait();
             _userManager.AddClaimsAsync(identityUser, user.Claims.ToList()).Wait();
-
-
+ 
             return Ok();
 
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateTenant([FromBody] TenantViewModel model)
-        {
-            var tenant = new ClientRedirectUri()
-            {
-                RedirectUri = model.RedirectURI,
-                ClientId = model.ClientID,
-            };
-
-            _configurationDbContext.Add(tenant);
-            await _configurationDbContext.SaveChangesAsync();
-
-            return Ok();
         }
 
     }

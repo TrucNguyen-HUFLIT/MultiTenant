@@ -122,22 +122,22 @@ namespace MultiTenant.WebApp.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Edit(AccountCreate accountCreate)
-        {
-            await _accountservice.CreateAsync(accountCreate);
+        //[HttpPost]
+        //public async Task<IActionResult> Edit(AccountCreate accountCreate)
+        //{
+        //    await _accountservice.CreateAsync(accountCreate);
 
-            HttpClient client = _api.Initial();
-            var postTask = client.PostAsJsonAsync("api/edit", accountCreate);
-            postTask.Wait();
+        //    HttpClient client = _api.Initial();
+        //    var postTask = client.PostAsJsonAsync("api/edit", accountCreate);
+        //    postTask.Wait();
 
-            var result = postTask.Result;
-            if (result.IsSuccessStatusCode)
-            {
-                return Ok(accountCreate);
-            }
+        //    var result = postTask.Result;
+        //    if (result.IsSuccessStatusCode)
+        //    {
+        //        return Ok(accountCreate);
+        //    }
 
-            return View(accountCreate);
-        }
+        //    return View(accountCreate);
+        //}
     }
 }

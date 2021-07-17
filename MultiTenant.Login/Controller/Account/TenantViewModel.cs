@@ -7,8 +7,7 @@ namespace MultiTenant.Login.Controller.Account
 {
     public class TenantViewModel
     {
-        public string RedirectURI { get; set; }
-        public int ClientID { get; set; }
-
+        public string DbName { get; set; }
+       
     }
 }
