@@ -1,9 +1,9 @@
 ﻿using IdentityModel;
 using IdentityServer4.EntityFramework.DbContexts;
-using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.Test;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MultiTenant.Login.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -51,10 +51,11 @@ namespace MultiTenant.Login.Controller.Account
 
             _userManager.CreateAsync(identityUser, user.Password.ToString()).Wait();
             _userManager.AddClaimsAsync(identityUser, user.Claims.ToList()).Wait();
- 
+
             return Ok();
 
         }
+
 
     }
 }

@@ -14,8 +14,9 @@ namespace MultiTenant.Application.Services.MultiTenants.AccTenants
         Task<List<Tenant>> GetAllListTenant(int id);
         Task AddTenantToAcc(AccTenantRequest accTenantRequest);
 
-        Task<bool> Delete(int tenantId, int accId);
+        Task<bool> Delete(AccTenantRequest accTenantRequest);
         Task <List<Tenant>> GetListTenantOfAccountAsync(int id);
         Task<List<string>> GetListTenantByUserName(string username);
+        Task<AccTenantRequest> SetDbNameToTenant(AccTenantRequest accTenantRequest);
     }
 }

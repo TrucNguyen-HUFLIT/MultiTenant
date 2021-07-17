@@ -2,6 +2,7 @@
 using IdentityServer4.EntityFramework.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MultiTenant.Login.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

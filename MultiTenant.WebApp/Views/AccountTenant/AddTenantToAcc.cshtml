@@ -18,12 +18,12 @@
     </div>
     <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
         <li class="nav-item">
-            <a asp-action="Index" class="nav-link ">
+            <a asp-action="Detail" class="nav-link ">
                 <span>List Tenant</span>
             </a>
         </li>
         <li class="nav-item">
-            <a asp-action="Index" class="nav-link active">
+            <a asp-action="AddTenantToAcc" class="nav-link active">
                 <span>Add Tenant To Account</span>
             </a>
         </li>
@@ -33,7 +33,7 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="card-body">
-                     <form asp-action="AddTenantToAcc">
+                     <form asp-action="AddTenantToAcc" id="add-tenant" enctype="multipart/form-data" > 
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <label class="control-label"> Account </label>
@@ -45,16 +45,17 @@
                             <label class="control-label"> Tenant </label>
                             <select asp-for="accTenantRequest.TenantId" class="form-control">
                                 @foreach (var tenant in Model.ListTenant)
-                                {   
-                                    <option value="@tenant.TenantId"> @tenant.DbName</option>
-                                         
+                                {
+                                    <option value="@tenant.TenantId">@tenant.DbName</option>
+
                                 }
                             </select>
+                            <input asp-for="accTenantRequest.UserName" class="form-control" hidden />
                             <span class="text-danger">@ViewBag.Error</span>
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Add" class="btn btn-primary" />
-                            <a asp-action="Details" asp-route-id="@Model.accTenantRequest.AccId" class="btn btn-secondary">Back</a>
+                            <a asp-action="Detail" asp-route-id="@Model.accTenantRequest.AccId" class="btn btn-secondary">Back</a>
                         </div>
                     </form>
                 </div>
