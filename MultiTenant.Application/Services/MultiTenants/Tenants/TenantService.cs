@@ -38,7 +38,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
             var model = new Tenant
             {
                 DbName = tenantCreate.DbName,
-                URL = "https://" + tenantCreate.DbName + ".localhost:5002",
+                URL = "https://" + tenantCreate.DbName + ".localhost:5002",//xem lại
             };
 
             string wwwrootpath = hostEnvironment.WebRootPath;
@@ -53,7 +53,11 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
             }
             model.Favicon = "/img/" + filename+extension;
 
-          //  var dbmigrate =  _tenantcontext.Database.MigrateAsync();
+            using (var dbcontext = new TenantContext(model.DbName)) //DI DBName
+            {
+                await dbcontext.Database.MigrateAsync();
+            }
+
             _context.Add(model);
             await _context.SaveChangesAsync();
             

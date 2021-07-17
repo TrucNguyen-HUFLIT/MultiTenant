@@ -18,7 +18,7 @@ namespace MultiTenant.Login
             services.AddControllersWithViews();
 
             const string connectionString =
-                @"Data Source=HUYDESKTOP;database=IdentityServer4;trusted_connection=yes;";
+                @"Data Source=DESKTOP-I7EOLFR\SQLEXPRESS;database=IdentityServer4;trusted_connection=yes;";
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddDbContext<ApplicationDbContext>(builder =>
@@ -95,7 +95,7 @@ namespace MultiTenant.Login
                     }
                     context.SaveChanges();
                 }
-
+                #region
                 //if (!context.ApiScopes.Any())
                 //{
                 //    foreach (var scope in Resources.GetApiScopes())
@@ -113,11 +113,10 @@ namespace MultiTenant.Login
                 //    }
                 //    context.SaveChanges();
                 //}
-
+                #endregion
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
                 if (!userManager.Users.Any())
                 {
-
                     foreach (var testUser in Users.Get())
                     {
                         var identityUser = new IdentityUser(testUser.Username)
