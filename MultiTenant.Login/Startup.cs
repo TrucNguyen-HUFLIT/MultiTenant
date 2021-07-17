@@ -95,7 +95,7 @@ namespace MultiTenant.Login
                     }
                     context.SaveChanges();
                 }
-
+                #region
                 //if (!context.ApiScopes.Any())
                 //{
                 //    foreach (var scope in Resources.GetApiScopes())
@@ -113,11 +113,10 @@ namespace MultiTenant.Login
                 //    }
                 //    context.SaveChanges();
                 //}
-
+                #endregion
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
                 if (!userManager.Users.Any())
                 {
-
                     foreach (var testUser in Users.Get())
                     {
                         var identityUser = new IdentityUser(testUser.Username)

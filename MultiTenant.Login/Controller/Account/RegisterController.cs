@@ -22,13 +22,12 @@ namespace MultiTenant.Login.Controller.Account
         public RegisterController( UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
-      
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] RegisterViewModel model)
         {
-            var user1 = _userManager.FindByNameAsync("kha");
+            //var user1 = _userManager.FindByNameAsync("kha");
 
             //DbName = Subdomain
             //string tenant = await _context.Tenants.Where(x => x.TenantId == model.TenantId).Select(x => x.DbName).FirstOrDefaultAsync();
