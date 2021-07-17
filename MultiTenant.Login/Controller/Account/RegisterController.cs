@@ -1,4 +1,5 @@
 ﻿using IdentityModel;
+using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.Test;
 using Microsoft.AspNetCore.Identity;
@@ -17,11 +18,13 @@ namespace MultiTenant.Login.Controller.Account
     public class RegisterController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
-      
+        private readonly ConfigurationDbContext _configurationDbContext;
 
-        public RegisterController( UserManager<IdentityUser> userManager)
+
+        public RegisterController( UserManager<IdentityUser> userManager, ConfigurationDbContext configurationDbContext)
         {
             _userManager = userManager;
+            _configurationDbContext = configurationDbContext;
         }
 
         [HttpPost]
@@ -57,18 +60,20 @@ namespace MultiTenant.Login.Controller.Account
 
         }
 
-        //[HttpPost]
-        //public IActionResult CreateTenant([FromBody] TenantViewModel model)
-        //{
-        //    var tenant = new ClientRedirectUri()
-        //    {
-        //       RedirectUri=model.RedirectURI,
-        //       ClientId=model.ClientID,
-        //    };
+        [HttpPost]
+        public async Task<IActionResult> CreateTenant([FromBody] TenantViewModel model)
+        {
+            var tenant = new ClientRedirectUri()
+            {
+                RedirectUri = model.RedirectURI,
+                ClientId = model.ClientID,
+            };
 
+            _configurationDbContext.Add(tenant);
+            await _configurationDbContext.SaveChangesAsync();
 
-
-        //}
+            return Ok();
+        }
 
     }
 }
