@@ -15,6 +15,8 @@ namespace MultiTenant.Application.Models.AccTenants
 
         public List<Tenant> ListTenant;
 
+        public AccTenantDelete accTenantDelete;
+
      
     }
 }

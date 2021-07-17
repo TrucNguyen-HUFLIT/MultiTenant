@@ -20,10 +20,11 @@ namespace MultiTenant.Application.Services.MultiTenants.AccTenants
             _context = context;
         }
 
-        public async Task<bool> Delete(int tenantId, int accId)
+        public async Task<bool> Delete(AccTenantRequest accTenantRequest)
         {
 
-            var detailacc = await _context.AccountTenants.Where(x => x.AccId == accId & x.TenantId == tenantId).FirstOrDefaultAsync();
+            var detailacc = await _context.AccountTenants.Where(x => x.AccId == accTenantRequest.AccId & x.TenantId == accTenantRequest.TenantId ).FirstOrDefaultAsync();
+
             _context.Remove(detailacc);
             await _context.SaveChangesAsync();
             return true;
@@ -69,6 +70,7 @@ namespace MultiTenant.Application.Services.MultiTenants.AccTenants
             {
                 AccId = model.AccId,
                 NameAcc=model.Name,
+                UserName=model.UserName,
             };
 
             return accTenantRequest;
@@ -101,6 +103,12 @@ namespace MultiTenant.Application.Services.MultiTenants.AccTenants
             };
             _context.AccountTenants.Add(model);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<AccTenantRequest> SetDbNameToTenant(AccTenantRequest accTenantRequest)
+        {
+            accTenantRequest.DbName = await _context.Tenants.Where(x => x.TenantId == accTenantRequest.TenantId).Select(x => x.DbName).FirstOrDefaultAsync();
+            return accTenantRequest;
         }
     }
 }

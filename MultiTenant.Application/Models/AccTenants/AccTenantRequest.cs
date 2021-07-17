@@ -12,6 +12,7 @@ namespace MultiTenant.Application.Models.AccTenants
         [Display(Name = "Account")]
         public int AccId { get; set; }
         public string NameAcc { get; set; }
+        public string UserName { get; set; }
 
         [Display(Name = "Tenant")]
         public int TenantId { get; set; }

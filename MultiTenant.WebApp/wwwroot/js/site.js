@@ -123,6 +123,27 @@ $("#create-tenant-form").submit(function (e) {
     });
 });
 
+$("#add-tenant").submit(function (e) {
+    e.preventDefault();
+
+    let formData = new FormData($(this)[0]);
+    $.ajax({
+        url: '/accounttenant/addtenanttoacc',
+        type: "post",
+        async: false,
+        cache: false,
+        contentType: false,
+        enctype: 'multipart/form-data',
+        processData: false,
+        data: formData,
+        success: function (data) {
+            console.log(data);
+            window.location.replace("/accounttenant/detail/" + data.accId);
+            
+        },
+    });
+});
+
 $("#create-acc-form").submit(function (e) {
     e.preventDefault();
 
@@ -183,6 +204,37 @@ $("#create-acc-form").submit(function (e) {
     });
 });
 
+function DeleteAcc() {
+    var confirm = prompt('Text "Delete" to Delete this account').toLowerCase();
+
+    if (confirm == "delete") {
+        $.ajax({
+            url: '/accounttenant/delete',
+            type: 'delete',
+            contentType: 'application/x-www-form-urlencoded',
+            data: form,
+            success: function (data) {
+                console.log(data);
+                ToastDelete();
+                setTimeout(() => window.location.replace("/accounttenant/detail" + data.accId), 2000);
+            }
+        });
+    }
+    else {
+        DeleteAcc();
+    }
+}
+
+function ToastDelete() {
+    // Get the snackbar DIV
+    var x = document.getElementById("toastDelete");
+
+    // Add the "show" class to DIV
+    x.className = "show";
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+}
 $(document).ready(function () {
 });
 
