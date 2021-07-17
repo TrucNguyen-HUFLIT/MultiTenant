@@ -11,7 +11,7 @@ namespace MultiTenant.Application.Services.MultiTenants.AccTenants
     public interface IAccTenantService
     {
         Task<AccTenantRequest> GetAccID(int id);
-        List<Tenant> GetAllListTenant();
+        Task<List<Tenant>> GetAllListTenant(int id);
         Task AddTenantToAcc(AccTenantRequest accTenantRequest);
 
         Task<bool> Delete(int tenantId, int accId);

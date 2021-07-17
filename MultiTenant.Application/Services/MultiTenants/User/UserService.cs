@@ -62,8 +62,8 @@ namespace MultiTenant.Application.Services.MultiTenants.User
 
         public async Task CreateAsync(AccountCreate accountCreate)
         {
-            var modelAcc = _context.Accounts.Where(x => x.UserName == accountCreate.UserName).Select(x=>new {x.UserName,x.Name}).FirstOrDefault();
-            if (modelAcc.UserName != null&&modelAcc.Name!=null)
+            var modelAcc = await _context.Accounts.Where(x => x.UserName == accountCreate.UserName).Select(x=>new {x.UserName,x.Name}).FirstOrDefaultAsync();
+            if (modelAcc!=null)
             {
                 throw new UserNameExistedException(modelAcc.UserName,modelAcc.Name);
             }

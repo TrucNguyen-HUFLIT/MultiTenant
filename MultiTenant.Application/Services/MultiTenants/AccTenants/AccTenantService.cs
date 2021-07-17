@@ -75,10 +75,17 @@ namespace MultiTenant.Application.Services.MultiTenants.AccTenants
 
         }
 
-        public List<Tenant> GetAllListTenant()
+        public async Task<List<Tenant>> GetAllListTenant(int id)
         {
+            var listTenant= await GetListTenantOfAccountAsync(id);
 
-            var model = _context.Tenants.ToList();
+            var model = await _context.Tenants.ToListAsync();
+
+            foreach (var Tenant in listTenant)
+            {
+                model.Remove(Tenant);
+            }
+
             return model;
 
         }

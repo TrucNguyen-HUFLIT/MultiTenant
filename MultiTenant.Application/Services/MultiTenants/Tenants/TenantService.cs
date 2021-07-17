@@ -41,6 +41,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
                 URL = "https://" + tenantCreate.DbName + ".localhost:5002",//xem lại
             };
 
+           
             string wwwrootpath = hostEnvironment.WebRootPath;
             string filename = Path.GetFileNameWithoutExtension(tenantCreate.UploadFavicon.FileName);
             string extension = Path.GetExtension(tenantCreate.UploadFavicon.FileName);
@@ -51,7 +52,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
             {
                 await tenantCreate.UploadFavicon.CopyToAsync(filestream);
             }
-            model.Favicon = "/img/" + filename+extension;
+            model.Favicon = "/img/" + filename;
 
             using (var dbcontext = new TenantContext(model.DbName)) //DI DBName
             {

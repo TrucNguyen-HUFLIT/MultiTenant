@@ -41,7 +41,7 @@ namespace MultiTenant.WebApp.Controllers
         {
             var model = new AccTenantViewModel
             {
-                ListTenant = _acctenantservice.GetAllListTenant(),
+                ListTenant = await _acctenantservice.GetAllListTenant(id),
                 accTenantRequest = await _acctenantservice.GetAccID(id),
             };
             return View(model);
