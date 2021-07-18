@@ -22,8 +22,10 @@ namespace MultiTenant.Application.Provider.Tenant
         {
             string host = _httpContextAccessor.HttpContext.Request.Host.Value;
             string[] subdomain = host.Split(".");
-
-            return subdomain[1];
+            if (subdomain.Length == 3)
+                return subdomain[1] + "." + subdomain[2];
+            else
+                return subdomain[1];
         }
     }
 }

@@ -31,7 +31,7 @@ namespace MultiTenant
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.MinimumSameSitePolicy = SameSiteMode.Lax;
             });
 
             services.AddControllersWithViews();
@@ -69,9 +69,9 @@ namespace MultiTenant
                .AddOpenIdConnect("oidc", "tenant", options =>
                {
                    options.SignInScheme = "Cookies";
-                   options.Authority = "https://localhost:5000";
-
-                   options.RequireHttpsMetadata = true;
+                   options.Authority = "https://loginsso.com"; //deploy IIS
+                   //options.Authority = "https://localhost:5000"; //launch Project
+                   options.RequireHttpsMetadata = false;
 
                    options.ClientId = "tenant";
                    options.ClientSecret = "SuperSecretPassword";
@@ -99,7 +99,7 @@ namespace MultiTenant
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseCookiePolicy();
+            app.UseCookiePolicy(new CookiePolicyOptions {MinimumSameSitePolicy = SameSiteMode.Lax });
 
             app.UseRouting();
 

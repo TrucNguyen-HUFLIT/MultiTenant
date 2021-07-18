@@ -65,7 +65,8 @@ namespace MultiTenant.WebApp
                .AddOpenIdConnect("oidc", options =>
                {
                    options.SignInScheme = "Cookies";
-                   options.Authority = "https://loginsso.com";
+                   options.Authority = "https://loginsso.com"; //deploy IIS
+                   //options.Authority = "https://localhost:5000"; //launch Project
                    options.RequireHttpsMetadata = false;
 
                    #region Ignore SSL validation
