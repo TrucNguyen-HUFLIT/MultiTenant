@@ -31,25 +31,30 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="tenantCreate.DbName" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
-                            <input asp-for="tenantCreate.DbName" class="form-control" />
-                            <span asp-validation-for="tenantCreate.DbName" class="text-danger" id="Err_DbName"></span>
-                            <span class="text-danger" id="DbNameExist"></span>
+                            <div class="col-md-12">
+                                 <input asp-for="tenantCreate.DbName" class="form-control ps-0 form-control-line label-color" />
+                                 <span asp-validation-for="tenantCreate.DbName" class="text-danger" id="Err_DbName"></span>
+                                 <span class="text-danger" id="DbNameExist"></span>
+                            </div>   
                         </div>
+
                         <div class="form-group" hidden>
                             <label asp-for="tenantCreate.URL" class="control-label"></label>
                             <input asp-for="tenantCreate.URL" class="form-control" />
                             <span asp-validation-for="tenantCreate.URL" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="tenantCreate.UploadFavicon" class="control-label"></label>
-                            <input asp-for="tenantCreate.UploadFavicon" accept="image/*" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" />
+                            <label asp-for="tenantCreate.UploadFavicon" class="control-label col-md-12 mb-0"></label>
+                            <div class="col-md-12">
+                                <input asp-for="tenantCreate.UploadFavicon" accept="image/*" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" />
                             @*@if (Model.tenantCreate != null)
                                 {
                                    <img src="@Model.tenantCreate.Favicon" asp-append-version="true" width="120" height="90" id="output" />
                                 }*@
                             <img src="~/img/favicon-robo.jpg" asp-append-version="true" width="120" height="90" id="output" />
-
+                            
                             <span asp-validation-for="tenantCreate.Favicon" class="text-danger" hidden></span>
+                            </div>
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Add" class="btn btn-primary" />

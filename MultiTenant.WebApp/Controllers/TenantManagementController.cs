@@ -67,7 +67,7 @@ namespace MultiTenant.WebApp.Controllers
             ViewBag.ActiveTenant = "active";
             var model = new TenantViewModel
             {
-                tenantCreate=new TenantCreate(),
+                tenantCreate = new TenantCreate(),
             };
             return View(model);
         }
@@ -80,7 +80,7 @@ namespace MultiTenant.WebApp.Controllers
             await _tenantservice.CreateAsync(tenantCreate);
 
             HttpClient client = _api.Initial();
-            var postTask = client.PostAsJsonAsync("api/register", tenantCreate);
+            var postTask = client.PostAsJsonAsync("api/APIID4/createtenant", tenantCreate);
             postTask.Wait();
 
             var result = postTask.Result;

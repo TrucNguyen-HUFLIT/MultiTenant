@@ -64,7 +64,7 @@
                         <div class="form-group">
                             <label asp-for="accountCreate.Email" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
                             <div class="col-md-12">
-                                 <input asp-for="accountCreate.Email" class="form-control" />
+                                 <input asp-for="accountCreate.Email" class="form-control ps-0 form-control-line label-color" />
                             <span asp-validation-for="accountCreate.Email" id="Err_Email" class="text-danger"></span>
                             </div>
                            
@@ -73,7 +73,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-12 mb-0 ">Role</label>
                             <div class="col-md-12">
-                                <select asp-for="accountCreate.Role" class="form-control">
+                                <select asp-for="accountCreate.Role" class="form-control ps-0 form-control-line label-color">
 
                                     <option value="1">Admin</option>
                                     <option value="2">Customer</option>
