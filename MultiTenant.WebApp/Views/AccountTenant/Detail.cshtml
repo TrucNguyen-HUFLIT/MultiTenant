@@ -1,29 +1,26 @@
-﻿@{ ViewData["Title"] = "List Tenant of Account";
+﻿@{ ViewData["Title"] = "Tenants of " + Model.accTenantRequest.NameAcc;
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 @model MultiTenant.Application.Models.AccTenants.AccTenantViewModel
-@using MultiTenant.Application.Models.AccTenants 
 <div class="app-main__inner">
     <div class="app-page-title">
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div>
-
-                    <h2 style="font-weight:500">List Tenant Of Account</h2>
-
+                    <h2 style="font-weight:500">Tenants of @Model.accTenantRequest.NameAcc</h2>
                 </div>
             </div>
         </div>
     </div>
     <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
         <li class="nav-item">
-            <a asp-action="Detail"  class="nav-link active">
-                <span>List Tenant</span>
+            <a asp-action="Detail" class="nav-link active">
+                <span>Tenants</span>
             </a>
         </li>
-         <li class="nav-item">
+        <li class="nav-item">
             <a asp-action="AddTenantToAcc" asp-route-id="@Model.accTenantRequest.AccId" class="nav-link ">
-                <span>Add Tenant To Account</span>
+                <span>Add Tenant</span>
             </a>
         </li>
     </ul>
@@ -33,7 +30,6 @@
             <div class="main-card mb-3 card">
                 <div class="card-body">
                     <table class="table table-hover table-sm">
-                        <h3>Account: @Model.accTenantRequest.NameAcc </h3>
                         <br />
                         <thead>
                             <tr>
@@ -51,6 +47,7 @@
                                 <th>
                                     <label asp-for="accTenantRequest.Favicon" class="control-label"></label>
                                 </th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -71,16 +68,25 @@
                                         <img src="@item.Favicon" width="120" class="rounded-circle" />
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Delete", "Delete", new { TenantId = item.TenantId, AccId = Model.accTenantRequest.AccId, DbName = Model.accTenantRequest.DbName, UserName = Model.accTenantRequest.UserName },new { @class = "btn btn-sm btn-outline-info" })
+                                        <form asp-action="Delete" id="delete-tenant">
+                                            <input asp-for="accTenantDelete.AccId" hidden value="@Model.accTenantRequest.AccId" />
+                                            <input asp-for="accTenantDelete.TenantId" hidden  value="@item.TenantId"/>
+                                            <input asp-for="accTenantDelete.DbName" hidden value="@item.DbName"/>
+                                            <input asp-for="accTenantDelete.UserName" hidden value="@Model.accTenantRequest.UserName"/>
+
+                                            <a class="btn btn-sm btn-outline-info" onclick="DeleteTenant()">Delete</a>
+                                        </form>
+                                        @*     @Html.ActionLink("Delete", "Delete", new { TenantId = item.TenantId, AccId = Model.accTenantRequest.AccId, DbName = Model.accTenantRequest.DbName, UserName = Model.accTenantRequest.UserName }, new { @class = "btn btn-sm btn-outline-info" })*@
                                     </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
+
                     <br /><br />
                     <a asp-action="Index" asp-controller="AccountManagement" class="btn btn-secondary">Back</a>
-                   
-                </div>        
+                    <div id="toastDelete">Deleted successfully!</div>
+                </div>
             </div>
         </div>
     </div>

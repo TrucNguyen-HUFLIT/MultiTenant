@@ -117,7 +117,7 @@ body {
 }
 
 .middle {
-    margin-bottom: 90px;
+    margin-bottom: -70px;
     width: 250px;
     height: 250px;
 }
@@ -128,3 +128,24 @@ body {
     font-size: 150%;
 }
 
+#toastDelete {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+}
+
+    #toastDelete.show {
+        visibility: visible;
+        -webkit-animation: fadein 1s, fadeout 1s 3s;
+        animation: fadein 1s, fadeout 1s 3s;
+    }

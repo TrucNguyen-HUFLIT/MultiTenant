@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "Tenant Mgmt";
+    ViewData["Title"] = "Tenant management";
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 @model MultiTenant.Application.Models.MultiTenants.Tenants.TenantViewModel
@@ -11,20 +11,15 @@
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div>
-                    <h2 style="font-weight:500">Tenant Management</h2>
+                    <h2 style="font-weight:500">Tenant management</h2>
                 </div>
             </div>
         </div>
     </div>
     <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
         <li class="nav-item">
-            <a asp-action="Index" class="nav-link active ">
-                <span>List Tenant</span>
-            </a>
-        </li>
-        <li class="nav-item">
             <a asp-action="Create" class="nav-link ">
-                <span>Create</span>
+                <span>Create Tenant</span>
             </a>
         </li>
     </ul>

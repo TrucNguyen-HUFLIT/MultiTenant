@@ -20,6 +20,7 @@ namespace MultiTenant.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
+            ViewBag.ActiveAccount = "active";
 
             var model = new AccTenantViewModel
             {
@@ -30,27 +31,28 @@ namespace MultiTenant.WebApp.Controllers
         }
 
        // [HttpDelete]
-        public async Task<IActionResult> Delete(AccTenantRequest accTenantRequest)
+        public async Task<IActionResult> Delete(AccTenantDelete accTenantDelete)
         {
-            accTenantRequest = await _acctenantservice.SetDbNameToTenant(accTenantRequest);
+            //accTenantRequest = await _acctenantservice.SetDbNameToTenant(accTenantRequest); //thừa
 
-            await _acctenantservice.Delete(accTenantRequest);
+            await _acctenantservice.Delete(accTenantDelete);
             HttpClient client = _api.Initial();
-            var postTask = client.PostAsJsonAsync("api/deletetenant", accTenantRequest);
+            var postTask = client.PostAsJsonAsync("api/deletetenant", accTenantDelete);
             postTask.Wait();
 
             var result = postTask.Result;
             if (result.IsSuccessStatusCode)
             {
-                return RedirectToAction("Detail", new { id = accTenantRequest.AccId });
-              
+                return Ok(accTenantDelete);
             }
-            return Ok(accTenantRequest);
+            return Ok(accTenantDelete);
         }
 
         [HttpGet]
         public async Task<IActionResult> AddTenantToAcc(int id)
         {
+            ViewBag.ActiveAccount = "active";
+
             var model = new AccTenantViewModel
             {
                 ListTenant = await _acctenantservice.GetAllListTenant(id),

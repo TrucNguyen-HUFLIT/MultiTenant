@@ -1,7 +1,7 @@
 ﻿
 @model MultiTenant.Application.Models.MultiTenants.Account.AccountViewModel
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create account";
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 <div class="app-main__inner">
@@ -9,17 +9,12 @@
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div>
-                    <h2 style="font-weight:500">Create Account</h2>
+                    <h2 style="font-weight:500">Create account</h2>
                 </div>
             </div>
         </div>
     </div>
     <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
-        <li class="nav-item">
-            <a asp-action="Index" class="nav-link  ">
-                <span>Account Management</span>
-            </a>
-        </li>
     </ul>
     <div class="row">
         <div class="col-md-12">
@@ -41,25 +36,25 @@
                         @*<input asp-for="nhanVien.UpLoadAvt" accept="image/*" onchange="ChangeImage(this,'#previewImg')" />*@
 
                         <div class="form-group">
-                            <label asp-for="accountCreate.UserName" class="control-label"></label>
+                            <label asp-for="accountCreate.UserName" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
                             <input asp-for="accountCreate.UserName" class="form-control" />
                             <span asp-validation-for="accountCreate.UserName" id="Err_UserName" class="text-danger"></span>
                             <span class="text-danger" id="UserNameExist">
                         </div>
                         <div class="form-group">
-                            <label asp-for="accountCreate.Password" class="control-label"></label>
+                            <label asp-for="accountCreate.Password" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
                             <input asp-for="accountCreate.Password" class="form-control" type="password" />
                             <span asp-validation-for="accountCreate.Password" class="text-danger" id="Err_Password"></span>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="accountCreate.Name" class="control-label"></label>
+                            <label asp-for="accountCreate.Name" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
                             <input asp-for="accountCreate.Name" class="form-control" />
                             <span asp-validation-for="accountCreate.Name" id="Err_Name" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="accountCreate.Email" class="control-label"></label>
+                            <label asp-for="accountCreate.Email" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
                             <input asp-for="accountCreate.Email" class="form-control" />
                             <span asp-validation-for="accountCreate.Email" id="Err_Email" class="text-danger"></span>
                         </div>
@@ -72,9 +67,10 @@
                             </select>
                         </div>
                         @*<input asp-for="nhanVien.UpLoadAvt" accept="image/*" onchange="ChangeImage(this,'#previewImg')" />*@
-                        <div class="form-group">
-                            <input type="submit" value="AddAccount" class="btn btn-primary" />
-                        </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                        <a asp-action="Index" class="btn btn-secondary">Back</a>
+                    </div>
                     </form>
 
 

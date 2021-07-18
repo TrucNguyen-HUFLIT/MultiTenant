@@ -1,9 +1,6 @@
 ﻿using MultiTenant.Application.Models.AccTenants;
 using MultiTenant.Data.EntitiesTenant.MultiTenants;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MultiTenant.Application.Services.MultiTenants.AccTenants
@@ -14,7 +11,7 @@ namespace MultiTenant.Application.Services.MultiTenants.AccTenants
         Task<List<Tenant>> GetAllListTenant(int id);
         Task AddTenantToAcc(AccTenantRequest accTenantRequest);
 
-        Task<bool> Delete(AccTenantRequest accTenantRequest);
+        Task<bool> Delete(AccTenantDelete accTenantDelete);
         Task <List<Tenant>> GetListTenantOfAccountAsync(int id);
         Task<List<string>> GetListTenantByUserName(string username);
         Task<AccTenantRequest> SetDbNameToTenant(AccTenantRequest accTenantRequest);
