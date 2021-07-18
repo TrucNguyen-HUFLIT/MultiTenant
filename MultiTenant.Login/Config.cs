@@ -65,7 +65,10 @@ namespace MultiTenant.Login
                     PostLogoutRedirectUris = new List<string>  {
                         "https://tenant.localhost:5002/signout-callback-oidc",
                         "https://tenant.multitenant.com:5002/signout-callback-oidc",
-
+                                              "https://tenant1.localhost:5002/signout-callback-oidc",
+                        "https://tenant1.multitenant.com:5002/signout-callback-oidc",
+                                              "https://tenant2.localhost:5002/signout-callback-oidc",
+                        "https://tenant2.multitenant.com:5002/signout-callback-oidc",
                     },
 
                     AllowedScopes = new List<string>

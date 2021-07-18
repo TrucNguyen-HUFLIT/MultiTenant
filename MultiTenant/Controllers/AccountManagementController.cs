@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MultiTenant.Application.Models.Tenants.Account;
 using MultiTenant.Application.Services.Tenants.User;
@@ -68,9 +69,11 @@ namespace MultiTenant.Controllers
         }
 
         [HttpGet]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
             StaticAcc.CheckTenant = true;
+            await HttpContext.SignOutAsync();
+            //await HttpContext.SignOutAsync("Cookies");
             return SignOut("Cookies", "oidc");
         }
     }
