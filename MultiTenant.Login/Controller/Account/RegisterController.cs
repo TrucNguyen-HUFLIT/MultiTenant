@@ -18,6 +18,7 @@ namespace MultiTenant.Login.Controller.Account
     public class RegisterController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
+
         public RegisterController( UserManager<IdentityUser> userManager, ConfigurationDbContext configurationDbContext)
         {
             _userManager = userManager;
@@ -27,11 +28,6 @@ namespace MultiTenant.Login.Controller.Account
         [HttpPost]
         public IActionResult Create([FromBody] RegisterViewModel model)
         {
-            //var user1 = _userManager.FindByNameAsync("kha");
-
-            //DbName = Subdomain
-            //string tenant = await _context.Tenants.Where(x => x.TenantId == model.TenantId).Select(x => x.DbName).FirstOrDefaultAsync();
-            //var tenant = await _context.Tenants.ToListAsync();
             TestUser user = new()
             {
                 Username = model.UserName,
@@ -53,9 +49,6 @@ namespace MultiTenant.Login.Controller.Account
             _userManager.AddClaimsAsync(identityUser, user.Claims.ToList()).Wait();
 
             return Ok();
-
         }
-
-
     }
 }

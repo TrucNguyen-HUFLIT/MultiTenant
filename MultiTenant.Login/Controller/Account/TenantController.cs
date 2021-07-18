@@ -15,6 +15,7 @@ namespace MultiTenant.Login.Controller.Account
     public class TenantController : ControllerBase
     {
         private readonly ConfigurationDbContext _configurationDbContext;
+
         public TenantController( ConfigurationDbContext configurationDbContext)
         {
             
@@ -35,8 +36,5 @@ namespace MultiTenant.Login.Controller.Account
 
             return Ok();
         }
-
-
-
     }
 }

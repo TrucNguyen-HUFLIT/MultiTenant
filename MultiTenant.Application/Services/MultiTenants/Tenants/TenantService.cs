@@ -41,7 +41,6 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
                 URL = "https://" + tenantCreate.DbName + ".localhost:5002",//xem lại
             };
 
-           
             string wwwrootpath = hostEnvironment.WebRootPath;
             string filename = Path.GetFileNameWithoutExtension(tenantCreate.UploadFavicon.FileName);
             string extension = Path.GetExtension(tenantCreate.UploadFavicon.FileName);
@@ -88,6 +87,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
                 }
                 model.Favicon = "/img/" + fileName1;
             }
+
             _context.Update(model);
             await _context.SaveChangesAsync();
             return true;
@@ -100,7 +100,6 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
 
             if (listTenant != null)
             {
-
                 foreach (var tenant in listTenant)
                 {
                     var accountRequest = new TenantRequest
@@ -155,7 +154,6 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
             }
 
             return null;
-
         }
     }
 }

@@ -30,11 +30,8 @@ namespace MultiTenant.WebApp.Controllers
             return View(model);
         }
 
-       // [HttpDelete]
         public async Task<IActionResult> Delete(AccTenantDelete accTenantDelete)
         {
-            //accTenantRequest = await _acctenantservice.SetDbNameToTenant(accTenantRequest); //thừa
-
             await _acctenantservice.Delete(accTenantDelete);
             HttpClient client = _api.Initial();
             var postTask = client.PostAsJsonAsync("api/deletetenant", accTenantDelete);

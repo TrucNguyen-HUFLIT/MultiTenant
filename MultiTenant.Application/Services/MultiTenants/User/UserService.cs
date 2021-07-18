@@ -92,7 +92,6 @@ namespace MultiTenant.Application.Services.MultiTenants.User
                 model.Avatar ="/img/"+"/img/main/avatar-default-icon.png";
             }
 
-
             _context.Accounts.Add(model);
             await _context.SaveChangesAsync();
 
@@ -100,7 +99,6 @@ namespace MultiTenant.Application.Services.MultiTenants.User
 
         public async Task<bool> EditAsync(AccountEdit accountEdit)
         {
-
             var model = await _context.Accounts
                   .Where(x => x.AccId == accountEdit.AccId)
                   .FirstOrDefaultAsync();
@@ -113,12 +111,10 @@ namespace MultiTenant.Application.Services.MultiTenants.User
             await _context.SaveChangesAsync();
 
             return true;
-
         }
 
         public async Task<AccountEdit> GetAccountEditByIdAsync(int id)
         {
-
             var model = await _context.Accounts
                 .Where(x => x.AccId == id)
                 .Select(x => new { x.AccId, x.Avatar, x.Email, x.Role, x.Name })
@@ -137,9 +133,7 @@ namespace MultiTenant.Application.Services.MultiTenants.User
                 };
                 return accountEdit;
             }
-
             return null;
-
         }
 
         public List<Tenant> GetListTenant()
@@ -149,7 +143,6 @@ namespace MultiTenant.Application.Services.MultiTenants.User
             return model;
 
         }
-
 
         public async Task<IPagedList<AccountRequest>> GetListAccountRequestAsync(string sortOrder, string currentFilter, string searchString, int? page)
         {

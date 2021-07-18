@@ -20,7 +20,7 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="card-body">
-                    <form asp-action="Create" id="create-acc-form" enctype="multipart/form-data">
+                    <form asp-action="Create" id="create-acc-form" enctype="multipart/form-data" class="form-horizontal form-material mx-2">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <div class="card-img ">
@@ -37,43 +37,59 @@
 
                         <div class="form-group">
                             <label asp-for="accountCreate.UserName" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
-                            <input asp-for="accountCreate.UserName" class="form-control" />
-                            <span asp-validation-for="accountCreate.UserName" id="Err_UserName" class="text-danger"></span>
-                            <span class="text-danger" id="UserNameExist">
+                            <div class="col-md-12">
+                                  <input asp-for="accountCreate.UserName" class="form-control ps-0 form-control-line label-color" />
+                                  <span asp-validation-for="accountCreate.UserName" id="Err_UserName" class="text-danger"></span>
+                                  <span class="text-danger" id="UserNameExist"></span>
+                            </div>
+                          
                         </div>
                         <div class="form-group">
                             <label asp-for="accountCreate.Password" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
-                            <input asp-for="accountCreate.Password" class="form-control" type="password" />
-                            <span asp-validation-for="accountCreate.Password" class="text-danger" id="Err_Password"></span>
+                            <div class="col-md-12">
+                                 <input asp-for="accountCreate.Password" class="form-control ps-0 form-control-line label-color" type="password" />
+                                 <span asp-validation-for="accountCreate.Password" class="text-danger" id="Err_Password"></span>
+                            </div>
+                           
                         </div>
 
                         <div class="form-group">
                             <label asp-for="accountCreate.Name" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
-                            <input asp-for="accountCreate.Name" class="form-control" />
-                            <span asp-validation-for="accountCreate.Name" id="Err_Name" class="text-danger"></span>
+                            <div class="col-md-12">
+                                <input asp-for="accountCreate.Name" class="form-control ps-0 form-control-line label-color" />
+                                <span asp-validation-for="accountCreate.Name" id="Err_Name" class="text-danger"></span>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label asp-for="accountCreate.Email" style="display:inline" class="control-label col-md-12 mb-0"></label><span class="text-danger">*</span>
-                            <input asp-for="accountCreate.Email" class="form-control" />
+                            <div class="col-md-12">
+                                 <input asp-for="accountCreate.Email" class="form-control" />
                             <span asp-validation-for="accountCreate.Email" id="Err_Email" class="text-danger"></span>
+                            </div>
+                           
                         </div>
+
                         <div class="form-group">
                             <label class="control-label col-md-12 mb-0 ">Role</label>
-                            <select asp-for="accountCreate.Role" class="form-control">
+                            <div class="col-md-12">
+                                <select asp-for="accountCreate.Role" class="form-control">
 
-                                <option value="1">Admin</option>
-                                <option value="2">Customer</option>
-                            </select>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Customer</option>
+                                </select>
+                            </div>
                         </div>
                         @*<input asp-for="nhanVien.UpLoadAvt" accept="image/*" onchange="ChangeImage(this,'#previewImg')" />*@
+
                     <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
-                        <a asp-action="Index" class="btn btn-secondary">Back</a>
+                        <div class="col-md-12">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                            <a asp-action="Index" class="btn btn-secondary">Back</a>
+                        </div>
+                       
                     </div>
                     </form>
-
-
                 </div>
             </div>
         </div>

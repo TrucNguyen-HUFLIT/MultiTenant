@@ -13,10 +13,12 @@ namespace MultiTenant.Login.Controller.Account
     public class AccTenantController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
+
         public AccTenantController(UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TenantAccViewModel model)

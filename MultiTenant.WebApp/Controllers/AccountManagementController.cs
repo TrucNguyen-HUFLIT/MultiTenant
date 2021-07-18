@@ -21,8 +21,7 @@ namespace MultiTenant.WebApp.Controllers
         {
             _accountservice = accountService;
         }
-
-
+        
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
 
@@ -44,14 +43,11 @@ namespace MultiTenant.WebApp.Controllers
                 listTenant = _accountservice.GetListTenant(),
             };
             return View(model);
-
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-
             ViewBag.ActiveAccount = "active";
             var model = new AccountViewModel
             {
@@ -59,36 +55,26 @@ namespace MultiTenant.WebApp.Controllers
                 accountEdit = await _accountservice.GetAccountEditByIdAsync(id)
             };
             return View(model);
-
         }
-
 
         [ServiceFilter(typeof(ModelStateAjaxFilter))]
         [HttpPost]
         public async Task<IActionResult> Edit(AccountEdit accountEdit)
         {
-
             await _accountservice.EditAsync(accountEdit);
             return Ok(accountEdit.AccId);
-
         }
-
 
         public async Task<IActionResult> ChangeImageEdit(ChangeImage changeImage)
-        {
-
+        { 
             await _accountservice.ChangeImageAsync(changeImage);
             return RedirectToAction("Edit", new { id = changeImage.AccId });
-
         }
-
 
         [HttpGet]
         public IActionResult Logout()
         {
-
             return SignOut("Cookies", "oidc");
-
         }
 
         [HttpGet]
@@ -121,23 +107,5 @@ namespace MultiTenant.WebApp.Controllers
 
             return View();
         }
-
-        //[HttpPost]
-        //public async Task<IActionResult> Edit(AccountCreate accountCreate)
-        //{
-        //    await _accountservice.CreateAsync(accountCreate);
-
-        //    HttpClient client = _api.Initial();
-        //    var postTask = client.PostAsJsonAsync("api/edit", accountCreate);
-        //    postTask.Wait();
-
-        //    var result = postTask.Result;
-        //    if (result.IsSuccessStatusCode)
-        //    {
-        //        return Ok(accountCreate);
-        //    }
-
-        //    return View(accountCreate);
-        //}
     }
 }

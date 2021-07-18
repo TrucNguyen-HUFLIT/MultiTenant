@@ -178,7 +178,7 @@ $("#create-acc-form").submit(function (e) {
                     document.getElementById("Err_UserName").innerHTML = "";
 
                 if (objectValid["accountCreate.Password"] != undefined)
-                    document.getElementById("Err_Password").innerHTML = objectValid["accountCreate.UserName"];
+                    document.getElementById("Err_Password").innerHTML = objectValid["accountCreate.Password"];
                 else
                     document.getElementById("Err_Password").innerHTML = "";
 

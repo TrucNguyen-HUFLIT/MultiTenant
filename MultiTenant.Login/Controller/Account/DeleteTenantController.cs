@@ -15,6 +15,7 @@ namespace MultiTenant.Login.Controller.Account
     public class DeleteTenantController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
+
         public DeleteTenantController(UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
@@ -23,7 +24,6 @@ namespace MultiTenant.Login.Controller.Account
         [HttpPost]
         public async Task<IActionResult> Delete(TenantAccViewModel model)
         {
-
             var user = await _userManager.FindByNameAsync(model.UserName);
 
             Claim c = new ("tenant_id", model.DbName);
@@ -31,7 +31,6 @@ namespace MultiTenant.Login.Controller.Account
             await _userManager.RemoveClaimAsync(user, c);
 
             return Ok();
-
         }
     }
 }

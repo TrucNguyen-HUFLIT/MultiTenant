@@ -39,9 +39,7 @@ namespace MultiTenant.WebApp.Controllers
                 listTenantRequest = await _tenantservice.GetListTenantRequestAsync(sortOrder, currentFilter, searchString, page)
             };
             return View(model);
-
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -54,7 +52,6 @@ namespace MultiTenant.WebApp.Controllers
             return View(model);
         }
 
-
         [ServiceFilter(typeof(ModelStateAjaxFilter))]
         [TypeFilter(typeof(ExceptionFilter))]
         [HttpPost]
@@ -63,7 +60,6 @@ namespace MultiTenant.WebApp.Controllers
             await _tenantservice.EditAsync(tenantEdit);
             return Ok(tenantEdit.TenantId);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Create()
