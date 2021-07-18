@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MultiTenant.Login.Models
+﻿namespace MultiTenant.Login.Models
 {
     public class TenantAccViewModel
     {

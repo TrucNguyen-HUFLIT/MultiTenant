@@ -20,10 +20,10 @@ namespace MultiTenant.Application.Services.MultiTenants.AccTenants
             _context = context;
         }
 
-        public async Task<bool> Delete(AccTenantRequest accTenantRequest)
+        public async Task<bool> Delete(AccTenantDelete accTenantDelete)
         {
 
-            var detailacc = await _context.AccountTenants.Where(x => x.AccId == accTenantRequest.AccId & x.TenantId == accTenantRequest.TenantId ).FirstOrDefaultAsync();
+            var detailacc = await _context.AccountTenants.Where(x => x.AccId == accTenantDelete.AccId & x.TenantId == accTenantDelete.TenantId ).FirstOrDefaultAsync();
 
             _context.Remove(detailacc);
             await _context.SaveChangesAsync();

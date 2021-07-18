@@ -204,10 +204,12 @@ $("#create-acc-form").submit(function (e) {
     });
 });
 
-function DeleteAcc() {
-    var confirm = prompt('Text "Delete" to Delete this account').toLowerCase();
+function DeleteTenant() {
+    var confirm = prompt('Text "Delete" to Delete this Tenant').toLowerCase();
 
     if (confirm == "delete") {
+        let form = $('#delete-tenant').serializeArray();
+        console.log(form);
         $.ajax({
             url: '/accounttenant/delete',
             type: 'delete',
@@ -216,12 +218,12 @@ function DeleteAcc() {
             success: function (data) {
                 console.log(data);
                 ToastDelete();
-                setTimeout(() => window.location.replace("/accounttenant/detail" + data.accId), 2000);
+                setTimeout(() => window.location.replace("/accounttenant/detail/" + data.accId), 2000);
             }
         });
     }
     else {
-        DeleteAcc();
+        DeleteTenant();
     }
 }
 
@@ -235,6 +237,7 @@ function ToastDelete() {
     // After 3 seconds, remove the show class from DIV
     setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
 }
+
 $(document).ready(function () {
 });
 
@@ -256,6 +259,7 @@ function Active() {
         x.classList.add("active");
     }
 }
+//#endregion
 
 function ActiveProfile() {
     var y = document.getElementById("ActiveProfile").value;

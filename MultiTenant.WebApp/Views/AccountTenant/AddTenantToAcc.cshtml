@@ -1,4 +1,4 @@
-﻿@{ ViewData["Title"] = "Add Tenant To Account";
+﻿@{ ViewData["Title"] = "Add tenant";
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 @model MultiTenant.Application.Models.AccTenants.AccTenantViewModel
@@ -10,7 +10,7 @@
             <div class="page-title-heading">
                 <div>
 
-                    <h2 style="font-weight:500">List Tenant Of Account</h2>
+                    <h2 style="font-weight:500">Add tenant</h2>
 
                 </div>
             </div>
@@ -18,13 +18,13 @@
     </div>
     <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
         <li class="nav-item">
-            <a asp-action="Detail" class="nav-link ">
-                <span>List Tenant</span>
+            <a asp-action="Detail" class="nav-link "  asp-route-id="@Model.accTenantRequest.AccId" >
+                <span>Tenants</span>
             </a>
         </li>
         <li class="nav-item">
             <a asp-action="AddTenantToAcc" class="nav-link active">
-                <span>Add Tenant To Account</span>
+                <span>Add Tenant</span>
             </a>
         </li>
     </ul>
