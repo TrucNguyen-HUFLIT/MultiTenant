@@ -68,10 +68,11 @@ namespace MultiTenant.WebApp
                    options.Authority = "https://loginsso.com";
                    options.RequireHttpsMetadata = false;
 
-                   // Ignore SSL validation
+                   #region Ignore SSL validation
                    //HttpClientHandler handler = new HttpClientHandler();
                    //handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
                    //options.BackchannelHttpHandler = handler;
+                   #endregion
 
                    options.ClientId = "mgmt";
                    options.ClientSecret = "SuperSecretPassword";
