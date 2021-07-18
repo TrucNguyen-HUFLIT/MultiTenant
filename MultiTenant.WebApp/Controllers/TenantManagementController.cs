@@ -39,9 +39,7 @@ namespace MultiTenant.WebApp.Controllers
                 listTenantRequest = await _tenantservice.GetListTenantRequestAsync(sortOrder, currentFilter, searchString, page)
             };
             return View(model);
-
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -54,7 +52,6 @@ namespace MultiTenant.WebApp.Controllers
             return View(model);
         }
 
-
         [ServiceFilter(typeof(ModelStateAjaxFilter))]
         [TypeFilter(typeof(ExceptionFilter))]
         [HttpPost]
@@ -64,14 +61,13 @@ namespace MultiTenant.WebApp.Controllers
             return Ok(tenantEdit.TenantId);
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Create()
         {
             ViewBag.ActiveTenant = "active";
             var model = new TenantViewModel
             {
-                tenantCreate=new TenantCreate(),
+                tenantCreate = new TenantCreate(),
             };
             return View(model);
         }
@@ -84,7 +80,7 @@ namespace MultiTenant.WebApp.Controllers
             await _tenantservice.CreateAsync(tenantCreate);
 
             HttpClient client = _api.Initial();
-            var postTask = client.PostAsJsonAsync("api/register", tenantCreate);
+            var postTask = client.PostAsJsonAsync("api/APIID4/createtenant", tenantCreate);
             postTask.Wait();
 
             var result = postTask.Result;

@@ -37,22 +37,25 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
 
             var model = new Tenant
             {
+                Favicon = "/img/favicon-robo.jpg",
                 DbName = tenantCreate.DbName,
                 URL = "https://" + tenantCreate.DbName + ".localhost:5002",//xem lại
             };
-
-           
-            string wwwrootpath = hostEnvironment.WebRootPath;
-            string filename = Path.GetFileNameWithoutExtension(tenantCreate.UploadFavicon.FileName);
-            string extension = Path.GetExtension(tenantCreate.UploadFavicon.FileName);
-            filename += extension;
-            string path1 = Path.Combine(wwwrootpath + "/img/", filename);
-
-            using (var filestream = new FileStream(path1, FileMode.Create))
+            if( tenantCreate.UploadFavicon != null)
             {
-                await tenantCreate.UploadFavicon.CopyToAsync(filestream);
+                string wwwrootpath = hostEnvironment.WebRootPath;
+                string filename = Path.GetFileNameWithoutExtension(tenantCreate.UploadFavicon.FileName);
+                string extension = Path.GetExtension(tenantCreate.UploadFavicon.FileName);
+                filename += extension;
+                string path1 = Path.Combine(wwwrootpath + "/img/", filename);
+
+                using (var filestream = new FileStream(path1, FileMode.Create))
+                {
+                    await tenantCreate.UploadFavicon.CopyToAsync(filestream);
+                }
+                model.Favicon = "/img/" + filename;
             }
-            model.Favicon = "/img/" + filename;
+            
 
             using (var dbcontext = new TenantContext(model.DbName)) //DI DBName
             {
@@ -88,6 +91,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
                 }
                 model.Favicon = "/img/" + fileName1;
             }
+
             _context.Update(model);
             await _context.SaveChangesAsync();
             return true;
@@ -100,7 +104,6 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
 
             if (listTenant != null)
             {
-
                 foreach (var tenant in listTenant)
                 {
                     var accountRequest = new TenantRequest
@@ -155,7 +158,6 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
             }
 
             return null;
-
         }
     }
 }

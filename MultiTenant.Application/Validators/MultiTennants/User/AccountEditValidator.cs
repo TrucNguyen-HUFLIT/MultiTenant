@@ -10,7 +10,6 @@ namespace MultiTenant.Application.Validators.MultiTenants.User
             RuleFor(actor => actor.Name).NotEmpty();
             RuleFor(actor => actor.AccId).NotEmpty();
             RuleFor(actor => actor.Email).NotEmpty();
-          
         }
     }
 }
