@@ -10,6 +10,7 @@ using MultiTenant.Application.Services.MultiTenants.Tenants;
 using MultiTenant.Application.Validators.MultiTenants.User;
 using MultiTenant.WebApp.Filter;
 using MultiTenant.Application.Services.MultiTenants.AccTenants;
+using System.Net.Http;
 
 namespace MultiTenant.WebApp
 {
@@ -64,8 +65,13 @@ namespace MultiTenant.WebApp
                .AddOpenIdConnect("oidc", options =>
                {
                    options.SignInScheme = "Cookies";
-                   options.Authority = "https://localhost:5000";
-                   options.RequireHttpsMetadata = true;
+                   options.Authority = "https://loginsso.com";
+                   options.RequireHttpsMetadata = false;
+
+                   // Ignore SSL validation
+                   //HttpClientHandler handler = new HttpClientHandler();
+                   //handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+                   //options.BackchannelHttpHandler = handler;
 
                    options.ClientId = "mgmt";
                    options.ClientSecret = "SuperSecretPassword";
