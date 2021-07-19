@@ -33,6 +33,8 @@ namespace MultiTenant.WebApp.Controllers
         public async Task<IActionResult> Delete(AccTenantDelete accTenantDelete)
         {
             await _acctenantservice.Delete(accTenantDelete);
+
+            //call APIID4
             HttpClient client = _api.Initial();
             var postTask = client.PostAsJsonAsync("api/APIID4/deleteclaim", accTenantDelete);
             postTask.Wait();
@@ -64,6 +66,7 @@ namespace MultiTenant.WebApp.Controllers
             accTenantRequest = await _acctenantservice.SetDbNameToTenant(accTenantRequest);
             await _acctenantservice.AddTenantToAcc(accTenantRequest);
 
+            //call APIID4
             HttpClient client = _api.Initial();
             var postTask = client.PostAsJsonAsync("api/APIID4/addclaim", accTenantRequest);
             postTask.Wait();

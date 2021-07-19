@@ -23,7 +23,6 @@ namespace MultiTenant.WebApp.Controllers
 
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-
             ViewBag.ActiveTenant = "active";
             ViewBag.CurrentSort = sortOrder;
             ViewBag.DbNameSortParm = String.IsNullOrEmpty(sortOrder) || sortOrder.Equals("name") ? "name_desc" : "name";
@@ -79,6 +78,7 @@ namespace MultiTenant.WebApp.Controllers
         {
             await _tenantservice.CreateAsync(tenantCreate);
 
+            //call APIID4
             HttpClient client = _api.Initial();
             var postTask = client.PostAsJsonAsync("api/APIID4/createtenant", tenantCreate);
             postTask.Wait();
