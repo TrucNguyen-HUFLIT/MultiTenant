@@ -30,12 +30,12 @@ namespace MultiTenant.Login
                     AllowedGrantTypes = GrantTypes.Code,
                     RedirectUris = new List<string> {
                         "https://localhost:5001/signin-oidc",
-                        "https://mgmt.com:5001/signin-oidc",
+                        "https://mgmt.com/signin-oidc",
                     },
                     FrontChannelLogoutUri = "https://localhost:5001/signout-oidc",
                     PostLogoutRedirectUris = new List<string>  {
                         "https://localhost:5001/signout-callback-oidc",
-                        "https://mgmt.com:5001/signout-callback-oidc",
+                        "https://mgmt.com/signout-callback-oidc",
                     },
 
                     AllowedScopes = new List<string>
@@ -57,18 +57,15 @@ namespace MultiTenant.Login
                     
                     AllowedGrantTypes = GrantTypes.Code,
                     RedirectUris = new List<string> {
-                        "https://tenant.localhost:5002/signin-oidc", "https://tenant.multitenant.com:5002/signin-oidc",
-                        "https://tenant1.localhost:5002/signin-oidc", "https://tenant1.multitenant.com:5002/signin-oidc",
-                        "https://tenant2.localhost:5002/signin-oidc", "https://tenant2.multitenant.com:5002/signin-oidc",
+                        "https://tenant.localhost:5002/signin-oidc", "https://tenant.multitenant.com/signin-oidc",
+                        "https://tenant1.localhost:5002/signin-oidc", "https://tenant1.multitenant.com/signin-oidc",
+                        "https://tenant2.localhost:5002/signin-oidc", "https://tenant2.multitenant.com/signin-oidc",
                     },
                     FrontChannelLogoutUri = "https://localhost:5002/signout-oidc",
                     PostLogoutRedirectUris = new List<string>  {
-                        "https://tenant.localhost:5002/signout-callback-oidc",
-                        "https://tenant.multitenant.com:5002/signout-callback-oidc",
-                                              "https://tenant1.localhost:5002/signout-callback-oidc",
-                        "https://tenant1.multitenant.com:5002/signout-callback-oidc",
-                                              "https://tenant2.localhost:5002/signout-callback-oidc",
-                        "https://tenant2.multitenant.com:5002/signout-callback-oidc",
+                        "https://tenant.localhost:5002/signout-callback-oidc", "https://tenant.multitenant.com/signout-callback-oidc",
+                        "https://tenant1.localhost:5002/signout-callback-oidc", "https://tenant1.multitenant.com/signout-callback-oidc",
+                        "https://tenant2.localhost:5002/signout-callback-oidc", "https://tenant2.multitenant.com/signout-callback-oidc",
                     },
 
                     AllowedScopes = new List<string>

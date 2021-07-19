@@ -29,7 +29,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
 
         public async Task CreateAsync(TenantCreate tenantCreate)
         {
-            var dbName = _context.Tenants.Where(x => x.TenantId == tenantCreate.TenantId).Select(x => x.DbName).FirstOrDefault();
+            var dbName = _context.Tenants.Where(x => x.DbName == tenantCreate.DbName).Select(x => x.DbName).FirstOrDefault();
             if (dbName != null)
             {
                 throw new SameDbExceptions(dbName);
