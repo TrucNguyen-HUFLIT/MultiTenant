@@ -60,7 +60,9 @@ namespace MultiTenant.Login.Controller.Account
         {
             var tenant = new ClientRedirectUri()
             {
-                RedirectUri = "https://" + model.DbName + ".localhost:5002/signin-oidc",
+                //RedirectUri = "https://" + model.DbName + ".localhost:5002/signin-oidc",
+                RedirectUri = "https://" + model.DbName + ".multitenant.com/signin-oidc",//deploy
+
                 ClientId = 2,
             };
 
