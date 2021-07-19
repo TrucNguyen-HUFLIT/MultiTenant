@@ -89,7 +89,7 @@ namespace MultiTenant.Application.Services.MultiTenants.User
             }
             else
             {
-                model.Avatar ="/img/"+"/img/main/avatar-default-icon.png";
+                model.Avatar ="/img/main/avatar-default-icon.png";
             }
 
             _context.Accounts.Add(model);
