@@ -99,8 +99,8 @@ namespace MultiTenant.Application.Services.Tenants.User
 
         public async Task<string> GetURLFromUser(ClaimsPrincipal user)
         {
-            string domain = await _tenantProvider.GetDomainFromHost();
-            string subdomain = await _tenantProvider.GetSubDomainFromHost();
+            string domain = _tenantProvider.GetDomainFromHost();
+            string subdomain = _tenantProvider.GetSubDomainFromHost();
 
             var claimsVlue = user.Claims
                                 .Where(x => x.Type == "tenant_id")

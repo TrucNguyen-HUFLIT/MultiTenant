@@ -21,10 +21,10 @@ namespace MultiTenant.Filter
             //throw new NotImplementedException();
         }
 
-        public async void OnActionExecuting(ActionExecutingContext context)
+        public void OnActionExecuting(ActionExecutingContext context)
         {
-            string domain = await _tenantProvider.GetDomainFromHost();
-            string subdomain = await _tenantProvider.GetSubDomainFromHost();
+            string domain = _tenantProvider.GetDomainFromHost();
+            string subdomain = _tenantProvider.GetSubDomainFromHost();
 
             var claimsVlue = context.HttpContext.User.Claims
                                 .Where(x => x.Type == "tenant_id")

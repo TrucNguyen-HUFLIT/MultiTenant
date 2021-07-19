@@ -1,6 +1,5 @@
 ﻿
 using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 
 namespace MultiTenant.Application.Provider.Tenant
 {
@@ -11,14 +10,14 @@ namespace MultiTenant.Application.Provider.Tenant
         {
             _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<string> GetSubDomainFromHost()
+        public string GetSubDomainFromHost()
         {
             string host = _httpContextAccessor.HttpContext.Request.Host.Value;
             string[] subdomain = host.Split(".");
 
             return subdomain[0];
         }
-        public async Task<string> GetDomainFromHost()
+        public string GetDomainFromHost()
         {
             string host = _httpContextAccessor.HttpContext.Request.Host.Value;
             string[] subdomain = host.Split(".");

@@ -1,6 +1,5 @@
 ﻿using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -50,12 +49,12 @@ namespace MultiTenant
             services.AddScoped<ITenantProvider, TenantProvider>();
 
             services.AddDbContext<MultiTenantContext>();
-            services.AddDbContext<TenantContext>(async (provider, options) =>
+            services.AddDbContext<TenantContext>((provider, options) =>
             {
                 var tenantProvider = provider.GetRequiredService<ITenantProvider>();
-                var dbName = await tenantProvider.GetSubDomainFromHost();
+                var dbName = tenantProvider.GetSubDomainFromHost();
 
-                options.UseSqlServer($@"Server=HUYDESKTOP;Database={dbName};Trusted_Connection=True;user id=sa1; password=sa123; Integrated Security=false");
+                options.UseSqlServer($@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database={dbName};Trusted_Connection=True;user id=sa1; password=sa123; Integrated Security=false");
             });
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
