@@ -18,7 +18,7 @@ namespace MultiTenant.Login
             services.AddControllersWithViews();
 
             const string connectionString =
-                @"Data Source=HUYDESKTOP;database=IdentityServer4;trusted_connection=yes;";
+                @"Data Source=DESKTOP-I7EOLFR\SQLEXPRESS;database=IdentityServer4;trusted_connection=yes;user id=sa1; password=sa123; Integrated Security=false";
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddDbContext<ApplicationDbContext>(builder =>
