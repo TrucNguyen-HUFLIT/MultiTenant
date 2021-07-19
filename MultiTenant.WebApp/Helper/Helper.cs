@@ -11,7 +11,9 @@ namespace MultiTenant.WebApp.Helper
         public HttpClient Initial()
         {
             var client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:5000");
+            //client.BaseAddress = new Uri("https://localhost:5000");
+            client.BaseAddress = new Uri("https://loginsso.com"); // deploy
+
             return client;
         }
     }
