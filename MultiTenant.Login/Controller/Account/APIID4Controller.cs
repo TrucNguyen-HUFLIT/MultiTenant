@@ -58,36 +58,35 @@ namespace MultiTenant.Login.Controller.Account
         [HttpPost]
         public async Task<IActionResult> CreateTenant([FromBody] TenantViewModel model)
         {
-            var RedirectUris = new List<ClientRedirectUri>()
+
+            var RedirectUris1 = new ClientRedirectUri()
             {
-                new ClientRedirectUri
-                {
-                     RedirectUri = "https://" + model.DbName + ".localhost:5002/signin-oidc",
-                     ClientId = 2,
-                },
-                new ClientRedirectUri
-                {
-                     RedirectUri = "https://" + model.DbName + ".multitenant.com/signin-oidc",
-                     ClientId = 2,
-                },
+                RedirectUri = "https://" + model.DbName + ".localhost:5002/signin-oidc",
+                ClientId = 2,
             };
 
-            var PostLogout = new List<ClientPostLogoutRedirectUri>()
+            var RedirectUris2 = new ClientRedirectUri()
             {
-                new ClientPostLogoutRedirectUri
-                {
-                    PostLogoutRedirectUri = "https://" + model.DbName + ".localhost:5002/signout-callback-oidc",
-                    ClientId = 2,
-                },
-                new ClientPostLogoutRedirectUri
-                {
-                    PostLogoutRedirectUri = "https://" + model.DbName + ".multitenant.com/signout-callback-oidc",
-                    ClientId = 2,
-                }
+                RedirectUri = "https://" + model.DbName + ".multitenant.com/signin-oidc",
+                ClientId = 2,
             };
 
-            _configurationDbContext.Add(PostLogout);
-            _configurationDbContext.Add(RedirectUris);
+            var PostLogout1 = new ClientPostLogoutRedirectUri()
+            {
+                PostLogoutRedirectUri = "https://" + model.DbName + ".localhost:5002/signout-callback-oidc",
+                ClientId = 2,
+            };
+
+            var PostLogout2 = new ClientPostLogoutRedirectUri()
+            {
+                PostLogoutRedirectUri = "https://" + model.DbName + ".multitenant.com/signout-callback-oidc",
+                ClientId = 2,
+            };
+            
+            _configurationDbContext.Add(RedirectUris1);
+            _configurationDbContext.Add(RedirectUris2);
+            _configurationDbContext.Add(PostLogout1);
+            _configurationDbContext.Add(PostLogout2);
             await _configurationDbContext.SaveChangesAsync();
 
             return Ok();
