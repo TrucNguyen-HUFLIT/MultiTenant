@@ -59,7 +59,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
 
             using (var dbcontext = new TenantContext(model.DbName)) //DI DBName
             {
-                await dbcontext.Database.MigrateAsync();
+                await dbcontext.Database.MigrateAsync(); // Migrate DB
             }
 
             _context.Add(model);

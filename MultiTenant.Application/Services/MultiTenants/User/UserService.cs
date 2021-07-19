@@ -1,11 +1,5 @@
-﻿using IdentityModel;
-using IdentityServer4.Test;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Routing;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using MultiTenant.Application.Exceptions;
 using MultiTenant.Application.Models.MultiTenants.Account;
 using MultiTenant.Data.Contexts;
@@ -15,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using X.PagedList;
 
