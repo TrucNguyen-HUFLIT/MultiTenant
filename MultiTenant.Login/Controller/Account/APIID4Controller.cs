@@ -58,13 +58,36 @@ namespace MultiTenant.Login.Controller.Account
         [HttpPost]
         public async Task<IActionResult> CreateTenant([FromBody] TenantViewModel model)
         {
-            var tenant = new ClientRedirectUri()
+            var RedirectUris = new List<ClientRedirectUri>()
             {
-                RedirectUri = "https://" + model.DbName + ".localhost:5002/signin-oidc",
-                ClientId = 2,
+                new ClientRedirectUri
+                {
+                     RedirectUri = "https://" + model.DbName + ".localhost:5002/signin-oidc",
+                     ClientId = 2,
+                },
+                new ClientRedirectUri
+                {
+                     RedirectUri = "https://" + model.DbName + ".multitenant.com/signin-oidc",
+                     ClientId = 2,
+                },
             };
 
-            _configurationDbContext.Add(tenant);
+            var PostLogout = new List<ClientPostLogoutRedirectUri>()
+            {
+                new ClientPostLogoutRedirectUri
+                {
+                    PostLogoutRedirectUri = "https://" + model.DbName + ".localhost:5002/signout-callback-oidc",
+                    ClientId = 2,
+                },
+                new ClientPostLogoutRedirectUri
+                {
+                    PostLogoutRedirectUri = "https://" + model.DbName + ".multitenant.com/signout-callback-oidc",
+                    ClientId = 2,
+                }
+            };
+
+            _configurationDbContext.Add(PostLogout);
+            _configurationDbContext.Add(RedirectUris);
             await _configurationDbContext.SaveChangesAsync();
 
             return Ok();

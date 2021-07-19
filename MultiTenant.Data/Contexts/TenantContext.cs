@@ -19,7 +19,7 @@ namespace MultiTenant.Data.Contexts
         {
             if (!optionsBuilder.IsConfigured)
                 //optionsBuilder.UseSqlServer($@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database=tenant;Trusted_Connection=True;");
-                optionsBuilder.UseSqlServer($@"Server=HUYDESKTOP;Database={_dbName};Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer($@"Server=DESKTOP-I7EOLFR\SQLEXPRESS;Database={_dbName};Trusted_Connection=True;user id=sa1; password=sa123; Integrated Security=false");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

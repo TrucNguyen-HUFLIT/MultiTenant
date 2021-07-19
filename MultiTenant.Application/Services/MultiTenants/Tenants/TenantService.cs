@@ -39,7 +39,7 @@ namespace MultiTenant.Application.Services.MultiTenants.Tenants
             {
                 Favicon = "/img/favicon-robo.jpg",
                 DbName = tenantCreate.DbName,
-                URL = "https://" + tenantCreate.DbName + ".localhost:5002",//xem lại
+                URL = "https://" + tenantCreate.DbName + ".multitenant.com",//xem lại
             };
             if( tenantCreate.UploadFavicon != null)
             {
